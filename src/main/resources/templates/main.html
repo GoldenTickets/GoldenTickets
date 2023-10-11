@@ -8,19 +8,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     .bi-search:hover {
-      background-color: #2F2F2F;
+      background-color: #000000;
     }
 
     .bi-person-fill:hover {
-      background-color: #2F2F2F;
+      background-color: #000000;
     }
 
     .navbar-nav>.nav-item>.nav-link:hover {
-      background-color: #2F2F2F;
+      color: #ffffff;
+    }
+
+    .navbar-nav>.nav-item>.nav-link{
+      color: #9a9a9a;
     }
 
     .navbar {
-      background: linear-gradient(90deg, rgba(27,28,0,0.95) 0%, rgba(34,18,0,0.95) 50%, rgba(29,0,0,0.95) 100%);
+      background-color: #363636;
     }
   </style>
   <title>Document</title>
@@ -30,7 +34,7 @@
   <!--Header-->
   <nav class="navbar navbar-expand navbar-light fixed-top flex-nowrap flex-ro">
     <div class="container-fluid">
-      <a class="navbar-brand text-light" href="#">GoldenTicket</a>
+      <a class="navbar-brand text-light" href="#"><img src="../static/img/logo.png" style="height:25px;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -38,25 +42,22 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="#">골든티켓 라운지</a>
+            <a class="nav-link fs-6" aria-current="page" href="#">골든티켓 라운지</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">골든티켓 랭킹</a>
+            <a class="nav-link fs-6" href="#">골든티켓 랭킹</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#">영화 정보</a>
+            <a class="nav-link fs-6" href="#">영화 정보</a>
           </li>
           <div class="position-absolute end-0">
-            <a href="#" style="text-decoration: none;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                class="bi bi-search text-light" viewBox="0 0 14 14">
-                <path
-                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            <a href="#" class="wh-14 grid" style="text-decoration: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" height="18" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
               </svg>
             </a>
             <a href="#" style="text-decoration: none;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                class="bi bi-person-fill text-light" viewBox="0 0 16 16">
+              <svg xmlns="http://www.w3.org/2000/svg" height="18" fill="currentColor" class="bi bi-person-fill text-light" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
               </svg>
             </a>
@@ -184,7 +185,7 @@
           <img src="../static/img/1917_poster.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <b class="card-title">1917</b>
-            <p class="card-text">⭐9.0</p>
+            <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.0</p>
           </div>
         </div>
       </div>
@@ -193,7 +194,7 @@
           <img src="../static/img/dunkirk_poster.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <b class="card-title">덩케르크</b>
-            <p class="card-text">⭐9.1</p>
+            <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.1</p>
           </div>
         </div>
       </div>
@@ -202,7 +203,7 @@
           <img src="../static/img/hansan_poster.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <b class="card-title">한산</b>
-            <p class="card-text">⭐8.5</p>
+            <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.5</p>
           </div>
         </div>
       </div>
@@ -211,7 +212,7 @@
           <img src="../static/img/topdunmaverick_poster.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <b class="card-title">탑건:매버릭</b>
-            <p class="card-text">⭐8.7</p>
+            <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.7</p>
           </div>
         </div>
       </div>
@@ -220,7 +221,7 @@
           <img src="../static/img/parasite_poster.jpg" class="card-img-top" alt="...">
           <div class="card-body">
             <b class="card-title">기생충</b>
-            <p class="card-text">⭐9.2</p>
+            <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.2</p>
           </div>
         </div>
       </div>
@@ -238,7 +239,7 @@
               <img src="../static/img/dune_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">듄</b>
-                <p class="card-text">⭐8.1</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.1</p>
               </div>
             </div>
           </div>
@@ -247,7 +248,7 @@
               <img src="../static/img/eternals_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">이터널스</b>
-                <p class="card-text">⭐7.2</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.2</p>
               </div>
             </div>
           </div>
@@ -256,7 +257,7 @@
               <img src="../static/img/minari_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">미나리</b>
-                <p class="card-text">⭐8.6</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.6</p>
               </div>
             </div>
           </div>
@@ -265,7 +266,7 @@
               <img src="../static/img/notimetodie_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">007:노 타임 투 다이</b>
-                <p class="card-text">⭐8.4</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.4</p>
               </div>
             </div>
           </div>
@@ -274,7 +275,7 @@
               <img src="../static/img/oppenheimer_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">오펜하이머</b>
-                <p class="card-text">⭐8.9</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.9</p>
               </div>
             </div>
           </div>
@@ -283,7 +284,7 @@
               <img src="../static/img/assassination_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">암살</b>
-                <p class="card-text">⭐8.0</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.0</p>
               </div>
             </div>
           </div>
@@ -292,7 +293,7 @@
               <img src="../static/img/lifeofpi_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">라이프 오브 파이</b>
-                <p class="card-text">⭐9.0</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.0</p>
               </div>
             </div>
           </div>
@@ -301,7 +302,7 @@
               <img src="../static/img/lincoln_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">링컨</b>
-                <p class="card-text">⭐8.5</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.5</p>
               </div>
             </div>
           </div>
@@ -310,7 +311,7 @@
               <img src="../static/img/thefounder_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">파운더</b>
-                <p class="card-text">⭐7.9</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.9</p>
               </div>
             </div>
           </div>
@@ -319,7 +320,7 @@
               <img src="../static/img/thegodfather_poster.jpg" class="card-img-top" alt="...">
               <div class="card-body">
                 <b class="card-title">대부</b>
-                <p class="card-text">⭐9.9</p>
+                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.9</p>
               </div>
             </div>
           </div>
@@ -328,14 +329,14 @@
         <div><b class="fs-4">영화 장르별로 보기</b></div>
         <hr>
         <div>
-          <button type="button" class="btn btn-light">👊액션</button>&nbsp;
-          <button type="button" class="btn btn-light">👻공포/스릴러</button>&nbsp;
-          <button type="button" class="btn btn-light">😂코미디</button>&nbsp;
-          <button type="button" class="btn btn-light">🚀SF/판타지</button>&nbsp;
-          <button type="button" class="btn btn-light">🏃드라마</button>&nbsp;
-          <button type="button" class="btn btn-light">👫멜로</button>&nbsp;
-          <button type="button" class="btn btn-light">😼애니메이션</button>&nbsp;
-          <button type="button" class="btn btn-light">🎥다큐멘터리</button>
+          <button type="button" class="btn btn-light fw-bold">액션</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-light fw-bold">공포/스릴러</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-light fw-bold">코미디</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-light fw-bold">SF/판타지</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-light fw-bold">드라마</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-light fw-bold">멜로</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-light fw-bold">애니메이션</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-light fw-bold">다큐멘터리</button>
         </div>
       </div>
       <div class="col-3">
