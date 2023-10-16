@@ -40,44 +40,19 @@
         border-color: #ccc;
       }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      $(function(){
+        $('#header').load("header.html");
+      })
+    </script>
     <title>Document</title>
 </head>
 <body>
-    <!--Header-->
-    <nav class="navbar navbar-expand navbar-light fixed-top flex-nowrap flex-ro">
-        <div class="container-fluid">
-          <a class="navbar-brand text-light" href="#">GoldenTicket</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active text-light" aria-current="page" href="#" >골든티켓 라운지</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-light" href="#">골든티켓 랭킹</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-light" href="#">영화 정보</a>
-              </li>
-            <div class="position-absolute end-0">
-                <a href="#" style="text-decoration: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-search text-light" viewBox="0 0 14 14">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                </svg>
-                </a>
-                <a href="#" style="text-decoration: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill text-light" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </svg>
-                </a>
-            </div>
-            </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+       <!--Header-->
+       <div id="header">
+
+       </div>
     <!--Content-->
     <div class="container">
       <div style="height:80px"></div>
