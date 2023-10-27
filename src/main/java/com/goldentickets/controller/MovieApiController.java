@@ -1,5 +1,8 @@
 package com.goldentickets.controller;
 
+import com.goldentickets.domain.Review;
+import com.goldentickets.dto.ReviewResponse;
+import com.goldentickets.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import com.goldentickets.domain.Movie;
 import com.goldentickets.dto.MovieResponse;
@@ -17,31 +20,20 @@ import java.util.List;
 public class MovieApiController {
 
     private final MovieService movieService;
+    private final ReviewService reviewService;
 
-    @GetMapping("/api/movies")
-    public ResponseEntity<List<MovieResponse>> findAllMovies() {
-        List<MovieResponse> movies = movieService.findAll()
-                .stream()
-                .map(MovieResponse::new)
-                .toList();
+    @GetMapping("/api/movies/{m_seq}")
+    public ResponseEntity findMovies(@PathVariable long m_seq, Model model) {
+
+        Movie movie = movieService.findById(m_seq);
+        model.addAttribute("movie", new MovieResponse(movie));
+
+        List<Review> review = reviewService.findByM_seq_M_seq(m_seq);
+        //여기 문제 해결하기
+
 
         return ResponseEntity.ok()
-                .body(movies);
-    }
-    @GetMapping("/api/movies/{m_seq}")
-    public String findMovies(@PathVariable long m_seq, Model model) {
-        Movie movie = movieService.findById(m_seq);
-        model.addAttribute("movie", new MovieResponse(movie));
-
-        return "movieInfo";
-    }
-
-    @GetMapping("/api/movie/{m_seq}")
-    public String fidMovies(@PathVariable long m_seq, Model model) {
-        Movie movie = movieService.findById(m_seq);
-        model.addAttribute("movie", new MovieResponse(movie));
-
-        return "main";
+                .body(review);
     }
 
 }
