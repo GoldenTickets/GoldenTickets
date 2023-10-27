@@ -1,0 +1,3 @@
+INSERT INTO movie (m_title, m_synopsis, m_release, m_director, m_country, m_runningtime, m_poster) VALUES ('제목1', '시놉시스1', '개봉일1' , '감독1', '국가1', '1분', '포경1')
+INSERT INTO movie (m_title, m_synopsis, m_release, m_director, m_country, m_runningtime, m_poster) VALUES ('제목2', '시놉시스2', '개봉일2' , '감독2', '국가2', '2분', '포경2')
+INSERT INTO movie (m_title, m_synopsis, m_release, m_director, m_country, m_runningtime, m_poster) VALUES ('제목3', '시놉시스3', '개봉일3' , '감독3', '국가3', '3분', '포경3')
