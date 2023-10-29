@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class ReviewResponse {
 
-    private final String m_seq;
+    private final Long m_seq;
     private final String email;
     private final String r_rating;
     private final String r_content;
