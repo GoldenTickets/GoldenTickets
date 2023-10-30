@@ -15,17 +15,4 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    public List<Review> findAll() {
-        return reviewRepository.findAll();
-    }
-
-    public Review findById(long id) {
-        return reviewRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
-    }
-
-    public List<Review> findByM_seq_M_seq(long m_seq) {
-        return reviewRepository.findByM_seq_M_seq(m_seq);
-    }
-
 }

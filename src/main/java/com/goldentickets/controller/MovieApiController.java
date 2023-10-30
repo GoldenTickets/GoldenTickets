@@ -21,7 +21,6 @@ import java.util.List;
 public class MovieApiController {
 
     private final MovieService movieService;
-    private final ReviewService reviewService;
 
     @GetMapping("/api/movies/{m_seq}")
     public String findMovies(@PathVariable long m_seq, Model model) {
@@ -31,7 +30,6 @@ public class MovieApiController {
 
         //List<Review> review = reviewService.findByM_seq_M_seq(m_seq);
         //여기 문제 해결하기
-
 
         return "movieInfo";
     }
