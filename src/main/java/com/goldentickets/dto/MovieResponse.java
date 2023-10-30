@@ -1,17 +1,26 @@
 package com.goldentickets.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import com.goldentickets.domain.Movie;
 
 @Getter
+@Schema(description = "MV dto")
 public class MovieResponse {
 
+    @Schema(description = "m_title")
     private final String m_title;
+    @Schema(description = "m_synopsis")
     private final String m_synopsis;
+    @Schema(description = "m_release")
     private final String m_release;
+    @Schema(description = "m_director")
     private final String m_director;
+    @Schema(description = "m_country")
     private final String m_country;
+    @Schema(description = "m_runningtime")
     private final String m_runningtime;
+    @Schema(description = "m_poster")
     private final String m_poster;
 
     public MovieResponse(Movie movie) {
