@@ -7,7 +7,7 @@ import lombok.Getter;
 
 public class BoardResponse {
 
-        private final int b_seq;
+        private final long b_seq;
         private final String b_title;
 
         private final String b_writer;

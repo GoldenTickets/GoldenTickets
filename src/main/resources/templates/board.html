@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
   <div class="container">
@@ -33,31 +34,33 @@
       </tr>
       </thead>
       <tbody>
-      <!-- 여기에 반복되는 데이터를 동적으로 삽입 -->
-      <tr th:each="post : ${posts}">
-        <td th:text="${post.category}"></td>
-        <td colspan="3" th:text="${post.title}"></td>
-        <td th:text="${post.nickname}"></td>
-        <td th:text="${post.date}"></td>
-        <td th:text="${post.views}"></td>
-        <td th:text="${post.likes}"></td>
+      <!-- Thymeleaf 반복문을 사용하여 데이터 동적 삽입 -->
+      <tr th:each="board : ${boards}">
+        <td th:text="${board.category}"></td>
+        <td colspan="3" th:text="${board.title}"></td>
+        <td th:text="${board.nickname}"></td>
+        <td th:text="${board.date}"></td>
+        <td th:text="${board.views}"></td>
+        <td th:text="${board.likes}"></td>
       </tr>
       </tbody>
     </table>
     <div style="height:20px"></div>
+    <!-- 페이징 네비게이션 -->
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center text-dark">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
+        <li class="page-item" th:class="${currentPage == 0} ? 'disabled' : ''">
+          <a class="page-link" th:href="@{/boards/page(page=0)}" aria-label="Previous">
+            <span aria-hidden="true">&nbsp;</span>
           </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
+        <!-- 페이지 번호 반복 출력 -->
+        <li class="page-item" th:each="page, stat : ${#numbers.sequence(0, totalPages - 1)}">
+          <a class="page-link" th:href="@{/boards/page(page=${page})}" th:text="${page + 1}"></a>
+        </li>
+        <li class="page-item" th:class="${currentPage == totalPages - 1} ? 'disabled' : ''">
+          <a class="page-link" th:href="@{/boards/page(page=${totalPages - 1})}" aria-label="Next">
+            <span aria-hidden="true">&nbsp;</span>
           </a>
         </li>
       </ul>
@@ -79,13 +82,15 @@
         <input type="text" class="form-control" id="search">
         <button type="button" class="btn btn-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="pointer-events: none;">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
           </svg>
-          </button>
-        </div>
-        <div class="col-3 d-flex justify-content-end"><button type="button" class="btn btn-outline-success">글쓰기</button></div>
+        </button>
       </div>
-      <div style="height:55px"></div>
+      <div class="col-3 d-flex justify-content-end">
+        <button type="button" class="btn btn-outline-success">글쓰기</button>
+      </div>
     </div>
+    <div style="height:55px"></div>
+  </div>
 </th:block>
 </html>

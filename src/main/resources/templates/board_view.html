@@ -1,85 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
-    <div class="container">
-      <div style="height:100px;"></div>
-      <div><h2 class="fw-bold">골든티켓 라운지</h2></div>
-      <hr>
-      <div style="height:5px;"></div>
-      <div><b>삽살개가 귀신 쫓는 개인 이유</b></div>
-      <div style="height:6px;"></div>
-      <div class="row">
-        <div class="col">달라달라 │ 10-10 16:26:25</div>
-        <div class="col" style="text-align: right;">조회 10 │ 👍🏻 5 │ 댓글 4</div>
-      </div>
-      <hr>
-      <div style="height:10px;"></div>
-      삽살개. 털에 눈이 가려져서 그렇지 사실은 눈매가 되게 날카로운 편이라고...
-      귀신 쫓는 개라고 불리는 이유가 있어 내가 귀신이었어도 이런 개랑 눈 마주치면
-      도망갔음
-      <div style="height:200px;"></div>
-      <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-light">👍🏻 5</button>
-        <span style="width:15px"></span>
-        <button type="button" class="btn btn-light">👎🏻 0</button>
-      </div>
-      <div style="font-size: 14px;">전체 댓글 4개</div>
-      <hr>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>ㅇㅇ</td>
-            <td colspan="2">와 그건 몰랐네</td>
-            <td><p style="font-size: 14px; color:#555; text-align: right;">10-10 16:32:22</p></td>
-          </tr>
-          <tr>
-            <td>ㅇㅇ</td>
-            <td colspan="2">오늘부터 삽살개 바로 키운다</td>
-            <td><p style="font-size: 14px; color:#555; text-align: right;">10-10 16:30:56</p></td>
-          </tr>
-          <tr class="table-light">
-            <td><span style="width:1px;"></span>ㅇㅇ</td>
-            <td colspan="2">┗키울 돈은 있고?</td>
-            <td><p style="font-size: 14px; color:#555; text-align: right;">10-10 16:30:57</p></td>
-          </tr>
-          <tr>
-            <td>ㅇㅇ</td>
-            <td colspan="2">시골가면 확인해봐야겠네</td>
-            <td><p style="font-size: 14px; color:#555; text-align: right;">10-10 16:30:58</p></td>
-          </tr>
-        </tbody>
-      </table>
-      <div style="height:10px"></div>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center text-dark">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div style="height:10px"></div>
-      <div class="row">
-        <div class="col-1"><input type="text" class="form-control" placeholder="닉네임"></div>
-        <div class="col-11">
-          <textarea class="form-control" rows="3"></textarea>
-        </div>
-      </div>
-      <div style="height:15px"></div>
-      <div class="row">
-        <div class="col"><button type="button" class="btn btn-outline-secondary">글 목록</button></div>
-        <div class="col d-flex justify-content-end"><button type="button" class="btn btn-outline-success">댓글 쓰기</button></div>
-      </div>
-      <div style="height:25px"></div>
+  <div class="container">
+    <div style="height:100px;"></div>
+    <div><h2 class="fw-bold">골든티켓 라운지</h2></div>
+    <hr>
+    <div style="height:5px;"></div>
+    <div><b th:text="${post.title}"></b></div>
+    <div style="height:6px;"></div>
+    <div class="row">
+      <div class="col" th:text="${post.nickname} + ' │ ' + ${post.date}"></div>
+      <div class="col" style="text-align: right;">조회 <span th:text="${post.views}"></span> │ 👍🏻 <span th:text="${post.likes}"></span> │ 댓글 <span th:text="${post.comments.size()}"></span></div>
     </div>
+    <hr>
+    <div style="height:10px;"></div>
+    <div th:text="${post.content}"></div>
+    <div style="height:200px;"></div>
+    <div class="d-flex justify-content-center">
+      <button type="button" class="btn btn-light">👍🏻 <span th:text="${post.likes}"></span></button>
+      <span style="width:15px"></span>
+      <button type="button" class="btn btn-light">👎🏻 0</button>
+    </div>
+    <div style="font-size: 14px;">전체 댓글 <span th:text="${post.comments.size()}"></span>개</div>
+    <hr>
+    <table class="table">
+      <tbody>
+      <tr th:each="comment : ${post.comments}">
+        <td th:text="${comment.nickname}"></td>
+        <td colspan="2" th:text="${comment.text}"></td>
+        <td><p style="font-size: 14px; color:#555; text-align: right;" th:text="${#dates.format(comment.date, 'MM-dd HH:mm:ss')}"></p></td>
+      </tr>
+      </tbody>
+    </table>
+    <div style="height:10px"></div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center text-dark">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true"></span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div style="height:10px"></div>
+    <div class="row">
+      <div class="col-1"><input type="text" class="form-control" placeholder="닉네임"></div>
+      <div class="col-11">
+        <textarea class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+      <div class="col"><button type="button" class="btn btn-outline-secondary">글 목록</button></div>
+      <div class="col d-flex justify-content-end"><button type="button" class="btn btn-outline-success">댓글 쓰기</button></div>
+    </div>
+    <div style="height:25px"></div>
+  </div>
 </th:block>
 </html>
