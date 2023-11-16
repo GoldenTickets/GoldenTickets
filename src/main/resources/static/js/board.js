@@ -52,19 +52,24 @@ if (createButton) {
     // 등록 버튼을 클릭하면 /api/articles로 요청을 보낸다
     createButton.addEventListener('click', event => {
         body = JSON.stringify({
-            atitle: document.getElementById('atitle').value,
-            acontent: document.getElementById('acontent').value
+			mem_id: 1,
+            title: document.getElementById('title').value,
+            content: document.getElementById('content').value,
+            hit: 0,
+            likes: 0,
+            dislikes: 0,
+            category_id: document.querySelector('input[name="category"]:checked').value
         });
         function success() {
             alert('등록 완료되었습니다.');
-            location.replace('/articles');
+            location.replace('/board');
         };
         function fail() {
             alert('등록 실패했습니다.');
-            location.replace('/articles');
+            location.replace('/board');
         };
 
-        httpRequest('POST','/api/articles', body, success, fail)
+        httpRequest('POST','/board', body, success, fail)
     });
 }
 

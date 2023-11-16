@@ -9,35 +9,36 @@
       <div style="height:5px;"></div>
 
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+        <input class="form-check-input" type="radio" name="category" id="2" value="2">
         <label class="form-check-label" for="inlineRadio1">뉴스</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+        <input class="form-check-input" type="radio" name="category" id="3" value="3">
         <label class="form-check-label" for="inlineRadio2">리뷰</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+        <input class="form-check-input" type="radio" name="category" id="4" value="4">
         <label class="form-check-label" for="inlineRadio3">일반</label>
       </div>
-      <div style="height:25px;"><input type="hidden" id="article-id" th:value="${article.id}"></div>
+      <div style="height:25px;"><!--<input type="hidden" id="article-id" th:value="${article.id}">--></div>
       <div>
-        <input type="text" class="form-control" id="atitle" placeholder="제목을 입력해주세요">
+        <input type="text" class="form-control" id="title" placeholder="제목을 입력해주세요">
       </div>
       <div style="height:13px;"></div>
       <p style="font-size: 14px; color:#555">※ 음란물, 차별, 비하, 혐오 및 초상권, 저작권 침해 게시물은 민, 형사상의 책임을 질 수 있습니다. </p>
       <div style="height:1px;"></div>
       <div>
-        <textarea class="form-control" id="acontent" rows="3" style="height:350px"></textarea>
+        <textarea class="form-control" id="content" rows="3" style="height:350px"></textarea>
       </div>
       <div style="height:30px"></div>
       <div class="row">
         <div class="col-9">
-          <button th:if="${article.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>
+          <!--<button th:if="${article.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>-->
         </div>
-        <div class="col-3 d-flex justify-content-end"><button type="button" onclick="/articles" class="btn btn-outline-secondary">취소</button>
+        <div class="col-3 d-flex justify-content-end">
+		  <button type="button" onclick="location.herf='/board'" class="btn btn-outline-secondary">취소</button>
           <span style="width: 20px;"></span>
-          <button th:if="${article.id} == null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록</button>
+          <button type="button" id="create-btn" class="btn btn-primary btn-sm">등록</button>
       </div>
       <div style="height:75px"></div>
     </div>

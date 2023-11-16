@@ -39,7 +39,7 @@
       <td th:text="${item.categoryname}"></td>
       <td colspan="3"><a th:href="@{/board/{id}(id=${item.id})}"><at th:text="${item.title}"></at></a></td>
       <td th:text="${item.nickname}"></td>
-      <td th:text="${#temporals.format(item.regdate, 'yyyy-MM-dd HH:mm')}"></td>
+      <td th:text="${item.regdate}"></td>
       <td th:text="${item.hit}"></td>
       <td th:text="${item.likes}"></td>
     </tr>
@@ -84,7 +84,7 @@
         </svg>
       </button>
     </div>
-    <div class="col-3 d-flex justify-content-end"><button type="button" id="create-btn" th:onclick="|location.href='@{/new-article}'|" class="btn btn-outline-success">글쓰기</button></div>
+    <div class="col-3 d-flex justify-content-end"><button type="button" th:onclick="|location.href='@{/board/write}'|" class="btn btn-outline-success">글쓰기</button></div>
   </div>
   <div style="height:55px"></div>
   <div><button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button></div>
