@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+  <div class="container">
+    <div style="height:55px"></div>
+    <div class="text-center" style="color:white;background: rgba(36,36,36,1)">
+      <div style="color:white">
+      <div style="background: linear-gradient(90deg, rgba(36,36,36,1) 35%, rgba(64,59,47,1) 50%, rgba(36,36,36,1) 65%)">
+      <div class="col">
+        <br>
+        <div style="font-size:30px" th:text="${movie.movie_title}"><!-- 제목 --></div>(2020)<!-- 개봉년도 -->
+      </div>
+      <div class="row">
+        <div class="col">
+          <br>
+          <img th:src="${movie.movie_poster}" alt="포스터"><!-- 포스터 경로 -->
+        </div>
+      </div>
+      </div>
+      </div>
+      <div style="height:50px;"></div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col">
+          <p th:text="${movie.movie_synopsis}"></p><!-- 시놉시스 -->
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div style="height:50px;"></div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <table class="table fst-normal" style="color:white">
+            <tr>
+              <th>
+                개봉일
+              </th>
+              <th th:text="${movie.movie_release}">
+                <!-- 개봉일 -->
+              </th>
+            </tr>
+            <tr>
+              <th>
+                골든티켓 평점
+              </th>
+              <th>
+                <img src="/images/star2.png" style="height:13px">&nbsp;9.09
+              </th>
+            </tr>
+            <tr>
+              <th>
+                장르
+              </th>
+              <th>
+                드라마, 시대극, 액션, 어드벤처, 전쟁, 버디 무비, 로드 무비, 밀리터리
+              </th>
+            </tr>
+            <tr>
+              <th>
+                감독
+              </th>
+              <th th:text="${movie.movie_director}">
+
+              </th>
+            </tr>
+            <tr>
+              <th>
+                러닝타임
+              </th>
+              <th th:text="${movie.movie_runningtime}">
+
+              </th>
+            </tr>
+            <tr>
+              <th>
+                볼 수 있는 곳
+              </th>
+              <th>
+                시리즈온, 웨이브, 왓챠, 넷플릭스
+              </th>
+            </tr>
+          </table>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div style="height:50px;"></div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
+                aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img th:src="${movie.movie_photo}" class="d-inline w-100" alt="...">
+              </div>
+              <!--<div class="carousel-item" th:each="item : ${photos}">
+                <img th:src="${item.psrc}" class="d-inline w-100" alt="...">
+              </div>-->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div style="height:70px;"></div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <iframe width="800" height="505" th:src="${movie.movie_trailer}"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="col-1"></div>
+      </div>
+      <div style="height:70px;"></div>
+  </div>
+  <div style="height:50px"></div>
+  <div class="container">
+      <div style="height:15px"></div>
+      <div class="text-center fw-bold">리뷰</div>
+      <div class="text-center">별점을 선택해주세요.</div>
+      <div class="row">
+          <div class="starpoint_wrap">
+            <div class="starpoint_box">
+              <label for="starpoint_1" class="label_star" title="0.5"><span class="blind">0.5점</span></label>
+              <label for="starpoint_2" class="label_star" title="1"><span class="blind">1점</span></label>
+              <label for="starpoint_3" class="label_star" title="1.5"><span class="blind">1.5점</span></label>
+              <label for="starpoint_4" class="label_star" title="2"><span class="blind">2점</span></label>
+              <label for="starpoint_5" class="label_star" title="2.5"><span class="blind">2.5점</span></label>
+              <label for="starpoint_6" class="label_star" title="3"><span class="blind">3점</span></label>
+              <label for="starpoint_7" class="label_star" title="3.5"><span class="blind">3.5점</span></label>
+              <label for="starpoint_8" class="label_star" title="4"><span class="blind">4점</span></label>
+              <label for="starpoint_9" class="label_star" title="4.5"><span class="blind">4.5점</span></label>
+              <label for="starpoint_10" class="label_star" title="5"><span class="blind">5점</span></label>
+              <input type="radio" name="starpoint" id="starpoint_1" value="1" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_2" value="2" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_3" value="3" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_4" value="4" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_5" value="5" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_6" value="6" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_7" value="7" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_8" value="8" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_9" value="9" class="star_radio">
+              <input type="radio" name="starpoint" id="starpoint_10" value="10" class="star_radio">
+              <span class="starpoint_bg"></span>
+            </div>
+          </div>
+      </div>
+      <div style="height:20px"></div>
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-9"><input class="form-control" type="text" id="rcontent" placeholder="감상평을 등록해주세요"></div>
+        <div class="col-2"><button type="button" id="reviewwrite-btn" class="btn btn-secondary">등록</button></div>
+      </div>
+      <div style="height:30px"></div>
+      <!--<table class="table">
+        <tbody>
+          <tr th:each="item : ${reviews}">
+            <td><img src="/images/star2.png" style="height:13px">&nbsp;<mj th:text="${item.rating}"></mj></td>
+            <td th:text="${item.nickname}"></td>
+            <td th:text="${item.rcontent}"></td>
+            <td th:text="${#temporals.format(item.rupdated_at, 'yyyy.MM.dd HH:mm:ss')}"></td>
+            <td>
+              <button type="button" class="btn btn-outline-dark">👍🏻<mj th:text="${item.rliked}"></mj></button>
+              <button type="button" class="btn btn-outline-dark">👎🏻<mj th:text="${item.rhated}"></mj></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>-->
+      <div style="height:10px"></div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center text-dark">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div style="height:5px"></div>
+  </div>
+  </div>
+</th:block>
+</html>

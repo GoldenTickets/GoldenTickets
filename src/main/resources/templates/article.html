@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+  <div class="container">
+    <div style="height:100px;"></div>
+    <div><h2 class="fw-bold">골든티켓 라운지</h2></div>
+    <hr>
+    <div style="height:5px;"></div>
+    <input type="hidden" id="article-id" th:value="${article.id}">
+    <div><b th:text="${article.title}"></b></div>
+    <div style="height:6px;"></div>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col" style="text-align: right;">조회 <span th:text="${article.hit}"></span> │ 👍🏻 <span></span> │ 댓글 <span>0</span></div>
+    </div>
+    <hr>
+    <div style="height:10px;"></div>
+    <div th:text="${article.content}"></div>
+    <div style="height:200px;"></div>
+    <div class="d-flex justify-content-center">
+      <button type="button" class="btn btn-light">👍🏻 <span></span></button>
+      <span style="width:15px"></span>
+      <button type="button" class="btn btn-light">👎🏻 0</button>
+    </div>
+    <div style="font-size: 14px;">전체 댓글 <span>0</span>개</div>
+    <hr>
+    <table class="table">
+	  <tbody th:each="item : ${replies}">
+	    <tr>
+	      <td th:text="${item.nickname}"></td>
+	      <td colspan="3" th:text="${item.content}"></td>
+	      <td>
+			  <button type="button" class="btn btn-light">👍🏻 <span th:text="${item.likes}"></span></button>
+			  <button type="button" class="btn btn-light">👎🏻<span th:text="${item.dislikes}"></span></button>
+		  </td>
+		  <td th:text="${item.regdate}"></td>
+	    </tr>
+	  </tbody>
+	</table>
+    <div style="height:10px"></div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center text-dark">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div style="height:10px"></div>
+    <div class="row">
+      <div class="col-1"><input type="text" class="form-control" placeholder="닉네임"></div>
+      <div class="col-11">
+        <textarea class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+      <div class="col">
+        <!--<button type="button" onclick="/articles" class="btn btn-outline-secondary">글 목록</button>-->
+        <button type="button" id="modify-btn" th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|" class="btn btn-outline-secondary">수정</button>
+        <button type="button" id="delete-btn" class="btn btn-outline-secondary">삭제</button>
+      </div>
+      <div class="col d-flex justify-content-end"><button type="button" class="btn btn-outline-success">댓글 쓰기</button></div>
+    </div>
+    <div style="height:25px"></div>
+  </div>
+</th:block>
+</html>

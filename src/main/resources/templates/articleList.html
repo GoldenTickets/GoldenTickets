@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+<!--Content-->
+<div class="container">
+  <div style="height:100px;"></div>
+  <div><h2 class="fw-bold">골든티켓 라운지</h2></div>
+  <hr>
+  <div style="height:20px;"></div>
+  <div class="row">
+    <div class="col-11">
+      <button type="button" class="btn btn-outline-dark fw-bold">공지</button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-outline-dark fw-bold">뉴스</button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-outline-dark fw-bold">리뷰</button>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-outline-dark fw-bold">일반</button>&nbsp;&nbsp;&nbsp;
+    </div>
+    <div class="col-1">
+      <select class="form-select form-select-sm" aria-label="Default select example">
+        <option value="1">15개</option>
+        <option value="2">30개</option>
+        <option value="3">50개</option>
+      </select>
+    </div>
+  </div>
+  <div style="height:10px;"></div>
+  <table class="table" style="text-align: center;">
+    <thead class="table-light">
+    <tr>
+      <th scope="col">카테고리</th>
+      <th scope="col" colspan="3">제목</th>
+      <th scope="col">닉네임</th>
+      <th scope="col">날짜</th>
+      <th scope="col">조회</th>
+      <th scope="col">👍🏻</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${articles}">
+      <td th:text="${item.categoryname}"></td>
+      <td colspan="3"><a th:href="@{/board/{id}(id=${item.id})}"><at th:text="${item.title}"></at></a></td>
+      <td th:text="${item.nickname}"></td>
+      <td th:text="${#temporals.format(item.regdate, 'yyyy-MM-dd HH:mm')}"></td>
+      <td th:text="${item.hit}"></td>
+      <td th:text="${item.likes}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div style="height:20px"></div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center text-dark">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div style="height:15px"></div>
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-2 row">
+      <div class="col-2"></div>
+      <div class="col-10">
+        <select class="form-select" aria-label="Default select example">
+          <option value="1">제목</option>
+          <option value="2">닉네임</option>
+          <option value="3">제목+닉네임</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4 d-flex">
+      <input type="text" class="form-control" id="search">
+      <button type="button" class="btn btn-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="pointer-events: none;">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="col-3 d-flex justify-content-end"><button type="button" id="create-btn" th:onclick="|location.href='@{/new-article}'|" class="btn btn-outline-success">글쓰기</button></div>
+  </div>
+  <div style="height:55px"></div>
+  <div><button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button></div>
+</div>
+</th:block>
+</html>

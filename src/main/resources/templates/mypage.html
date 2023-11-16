@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+    <div class="container">
+      <div class="d-flex flex-nowrap">
+        <div class="d-flex flex-column flex-shrink-0 p-3" style="width:280px;">
+          <div style="height:75px;"></div>
+          <b style="font-size: 22px;">마이페이지</b>
+          <hr style="border:solid 2px black;">
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item"><a>회원정보 수정</a></li>
+            <hr>
+            <li class="nav-item"><a>북마크 관리</a></li>
+            <hr>
+            <li class="nav-item"><a>작성 리뷰 관리</a></li>
+            <hr>
+            <li class="nav-item"><a>작성 게시물 관리</a></li>
+            <hr>
+            <li class="nav-item"><a>작성 댓글 관리</a></li>
+          </ul>
+        </div>
+        <div class="d-flex flex-column">
+          <div style="height:70px;"></div>
+          <div class="d-flex justify-content-start"><b class="fw-bold fs-3">회원정보 수정</b></div>
+          <div style="height:20px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">이름</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="text" class="form-control" placeholder="이름을 입력해주세요"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">생년월일</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="text" class="form-control" placeholder="생년월일 8자리를 입력해주세요"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">성별</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check d-gird col-4" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-secondary" for="btnradio1">남자</label>
+              
+                <input type="radio" class="btn-check d-gird col-4" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="btnradio2">여자</label>
+              
+                <input type="radio" class="btn-check d-gird col-4" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="btnradio3">선택안함</label>
+              </div>
+            </div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">전화번호</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="text" class="form-control" placeholder="전화번호를 -없이 입력해주세요"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">주소</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="text" class="form-control" placeholder="API사용하기"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">아이디 (이메일)</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="email" class="form-control" placeholder="이메일을 입력해주세요"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">비밀번호</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="password" class="form-control" placeholder="비밀번호를 입력해주세요"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">비밀번호 확인</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">닉네임</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><input type="text" class="form-control" placeholder="사용하실 닉네임을 입력해주세요"></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><span style="font-size: 14px;">선호하는 장르 (복수선택 가능)</span></div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:10px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">액션</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">공포/스릴러</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">코미디</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                <label class="form-check-label" for="inlineCheckbox4">SF/판타지</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                <label class="form-check-label" for="inlineCheckbox5">드라마</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                <label class="form-check-label" for="inlineCheckbox6">멜로</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                <label class="form-check-label" for="inlineCheckbox7">애니메이션</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option8">
+                <label class="form-check-label" for="inlineCheckbox8">다큐멘터리</label>
+              </div>
+            </div>
+            <div class="col-2"></div>
+          </div>
+          <div style="height:20px;"></div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8"><div class="d-grid gap-2"><button type="button" class="btn btn-outline-dark">회원가입</button></div></div>
+            <div class="col-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</th:block>
+</html>
