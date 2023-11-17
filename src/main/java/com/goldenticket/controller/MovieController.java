@@ -2,25 +2,30 @@ package com.goldenticket.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.DTO.Review;
+import com.goldenticket.mapper.MovieMapper;
 import com.goldenticket.service.MovieService;
 
 @RestController
-@RequestMapping("/movieinfo")
+@RequestMapping("/movie")
 public class MovieController {
 
+	@Autowired
+	private MovieMapper movieMapper;
+	
 	@Autowired
 	private MovieService movieService;
 	
@@ -46,5 +51,43 @@ public class MovieController {
 		ModelAndView mav=new ModelAndView("redirect:/movieinfo/"+id);
 		return mav;
 	}
+	
+	@GetMapping("")
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+		
+		ModelAndView mav = new ModelAndView("movieInfo_all");
+		int pageSize = 12;
+		int startRow = (page-1)*pageSize;
+		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+		List<Movie> movies = movieMapper.getAll(rowBounds);
+		System.out.println(movies);
+		
+		int totalMovies = movieMapper.totalMovies();
+		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+		mav.addObject("currentPage", page);
+        mav.addObject("totalPages", totalPages);
+		
+		return mav;
+	}
+	
+	@GetMapping("/ranking")
+		public ModelAndView getRanking(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+		
+		ModelAndView mav = new ModelAndView("movieRanking");
+		int pageSize = 10;
+		int startRow = (page-1)*pageSize;
+		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+		List<Movie> movies = movieMapper.getRanking(rowBounds);
+		System.out.println(movies);
+		mav.addObject("movies", movies);
+		
+		int totalMovies = movieMapper.totalMovies();
+		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+		mav.addObject("currentPage", page);
+        mav.addObject("totalPages", totalPages);
+		
+		return mav;
+	}
+	
 	
 }

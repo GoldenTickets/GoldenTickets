@@ -3,7 +3,7 @@
 <th:block layout:fragment="content">
     <div class="container">
       <div style="height:80px"></div>
-          <div class="d-flex justify-content-center">
+          <!--<div class="d-flex justify-content-center"> 추후에 살리기
             <button type="button" class="btn btn-light fw-bold">전체</button>&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-light fw-bold">액션</button>&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-light fw-bold">공포/스릴러</button>&nbsp;&nbsp;&nbsp;
@@ -13,309 +13,49 @@
             <button type="button" class="btn btn-light fw-bold">멜로</button>&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-light fw-bold">애니메이션</button>&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-light fw-bold">다큐멘터리</button>
-          </div>
+          </div>-->
         <div style="height:80px"></div>
         <div class="row">
-          <div class="col-10"><b class="fs-3">전체(520)</b></div>
+          <div class="col-10"><b class="fs-3">전체</b></div><!--전체(영화 갯수)-->
           <div class="col-2">
-            <select class="form-select" aria-label="정렬순서">
+            <!--<select class="form-select" aria-label="정렬순서"> 이것도 추후에 살리기
               <option value="1">업데이트순</option>
               <option value="2">조회순</option>
-            </select>
+            </select>-->
           </div>
         </div>
         <hr>
         <div class="row row-cols-1 row-cols-md-6 g-4">
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/dune_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">듄</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.1</p>
-              </div>
-            </div>
+          <div class="col" th:each="item : ${movies}">
+			<a th:href="@{/movie/{id}(id=${item.id})}">
+            	<div class="card">
+	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
+	              <div class="card-body">
+	                <b class="card-title" th:text="${item.title}"></b>
+	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+	              </div>
+            	</div>
+            </a>
           </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/eternals_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">이터널스</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.2</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/minari_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">미나리</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.6</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/notimetodie_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">007:노 타임 투 다이</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.4</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/oppenheimer_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">오펜하이머</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/assassination_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">암살</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/lifeofpi_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">라이프 오브 파이</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/lincoln_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">링컨</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.5</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/thefounder_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">파운더</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/thegodfather_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">대부</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/dune_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">듄</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.1</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/eternals_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">이터널스</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.2</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/minari_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">미나리</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.6</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/notimetodie_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">007:노 타임 투 다이</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.4</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/oppenheimer_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">오펜하이머</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/assassination_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">암살</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/lifeofpi_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">라이프 오브 파이</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/lincoln_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">링컨</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.5</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/thefounder_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">파운더</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/thegodfather_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">대부</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/dune_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">듄</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.1</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/eternals_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">이터널스</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.2</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/minari_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">미나리</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.6</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/notimetodie_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">007:노 타임 투 다이</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.4</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/oppenheimer_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">오펜하이머</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/assassination_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">암살</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/lifeofpi_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">라이프 오브 파이</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/lincoln_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">링컨</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;8.5</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/thefounder_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">파운더</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;7.9</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <img src="../static/img/thegodfather_poster.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <b class="card-title">대부</b>
-                <p class="card-text"><img src="../static/img/star2.png" style="height:13px">&nbsp;9.9</p>
-              </div>
-            </div>
-          </div>
-        </div>
         <div style="height:50px"></div>
-        <!-- 페이지네이션 시작 -->
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center text-dark">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <!-- 페이지네이션 시작 페이지네이션 버튼 수정하기 -->
+	    <nav aria-label="Page navigation">
+	          <ul class="pagination justify-content-center text-dark">
+	            <!--<li class="page-item">
+	              <a class="page-link" href="#" aria-label="Previous">
+	                <span aria-hidden="true">&laquo;</span>
+	              </a>
+	            </li>-->
+	            <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+	                <a th:href="@{'/movie?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+	            </li>
+	            <!--<li class="page-item">
+	              <a class="page-link" href="#" aria-label="Next">
+	                <span aria-hidden="true">&raquo;</span>
+	              </a>
+	            </li>-->
+	          </ul>
+	    </nav>
         <div style="height:5px"></div>
     </div>
 </th:block>

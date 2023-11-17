@@ -20,8 +20,10 @@ public class Movie {
 	private String poster;
 	private String trailer;
 	private double rating;
+	private int hit;
 	
 	//조인해서 가져온 데이터
 	private List<MoviePhoto> moviePhoto;
 	private double avg_rating;
+	private int ranking;
 }
