@@ -176,6 +176,8 @@
       <div style="height:20px"></div>
       <div class="row">
         <div class="col-1"></div>
+        <input type="hidden" th:value="${movie.id}" id="movie_id"></input>
+        <input type="hidden" th:value="${session.id}" id="member_id"></input>
         <div class="col-9"><input class="form-control" type="text" id="reviewcontent" placeholder="감상평을 등록해주세요"></div>
         <div class="col-2"><button type="button" id="reviewwrite-btn" class="btn btn-secondary">등록</button></div>
       </div>

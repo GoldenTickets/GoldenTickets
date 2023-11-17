@@ -29,4 +29,9 @@ public class MemberService {
 		return memberMapper.getMember(email);
 	}
 	
+	//회원가입하기
+	public int createMember(Member member) {
+		return memberMapper.createMember(member);
+	}
+	
 }

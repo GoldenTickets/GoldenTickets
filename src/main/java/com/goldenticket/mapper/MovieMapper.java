@@ -34,7 +34,7 @@ public interface MovieMapper {
 	List<Review> getMovieReview(int id);
 	
 	//영화 리뷰 쓰기
-	@Insert("INSERT INTO review (movie_id,mem_id,rating,content,regdate) WHERE movie_id=#{id} ")
-	int createMovieReview(Review review);
+	@Insert("INSERT INTO review (movie_id,mem_id,rating,content,regdate) values(#{review.movie_id},#{review.mem_id},#{review.rating},#{review.content},current_timestamp)")
+	int createMovieReview(Review review,int id);
 	
 }

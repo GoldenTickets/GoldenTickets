@@ -1,5 +1,6 @@
 package com.goldenticket.mapper;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,4 +16,8 @@ public interface MemberMapper {
 	//닉네임,id번호 가져오기
 	@Select("SELECT id,nickname from Member WHERE email = #{email}")
 	Member getMember(String nickname);
+
+	//회원가입
+	@Insert("INSERT INTO member (email,password,nickname,name) VALUES (#{email},#{password},#{nickname},#{name})")
+	int createMember(Member member);
 }
