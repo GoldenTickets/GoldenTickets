@@ -46,21 +46,21 @@
     </tbody>
   </table>
   <div style="height:20px"></div>
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center text-dark">
-      <li class="page-item">
+      <!--<li class="page-item">   추후에 적용시키기 10개씩 끊기
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
+      </li>-->
+      <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+                <a th:href="@{'/board?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+            </li>
+      <!--<li class="page-item">
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
-      </li>
+      </li>-->
     </ul>
   </nav>
   <div style="height:15px"></div>
