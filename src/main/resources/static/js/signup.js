@@ -1,3 +1,4 @@
+
 // 회원가입
 const signupButton = document.getElementById('signup-btn');
 

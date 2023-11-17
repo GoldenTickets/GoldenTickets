@@ -45,11 +45,11 @@ public class MovieController {
 		}
 	
 	@PostMapping("/submitreview/{id}")
-	public ModelAndView reviewSubmit(@RequestBody Review review,@PathVariable int id) {
+	public int reviewSubmit(@RequestBody Review review,@PathVariable int id) {
 		System.out.println(review);
-		movieService.createMovieReview(review,id);
-		ModelAndView mav=new ModelAndView("redirect:/movieinfo/"+id);
-		return mav;
+		int result = movieService.createMovieReview(review,id);
+		
+		return result;
 	}
 	
 	@GetMapping("")

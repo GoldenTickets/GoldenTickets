@@ -53,25 +53,15 @@
             <div class="offcanvas-body">
                 <div th:if="${session.nickname==null}">
                     <label>email&nbsp;&nbsp;&nbsp;</label>
-                    <input type="text" id="email"><br>
+                    <input type="text" id="offcanvas-id"><br>
                     <label>비밀번호</label>
-                    <input type="password" id="password"><br>
-                    <button id="login-btn">제출</button>
+                    <input type="password" id="offcanvas-password"><br>
+                    <button id="offCanvasloginButton">제출</button>
                     <button onclick="location.href='/signup'">회원가입</button>
                 </div>
                 <div th:unless="${session.nickname==null}">
 					<button onclick="location.href='/logout'">로그아웃</button>
 				</div>
-                <div class="dropdown mt-3">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                        Dropdown button
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </th:block>

@@ -3,17 +3,17 @@ package com.goldenticket.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenticket.DTO.Member;
 import com.goldenticket.service.MemberService;
 
-@Controller
+@RestController
 public class MemberController {
 	
 	@Autowired
@@ -42,9 +42,9 @@ public class MemberController {
 		if(result==1) {
 			session.setAttribute("id",membeno);
 			session.setAttribute("nickname",nickname);
-			return new ModelAndView("redirect:/login");
+			return new ModelAndView ("main");
 		}else {
-			return new ModelAndView("redirect:/login");
+			return new ModelAndView ("main");
 		}
 		
 	}

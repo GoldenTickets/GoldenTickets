@@ -7,7 +7,7 @@ if (reviewSubmitButton) {
 		var reviewmovieid=document.getElementById('movie_id').value;
 		var reviewmemberid=document.getElementById('member_id').value;
 		
-		fetch('/movieinfo/submitreview/'+reviewmovieid,{
+		fetch('/movie/submitreview/'+reviewmovieid,{
 			method:'POST',
 			headers:{"Content-Type":"application/json"},
 			body:JSON.stringify({
