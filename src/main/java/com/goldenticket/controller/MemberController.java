@@ -3,35 +3,63 @@ package com.goldenticket.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goldenticket.DTO.Member;
-import com.goldenticket.mapper.MemberMapper;
+import com.goldenticket.service.MemberService;
 
-@RestController
-@RequestMapping("/member")
+@Controller
 public class MemberController {
-
+	
 	@Autowired
-	private MemberMapper memberMapper;
+	private MemberService memberService;
 	
-	@PostMapping("")
-	public Member signup(@RequestBody Member member) { //회원가입 -> fetch로 할것 // 아직 미완
-		memberMapper.signup(member);
-		return member;
+	@GetMapping("/login")
+	public ModelAndView loginPage() {
+		ModelAndView mav = new ModelAndView("login");
+		return mav;
+	}
+
+	@PostMapping("/login")
+	public int loginCheck(@RequestParam("email") String email,
+							 @RequestParam("password") String password,
+							 HttpSession session) {//로그인 
+		int result = memberService.loginCheck(email,password);
+		
+		int membeno=memberService.getMember(email).getId();
+		String nickname=memberService.getMember(email).getNickname();
+				
+		
+		if(result==1) {
+			session.setAttribute("id",membeno);
+			session.setAttribute("nickname",nickname);
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 	
-	@GetMapping("")
-	public Member login(@RequestParam Member member, HttpSession session) { //로그인도 -> fetch로 할것 로그인 정보 확인 로직은 나중에 처리하기
-		member = memberMapper.login(member);
-		session.setAttribute("mem_id", member.getId());
-		session.setAttribute("nickname", member.getNickname());
-		return member;
+	@PostMapping("/loginwithcheck")
+	public int loginwithCheck(@RequestParam("email") String email,
+							 @RequestParam("password") String password,
+							 HttpSession session) {//로그인 
+		int result = memberService.loginCheck(email,password);
+		
+		int membeno=memberService.getMember(email).getId();
+		String nickname=memberService.getMember(email).getNickname();
+				
+		
+		if(result==1) {
+			session.setAttribute("id",membeno);
+			session.setAttribute("nickname",nickname);
+			return 1;
+		}else {
+			return 0;
+		}
 	}
+	
+	
 }

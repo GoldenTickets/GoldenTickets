@@ -11,10 +11,10 @@
       <div class="col-4"></div>
     </div>
     <form action="/login" method="POST">
-      <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+      <!--스프링시큐리티 일단 주석처리 <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />-->
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><input type="email" class="form-control" name="username" placeholder="이메일을 입력해주세요"></div>
+        <div class="col-4"><input type="email" class="form-control" id="loginidinput" name="email" placeholder="이메일을 입력해주세요"></div>
         <div class="col-4"></div>
       </div>
       <div style="height:10px;"></div>
@@ -25,7 +25,7 @@
       </div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주세요"></div>
+        <div class="col-4"><input type="password" class="form-control" id="loginpwinput" name="password" placeholder="비밀번호를 입력해주세요"></div>
         <div class="col-4"></div>
       </div>
       <div style="height:10px;"></div>
@@ -46,21 +46,56 @@
       <div style="height:10px;"></div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><div class="d-grid gap-2"><button type="submit" class="btn btn-dark">로그인</button></div></div>
+        <div class="col-4"><div class="d-grid gap-2"><button class="btn btn-dark" onclick="submitcheck()">로그인</button></div></div>
         <div class="col-4"></div>
       </div>
     </form>
     <div style="height:10px;"></div>
-    <div class="row">
+<!--<div class="row">
       <div class="col-4"></div>
       <div class="col-4"><a href="/oauth2/authorization/google"><img src="/images/btn_login_google_long"></a></div></div>
       <div class="col-4"></div>
-    </div>
+    </div>-->
     <div class="row">
       <div class="col-4"></div>
       <div class="col-4"><div class="d-grid gap-2"><button type="button" class="btn btn-outline-dark" onclick="location.href='/signup'">회원가입</button></div></div>
       <div class="col-4"></div>
     </div>
   </div>
+  <script>
+	$(function(){ 
+	var inputid = document.getElementById('loginidinput');
+	var inputpw = document.getElementById('loginpwinput');
+	var submitcheck= function(){
+		if(inputid.value.length<1){
+			alert('이메일을 다시 확인해주세요');
+		}else if(inputpw.value.length<4){
+			alert('비밀번호를 다시 확인해주세요');
+		}else{
+			var loginformdata=new FormData();
+			formdate.append('email',inputid.value);
+			formdate.append('password',inputpw.value);
+			$.ajax({
+				url:'/login',
+				type:'POST',
+				data:loginformdata,
+				processData: false,
+				contentType: false,
+				success:function(result){
+							if(result==1){
+								alert('로그인에 성공했습니다.');
+								location.reload();
+							}else{
+								alert('로그인에 실패했습니다.');
+							}
+								
+						},
+				error:function(){
+						alert('로그인에 실패했습니다.');
+					  }
+				});
+		 }//else
+		}})
+  </script>
 </th:block>
 </html>
