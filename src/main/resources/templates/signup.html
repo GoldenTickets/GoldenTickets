@@ -5,7 +5,7 @@
   <div class="container">
     <div class="d-flex justify-content-center"><p class="fw-bold fs-3">골든티켓 회원가입</p></div>
     <div style="height:20px;"></div>
-    <form th:action="@{/user}" method="POST">
+    
       <!-- 토큰을 추가하여 CSRF 공격 방지 -->
       <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
       <div class="row">
@@ -18,54 +18,7 @@
         <div class="col-4"><input type="text" class="form-control" name="name" placeholder="이름을 입력해주세요"></div>
         <div class="col-4"></div>
       </div>
-      <div style="height:10px;"></div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4"><span style="font-size: 14px;">성별</span></div>
-        <div class="col-4"></div>
-      </div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
-          <input type="text" class="form-control" name="sex" placeholder="성별을 입력해주세요">
-          <!--
-          <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check d-gird col-4" name="sex" value="men" id="btnradio1" autocomplete="off" checked>
-            <label class="btn btn-outline-secondary" for="btnradio1">남자</label>
 
-            <input type="radio" class="btn-check d-gird col-4" name="sex" value="women" id="btnradio2" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="btnradio2">여자</label>
-
-            <input type="radio" class="btn-check d-gird col-4" name="sex" value="none" id="btnradio3" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="btnradio3">선택안함</label>
-          </div>
-          -->
-        </div>
-        <div class="col-4"></div>
-      </div>
-      <div style="height:10px;"></div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4"><span style="font-size: 14px;">전화번호</span></div>
-        <div class="col-4"></div>
-      </div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4"><input type="text" name="phone" class="form-control" placeholder="전화번호를 -없이 입력해주세요"></div>
-        <div class="col-4"></div>
-      </div>
-      <div style="height:10px;"></div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4"><span style="font-size: 14px;">주소</span></div>
-        <div class="col-4"></div>
-      </div>
-      <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4"><input type="text" name="address" class="form-control" placeholder="주소를 입력해주세요"></div>
-        <div class="col-4"></div>
-      </div>
-      <div style="height:10px;"></div>
       <div class="row">
         <div class="col-4"></div>
         <div class="col-4"><span style="font-size: 14px;">아이디 (이메일)</span></div>
@@ -159,10 +112,10 @@
       <div style="height:20px;"></div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><div class="d-grid gap-2"><button type="submit" class="btn btn-outline-dark">회원가입</button></div></div>
+        <div class="col-4"><div class="d-grid gap-2"><button type="submit" class="btn btn-outline-dark" id="signup-btn">회원가입</button></div></div>
         <div class="col-4"></div>
       </div>
-    </form>
+
   </div>
 </th:block>
 </html>

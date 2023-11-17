@@ -42,12 +42,13 @@ public class MovieController {
 		mav.addObject("moviePlatform", movieService.getMoviePlatform(id));//영화 플랫폼가져오기
 		mav.addObject("movieReviewList", movieService.getMovieReview(id));//영화 리뷰가져오기
 		return mav;
-	}
+		}
 	
-	@PostMapping("/submitreview")
-	public ModelAndView reviewSubmit(@RequestBody Review review) {
-		movieService.createMovieReview(review);
-		ModelAndView mav=new ModelAndView();
+	@PostMapping("/submitreview/{id}")
+	public ModelAndView reviewSubmit(@RequestBody Review review,@PathVariable int id) {
+		System.out.println(review);
+		movieService.createMovieReview(review,id);
+		ModelAndView mav=new ModelAndView("redirect:/movieinfo/"+id);
 		return mav;
 	}
 	

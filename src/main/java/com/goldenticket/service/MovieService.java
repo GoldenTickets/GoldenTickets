@@ -45,7 +45,7 @@ public class MovieService {
 		return movieMapper.getMovieReview(id);
 	}
 	
-	public int createMovieReview(Review review) {//영화 리뷰 작성하기
-		return movieMapper.createMovieReview(review);
+	public int createMovieReview(Review review,int id) {//영화 리뷰 작성하기
+		return movieMapper.createMovieReview(review,id);
 	}
 }
