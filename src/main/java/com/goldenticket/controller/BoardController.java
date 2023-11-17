@@ -18,18 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Reply;
-import com.goldenticket.mapper.ArticleMapper;
-import com.goldenticket.mapper.ReplyMapper;
+import com.goldenticket.mapper.BoardMapper;
+import com.goldenticket.service.BoardService;
 
 @RestController
 @RequestMapping("/board")
 public class BoardController {
 	
-	@Autowired
-	private ArticleMapper articleMapper;
 	
 	@Autowired
-	private ReplyMapper replyMapper;
+	private BoardMapper boardMapper;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@GetMapping("")
 	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
@@ -38,10 +39,10 @@ public class BoardController {
 		int pageSize = 10;
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		List<Article> articles = articleMapper.getAll(rowBounds);
+		List<Article> articles = boardMapper.getAll(rowBounds);
 		mav.addObject("articles", articles);
 		
-		int totalArticles = articleMapper.totalArticles();
+		int totalArticles = boardMapper.totalArticles();
 		int totalPages = (int) Math.ceil((double) totalArticles / pageSize); // 전체 페이지 수 구하기
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);
@@ -51,9 +52,10 @@ public class BoardController {
 	
 	@GetMapping("/{id}")
 	public ModelAndView getById(@PathVariable("id") int id) {
+		boardService.updateHit(id);//조회수 1 증가
 		ModelAndView mav = new ModelAndView("article");
-		Article article = articleMapper.getById(id);
-		List<Reply> replies = replyMapper.getByArticle_id(id);
+		Article article = boardMapper.getById(id);
+		List<Reply> replies = boardMapper.getByArticle_id(id);
 		mav.addObject("article", article);
 		mav.addObject("replies", replies);
 		return mav;
@@ -69,26 +71,33 @@ public class BoardController {
 	@PostMapping("")
 	public Article post(@RequestBody Article article) {
 		int cid = article.getCategory_id();
-		articleMapper.save(article);
-		article = articleMapper.getNewId();
+		boardMapper.save(article);
+		article = boardMapper.getNewId();
 		article.setCategory_id(cid);
-		articleMapper.save2(article);
+		boardMapper.save2(article);
 		return article;
 	}
 	
 	@Transactional(rollbackFor=Exception.class)
 	@PutMapping("")
 	public Article update(@RequestBody Article article) {
-		articleMapper.articleUpdate(article);
-		articleMapper.acUpdate(article); // 조건문 넣기
+		boardMapper.articleUpdate(article);
+		boardMapper.acUpdate(article); // 조건문 넣기
 		return article;
 	}
 	
 	@Transactional(rollbackFor=Exception.class)
 	@DeleteMapping("")
 	public Article delete(@RequestBody Article article) {
-		articleMapper.deleteac(article);
-		articleMapper.deleteArticle(article);
+		boardMapper.deleteac(article);
+		boardMapper.deleteArticle(article);
 		return article;
 	}
+	
+	@PostMapping("/submitreply/{id}")
+	public ModelAndView createReply(@RequestBody Reply reply,@PathVariable int id) {
+		boardService.createReply(reply);
+		return new ModelAndView("redirect:/board/"+id);
+	}
+		
 }

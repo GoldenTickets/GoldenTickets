@@ -33,7 +33,7 @@
 			  <button type="button" class="btn btn-light">👍🏻 <span th:text="${item.likes}"></span></button>
 			  <button type="button" class="btn btn-light">👎🏻<span th:text="${item.dislikes}"></span></button>
 		  </td>
-		  <td th:text="${item.regdate}"></td>
+		  <td th:text="${#temporals.format(item.regdate,'yyyy-MM-dd HH:mm')}"></td>
 	    </tr>
 	  </tbody>
 	</table>
@@ -66,10 +66,14 @@
     <div class="row">
       <div class="col">
         <!--<button type="button" onclick="/articles" class="btn btn-outline-secondary">글 목록</button>-->
-        <button type="button" id="modify-btn" th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|" class="btn btn-outline-secondary">수정</button>
-        <button type="button" id="delete-btn" class="btn btn-outline-secondary">삭제</button>
+        <th:block th:if="${session.id}==${article.mem_id}">
+	        <button type="button" id="modify-btn" th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|" class="btn btn-outline-secondary">수정</button>
+	        <button type="button" id="delete-btn" class="btn btn-outline-secondary">삭제</button>
+        </th:block>
       </div>
-      <div class="col d-flex justify-content-end"><button type="button" class="btn btn-outline-success">댓글 쓰기</button></div>
+      <input type="hidden" th:value="${article.id}" id="article_id">
+      <input type="hidden" th:value="${session.id}" id="replywriter_id">
+      <div class="col d-flex justify-content-end"><button class="btn btn-outline-success" id="replySubmitButton">댓글 쓰기</button></div>
     </div>
     <div style="height:25px"></div>
   </div>

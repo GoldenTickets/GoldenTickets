@@ -11,10 +11,10 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.goldenticket.DTO.Article;
+import com.goldenticket.DTO.Reply;
 
 @Mapper
-public interface ArticleMapper {
-
+public interface BoardMapper {
 	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE A.id = #{id}")
 	Article getById(@Param("id") int id);
 	
@@ -45,4 +45,14 @@ public interface ArticleMapper {
 	// 페이징 처리
 	@Select("SELECT count(*) FROM article")
 	int totalArticles();
+	
+	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id}")
+	List<Reply> getByArticle_id(@Param("id") int id);
+	
+	@Insert("INSERT INTO reply (article_id,mem_id,content,regdate) VALUES (#{article_id},#{mem_id},#{content},current_timestamp)")
+	int createReply(Reply reply);
+	
+	@Update("UPDATE article SET hit=#{hit} WHERE id=#{id}")
+	int updateReplyHit(Article article);
 }
+
