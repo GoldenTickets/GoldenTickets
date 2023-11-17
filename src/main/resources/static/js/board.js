@@ -52,7 +52,7 @@ if (createButton) {
     // 등록 버튼을 클릭하면 /api/articles로 요청을 보낸다
     createButton.addEventListener('click', event => {
         body = JSON.stringify({
-			mem_id: 1,
+			mem_id: document.getElementById('mem_id').value,
             title: document.getElementById('title').value,
             content: document.getElementById('content').value,
             hit: 0,

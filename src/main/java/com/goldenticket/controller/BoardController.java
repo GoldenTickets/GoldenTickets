@@ -68,9 +68,12 @@ public class BoardController {
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PostMapping("")
 	public Article post(@RequestBody Article article) {
+		System.out.println(article);
 		int cid = article.getCategory_id();
 		articleMapper.save(article);
+		System.out.println(article);
 		article = articleMapper.getNewId();
+		System.out.println(article);
 		article.setCategory_id(cid);
 		articleMapper.save2(article);
 		return article;
