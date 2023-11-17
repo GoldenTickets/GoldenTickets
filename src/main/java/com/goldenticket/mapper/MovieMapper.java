@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.session.RowBounds;
 
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.DTO.Platform;
@@ -13,6 +14,7 @@ import com.goldenticket.DTO.Review;
 
 @Mapper
 public interface MovieMapper {
+	
 	//DB 영화 모두 가져오기(영화 평점은 해당영화의 리뷰 테이블의 평균을 조인으로 가져와서 avg_rating 별칭사용한 컬럼으로 가져옴)
 	@Select("SELECT M.*, format(AVG(R.RATING),1) AS avg_rating FROM movie M LEFT JOIN review R ON M.id = R.movie_id WHERE M.id = #{id} GROUP BY M.id")
 	Movie getMovieById(@Param("id")int id);
@@ -37,4 +39,12 @@ public interface MovieMapper {
 	@Insert("INSERT INTO review (movie_id,mem_id,rating,content,regdate) WHERE movie_id=#{id} ")
 	int createMovieReview(Review review);
 	
+	@Select("SELECT id, title, poster, rating FROM movie")
+	List<Movie> getAll(RowBounds rowBounds);
+	
+	@Select("SELECT count(*) FROM movie")
+	int totalMovies();
+	
+	@Select("SELECT id, title, synopsis, releasedate, director, country, runningtime, poster, trailer, rating, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC")
+	List<Movie> getRanking(RowBounds rowBounds);
 }
