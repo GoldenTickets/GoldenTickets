@@ -23,7 +23,12 @@ public class MainController {
 	@GetMapping("")
 	public ModelAndView getAll() {
 		
-		ModelAndView mav = new ModelAndView("movieInfo_all");
+		ModelAndView mav = new ModelAndView("main");
+		List<Integer> list = movieMapper.getNewmovie_id();
+		
+		for (int item : list) {
+			
+		}
 		return mav;
 	}
 }

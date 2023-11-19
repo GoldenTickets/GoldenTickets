@@ -47,4 +47,11 @@ public interface MovieMapper {
 	
 	@Select("SELECT id, title, synopsis, releasedate, director, country, runningtime, poster, trailer, rating, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC")
 	List<Movie> getRanking(RowBounds rowBounds);
+	
+	@Select("SELECT movie_id FROM new_movie")
+	List<Integer> getNewmovie_id();
+	
+	@Select("SELECT M.id, M.title, M.rating, MP.photoname FROM movie M JOIN movie_photo MP ON M.id = MP.movie_id WHERE M.id = #{id} ORDER BY RAND() LIMIT 1")
+	Movie getNewmovie(int id);
+	
 }

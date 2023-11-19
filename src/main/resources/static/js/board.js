@@ -73,6 +73,28 @@ if (createButton) {
     });
 }
 
+//댓글쓰기 기능
+const replySubmitButton=document.getElementById('replySubmitButton');
+
+if (replySubmitButton) {
+	replySubmitButton.addEventListener('click',event => {
+		var article_id = document.getElementById('article_id').value;
+		var replywriter_id = document.getElementById('replywriter_id').value;
+		
+		fetch('/board/submitreply/'+article_id,{
+			method:'POST',
+			headers:{"Content-Type":"application/json"},
+			body:JSON.stringify({
+				article_id:article_id,
+				mem_id:replywriter_id,
+				content:$('#reviewcontent').val()	
+			})
+		}).then(()=>{
+			alert('리뷰 등록이 완료되었습니다.');
+			location.reload();
+		})
+	})
+}
 
 // 쿠키를 가져오는 함수
 function getCookie(key) {
