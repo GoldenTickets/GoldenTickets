@@ -165,7 +165,18 @@
         </div>
         <hr>
         <div class="row row-cols-1 row-cols-md-5 g-4">
-          <div class="col" th:each="item : ${lovedmovies}">
+          <div class="col" th:if="${#session.getAttribute('id') != null}" th:each="item : ${custommovies}">
+			<a th:href="@{/movie/{id}(id=${item.id})}">
+            	<div class="card">
+	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
+	              <div class="card-body">
+	                <b class="card-title" th:text="${item.title}"></b>
+	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+	              </div>
+            	</div>
+            </a>
+          </div>
+          <div class="col" th:unless="${#session.getAttribute('id') != null}" th:each="item : ${lovedmovies}">
 			<a th:href="@{/movie/{id}(id=${item.id})}">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
@@ -197,8 +208,8 @@
         </div>
         <hr>
         <ul class="list-group" th:each="item : ${topmovies}">
-          <li class="list-group-item"><a th:href="@{/movie/{id}(id=${item.id})}"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:65px"
-              alt="...">&nbsp;&nbsp;<b th:text="${item.ranking}"></b>&nbsp;&nbsp;<th:block th:text="${item.title}"></th:block></a></li>
+          <a th:href="@{/movie/{id}(id=${item.id})}"><li class="list-group-item"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:65px"
+              alt="...">&nbsp;&nbsp;<b th:text="${item.ranking}"></b>&nbsp;&nbsp;<th:block th:text="${item.title}"></th:block></li></a>
         </ul>
       </div>
     </div>

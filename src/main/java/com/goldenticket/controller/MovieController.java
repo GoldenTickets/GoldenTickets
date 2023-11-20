@@ -46,7 +46,6 @@ public class MovieController {
 	
 	@PostMapping("/submitreview/{id}")
 	public int reviewSubmit(@RequestBody Review review,@PathVariable int id) {
-		System.out.println(review);
 		int result = movieService.createMovieReview(review,id);
 		
 		return result;
@@ -64,6 +63,8 @@ public class MovieController {
 		
 		int totalMovies = movieMapper.totalMovies();
 		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+		
+		mav.addObject("movies", movies);
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);
 		
@@ -78,7 +79,6 @@ public class MovieController {
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		List<Movie> movies = movieMapper.getRanking(rowBounds);
-		System.out.println(movies);
 		mav.addObject("movies", movies);
 		
 		int totalMovies = movieMapper.totalMovies();

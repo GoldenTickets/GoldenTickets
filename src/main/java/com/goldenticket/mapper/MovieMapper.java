@@ -48,7 +48,7 @@ public interface MovieMapper {
 	@Select("SELECT id, title, synopsis, releasedate, director, runningtime, poster, trailer, rating, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC")
 	List<Movie> getRanking(RowBounds rowBounds);
 	
-	//신작영화 번호 리스트 가져오기
+	//신작영화 번호 리스트 가져오기 -> 관리자 관리
 	@Select("SELECT movie_id FROM new_movie")
 	List<Integer> getNewmovie_ids();
 	

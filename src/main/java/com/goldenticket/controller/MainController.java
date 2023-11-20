@@ -2,6 +2,8 @@ package com.goldenticket.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +21,10 @@ public class MainController {
 	private MovieMapper movieMapper;
 	
 	@GetMapping("")
-	public ModelAndView getAll() {
+	public ModelAndView getAll(HttpSession session) {
 		
 		ModelAndView mav = new ModelAndView("main");
 		List<Integer> list = movieMapper.getNewmovie_ids();
-		System.out.println(list);
 		
 		int index = 1;
 		for (int item : list) {
@@ -40,9 +41,13 @@ public class MainController {
 		List<Movie> movies = movieMapper.getTodaymovies();
 		mav.addObject("todaymovies", movies);
 		
-		movies = movieMapper.getLovedmovies();
-		mav.addObject("lovedmovies", movies);
-		
+		if(session.getAttribute("id") == null) {
+			movies = movieMapper.getLovedmovies();
+			mav.addObject("lovedmovies", movies);
+		}else {
+			movies = movieMapper.getCustommovies((int)session.getAttribute("id"));
+			mav.addObject("custommovies", movies);
+		}
 		movies = movieMapper.getTopMovies();
 		mav.addObject("topmovies", movies);
 		
