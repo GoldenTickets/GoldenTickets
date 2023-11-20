@@ -33,7 +33,11 @@ public interface MovieMapper {
 	
 	//영화 리뷰 가져오기
 	@Select("SELECT R.*,M.nickname FROM review R INNER JOIN member M ON R.mem_id=M.id WHERE R.movie_id=#{id} ORDER BY R.regdate DESC")
-	List<Review> getMovieReview(int id);
+	List<Review> getMovieReview(int id, RowBounds rowBounds);
+	
+	//총 리뷰수 구하기
+	@Select("SELECT COUNT(*) FROM review WHERE movie_id = #{id}")
+	int getTotalreviews(int id);
 	
 	//영화 리뷰 쓰기
 	@Insert("INSERT INTO review (movie_id,mem_id,rating,content,regdate) values(#{review.movie_id},#{review.mem_id},#{review.rating},#{review.content},current_timestamp)")

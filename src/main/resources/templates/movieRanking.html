@@ -4,21 +4,21 @@
     <div class="container">
       <div style="height:80px"></div>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking"'>전체</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>액션</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>공포/스릴러</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/11"'>코미디</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>SF/판타지</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/3"'>드라마</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/2"'>로맨스</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/22"'>애니메이션</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>다큐멘터리</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">전체</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">액션</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">공포/스릴러</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">코미디</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">SF/판타지</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">드라마</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">멜로</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">애니메이션</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">다큐멘터리</button>
           </div>
         <div style="height:70px"></div>
-        <div class=><b class="fs-3">전체 영화 순위</b></div>
-        <div style="height:5px"></div>
-        <hr> <!--이거 나중에 하기-->
-        <div class="row" th:each="item : ${movies}">
+        <div class=><b class="fs-2">전체 영화 순위</b></div>
+        <div style="height:30px"></div>
+        <!--<hr>-->
+        <div class="row" th:each="item, iterStat: ${movies}">
           <hr>
           <div class="col-1"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:110px;"></div>
           <div class="col-9">
@@ -28,9 +28,10 @@
           </div>
           <div class="col-2"><div style="height: 35px;"></div><button type="button" class="btn btn-outline-secondary">북마크에 추가</button></div> <!--나중에 북마크 추가 기능 만들기-->
 		  <div style="height:15px"></div>
+		  <hr th:if="${iterStat.last}">
         </div>
-        <hr>
-        <div style="height:50px"></div>
+        <!--<hr>-->
+        <div style="height:30px"></div>
         <!-- 페이지네이션 시작 -->
         <nav aria-label="Page navigation">
           <ul class="pagination justify-content-center text-dark">
@@ -49,7 +50,7 @@
             </li>-->
           </ul>
         </nav>
-        <div style="height:5px"></div>
+        <div style="height:120px"></div>
     </div>
 </th:block>
 </html>

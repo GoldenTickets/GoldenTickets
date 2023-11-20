@@ -47,7 +47,10 @@ public interface BoardMapper {
 	int totalArticles();
 	
 	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id}")
-	List<Reply> getByArticle_id(@Param("id") int id);
+	List<Reply> getByArticle_id(@Param("id") int id, RowBounds rowBounds);
+	
+	@Select("SELECT COUNT(*) FROM reply WHERE article_id = #{id}")
+	int getTotalreply(int id);
 	
 	@Insert("INSERT INTO reply (article_id,mem_id,content,regdate) VALUES (#{article_id},#{mem_id},#{content},current_timestamp)")
 	int createReply(Reply reply);

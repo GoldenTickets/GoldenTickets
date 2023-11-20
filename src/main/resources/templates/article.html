@@ -40,19 +40,19 @@
     <div style="height:10px"></div>
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center text-dark">
-        <li class="page-item">
+        <!--<li class="page-item">
           <a class="page-link" href="#" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
+        </li>-->
+        <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+                <a th:href="@{'/board/'+ ${article.id} +'?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+            </li>
+        <!--<li class="page-item">
           <a class="page-link" href="#" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
-        </li>
+        </li>-->
       </ul>
     </nav>
     <div style="height:10px"></div>

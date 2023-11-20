@@ -3,6 +3,7 @@ package com.goldenticket.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +42,8 @@ public class MovieService {
 		return movieMapper.getMoviePlatform(id);
 	}
 	
-	public List<Review> getMovieReview(int id){//영화 리뷰 가져오기
-		return movieMapper.getMovieReview(id);
+	public List<Review> getMovieReview(int id, RowBounds rowBounds){//영화 리뷰 가져오기
+		return movieMapper.getMovieReview(id, rowBounds);
 	}
 	
 	public int createMovieReview(Review review,int id) {//영화 리뷰 작성하기

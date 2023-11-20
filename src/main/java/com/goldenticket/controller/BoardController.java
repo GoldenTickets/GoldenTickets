@@ -51,13 +51,24 @@ public class BoardController {
 	}
 	
 	@GetMapping("/{id}")
-	public ModelAndView getById(@PathVariable("id") int id) {
+	public ModelAndView getById(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id) {
 		boardService.updateHit(id);//조회수 1 증가
+		
+		int pageSize = 10;
+		int startRow = (page-1)*pageSize;
+		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+		
 		ModelAndView mav = new ModelAndView("article");
 		Article article = boardMapper.getById(id);
-		List<Reply> replies = boardMapper.getByArticle_id(id);
+		List<Reply> replies = boardMapper.getByArticle_id(id, rowBounds);
 		mav.addObject("article", article);
 		mav.addObject("replies", replies);
+		
+		int totalArticles = boardMapper.getTotalreply(id);
+		int totalPages = (int) Math.ceil((double) totalArticles / pageSize); // 전체 페이지 수 구하기
+		mav.addObject("currentPage", page);
+        mav.addObject("totalPages", totalPages);
+        
 		return mav;
 	}
 	

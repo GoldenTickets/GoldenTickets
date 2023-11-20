@@ -132,7 +132,7 @@
       <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
-          <iframe width="800" height="505" th:src="${movie.trailer}"
+          <iframe class="d-inline w-100" width="926" height="520" th:src="${movie.trailer}"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
@@ -182,39 +182,50 @@
         <div class="col-2"><button type="button" id="reviewwrite-btn" class="btn btn-secondary">등록</button></div>
       </div>
       <div style="height:30px"></div>
-      <table class="table">
+      <div class="row" th:each="item, iterStat: ${movieReviewList}">
+		  <hr>
+		  <div class="col-2 row">
+			  <div class="col-8"><th:block th:text="${item.nickname}"></th:block></div>
+			  <div class="col-6"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></div>
+		  </div>
+		  <div class="col-8"><th:block th:text="${item.content}"></th:block></div>
+		  <div class="col-2"><th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block></div>
+		  <div style="height:13px;"></div>
+		  <hr th:if="${iterStat.last}">
+	  </div>
+      <!--<table class="table">
         <tbody>
           <tr th:each="review: ${movieReviewList}">
-            <td><img src="/images/star2.png" style="height:13px">&nbsp;<mj th:text="${review.rating}"></mj></td>
-            <td th:text="${review.nickname}"></td>
-            <td th:text="${review.content}"></td>
-            <td th:text="${#temporals.format(review.regdate, 'yyyy.MM.dd HH:mm:ss')}"></td>
+            <td><th:block th:text="${review.nickname}"></th:block></td>
+            <td><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${review.rating}"></th:block></td>
+            <td colspan="3" th:text="${review.content}"></td>
+            <td th:text="${#temporals.format(review.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></td>
             <td>
               <button type="button" class="btn btn-outline-dark" id="reviewlike">👍🏻<mj th:text="${review.liked}"></mj></button>
               <button type="button" class="btn btn-outline-dark" id="reviewdislike">👎🏻<mj th:text="${review.disliked}"></mj></button>
             </td>
           </tr>
         </tbody>
-      </table>
-      <div style="height:10px"></div>
-      <nav aria-label="Page navigation example">
+      </table>-->
+      <div style="height:20px"></div>
+      <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center text-dark">
-          <li class="page-item">
+          <!--<li class="page-item">
             <a class="page-link" href="#" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
+          </li>-->
+          <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+                <a th:href="@{'/movie/' + ${movie.id} + '?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage ? 'page-link active' : 'page-link'}"></a>
+            </li>
+          <!--<li class="page-item">
             <a class="page-link" href="#" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
-          </li>
+          </li>-->
         </ul>
       </nav>
-      <div style="height:5px"></div>
+      <div style="height:100px"></div>
   </div>
   </div>
 </th:block>
