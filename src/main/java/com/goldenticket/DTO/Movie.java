@@ -26,4 +26,5 @@ public class Movie {
 	private List<MoviePhoto> moviePhoto;
 	private double avg_rating;
 	private int ranking;
+	private String photoname;
 }
