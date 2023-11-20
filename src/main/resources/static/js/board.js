@@ -19,7 +19,7 @@ if (deleteButton) {
 }
 
 // 수정 기능
-const modifyButton = document.getElementById('modify-btn');
+const modifyButton = document.getElementById('modifycomplete-btn');
 
 if (modifyButton) {
     modifyButton.addEventListener('click', event => {
@@ -27,8 +27,9 @@ if (modifyButton) {
         let id = params.get('id');
 
         body = JSON.stringify({
-            atitle: document.getElementById('atitle').value,
-            acontent: document.getElementById('acontent').value
+			category_id: $('input[name=category]:checked').val(),
+            title: $('#'),
+            content: document.getElementById('acontent').value
         })
 
         function success() {

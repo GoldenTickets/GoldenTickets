@@ -36,8 +36,8 @@ public interface BoardMapper {
 	@Update("UPDATE article_category SET category_id = #{article.category_id} WHERE article_id = #{article.id}")
 	int acUpdate(@Param("article") Article article);
 	
-	@Delete("DELETE FROM article WHERE id = #{article.id}")
-	int deleteArticle(@Param("article") Article article); // 파라미터 그냥 id로 바꾸기
+	@Delete("DELETE FROM article WHERE id = #{id}")
+	int deleteArticle(int id); // 파라미터 그냥 id로 바꾸기
 	
 	@Delete("DELETE FROM article_category WHERE article_id = #{article.id}") // cascade 옵션 써서 이 메서드 지워버리기
 	int deleteac(@Param("article") Article article);

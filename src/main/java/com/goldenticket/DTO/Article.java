@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Article {
 	private int id;
-	private String mem_id;
+	private int mem_id;
 	private String title;
 	private String content;
 	private int hit;

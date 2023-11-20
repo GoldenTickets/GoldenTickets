@@ -79,20 +79,31 @@ public class BoardController {
 		return article;
 	}
 	
+	//글 수정하기 페이지로 이동
+	@GetMapping("/update/{id}")
+	public ModelAndView update(@PathVariable int id) {
+		
+		Article article = boardService.getArticleById(id);
+		ModelAndView mav = new ModelAndView("update/"+id);
+		return mav;
+	}
+	
+	
 	@Transactional(rollbackFor=Exception.class)
 	@PutMapping("")
 	public Article update(@RequestBody Article article) {
-		boardMapper.articleUpdate(article);
-		boardMapper.acUpdate(article); // 조건문 넣기
+		boardService.updateArticle(article);
+		//boardService.acUpdate(article); // 조건문 넣기
 		return article;
 	}
 	
+	//글 삭제하기
 	@Transactional(rollbackFor=Exception.class)
-	@DeleteMapping("")
-	public Article delete(@RequestBody Article article) {
-		boardMapper.deleteac(article);
-		boardMapper.deleteArticle(article);
-		return article;
+	@DeleteMapping("/delete/{id}")
+	public ModelAndView delete(@PathVariable int id) {
+		//boardMapper.deleteac(article);
+		boardService.deleteArticle(id);
+		return new ModelAndView("redirect:/board");
 	}
 	
 	@PostMapping("/submitreply/{id}")

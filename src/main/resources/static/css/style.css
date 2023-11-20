@@ -109,5 +109,9 @@
             background-color: #fafafa;
             border-color: #ccc;
           }
+          
+          a {
+			  text-decoration: none;
+		  }
 
           /* board.css 끝 */

@@ -146,7 +146,7 @@
     <hr>
     <div class="row row-cols-1 row-cols-md-5 g-4">
 		<div class="col" th:each="item : ${todaymovies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}">
+			<a th:href="@{/movie/{id}(id=${item.id})}" style="color:black">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
@@ -166,7 +166,7 @@
         <hr>
         <div class="row row-cols-1 row-cols-md-5 g-4">
           <div class="col" th:if="${#session.getAttribute('id') != null}" th:each="item : ${custommovies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}">
+			<a th:href="@{/movie/{id}(id=${item.id})}"  style="color:black">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
@@ -177,7 +177,7 @@
             </a>
           </div>
           <div class="col" th:unless="${#session.getAttribute('id') != null}" th:each="item : ${lovedmovies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}">
+			<a th:href="@{/movie/{id}(id=${item.id})}"  style="color:black">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">

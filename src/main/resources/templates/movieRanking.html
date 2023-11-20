@@ -4,15 +4,15 @@
     <div class="container">
       <div style="height:80px"></div>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-light fw-bold">전체</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">액션</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">공포/스릴러</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">코미디</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">SF/판타지</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">드라마</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">멜로</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">애니메이션</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-light fw-bold">다큐멘터리</button>
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking"'>전체</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>액션</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>공포/스릴러</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/11"'>코미디</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>SF/판타지</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/3"'>드라마</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/2"'>로맨스</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/22"'>애니메이션</button>&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-light fw-bold" onclick='location.href="/movie/ranking/1"'>다큐멘터리</button>
           </div>
         <div style="height:70px"></div>
         <div class=><b class="fs-3">전체 영화 순위</b></div>
@@ -22,7 +22,7 @@
           <hr>
           <div class="col-1"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:110px;"></div>
           <div class="col-9">
-            <h5><a th:href="@{/movie/{id}(id=${item.id})}"><b><th:block th:text="${item.ranking}"></th:block>&nbsp;<th:block th:text="${item.title}"></th:block></b></a></h5>
+            <h5><a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;"><b><th:block th:text="${item.ranking}"></th:block>&nbsp;<th:block th:text="${item.title}"></th:block></b></a></h5>
             <p style="color:grey"><th:block th:text="${#temporals.format(item.releasedate, 'yyyy')}"></th:block>&nbsp;&nbsp;<th:block th:text="${item.runningtime}+'분'"></th:block></p>
             <p style="color:grey"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
           </div>

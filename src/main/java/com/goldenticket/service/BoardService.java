@@ -13,6 +13,13 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	//게시글 상세
+	public Article getArticleById(int id) {
+		Article article=boardMapper.getById(id);
+		return article;
+	}
+	
+	
 	//게시글 조회수증가
 	public int updateHit(int id) {
 		Article article=boardMapper.getById(id);
@@ -24,4 +31,15 @@ public class BoardService {
 	public int createReply(Reply reply) {
 		return boardMapper.createReply(reply);
 	};
+	
+	//글수정하기
+	public int updateArticle(Article article) {
+		return boardMapper.articleUpdate(article);
+	}
+	
+	//글삭제하기
+	public int deleteArticle(int id) {
+		return boardMapper.deleteArticle(id);
+	}
+	
 }

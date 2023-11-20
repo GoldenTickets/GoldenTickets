@@ -25,7 +25,7 @@ public class MemberController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("/login");
 		}else {
-			return new ModelAndView("");
+			return new ModelAndView("redirect:/");
 		}
 		
 	}
@@ -43,9 +43,9 @@ public class MemberController {
 			session.setAttribute("id",membeno);
 			session.setAttribute("nickname",nickname);
 			
-			return new ModelAndView ("");
+			return new ModelAndView ("redirect:/");
 		}else {
-			return new ModelAndView ("");
+			return new ModelAndView ("redirect:/");
 		}
 		
 	}

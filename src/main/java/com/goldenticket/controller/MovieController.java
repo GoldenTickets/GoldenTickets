@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.DTO.Review;
 import com.goldenticket.mapper.MovieMapper;
 import com.goldenticket.service.MovieService;
 
+@ControllerAdvice
 @RestController
 @RequestMapping("/movie")
 public class MovieController {
@@ -89,5 +91,13 @@ public class MovieController {
 		return mav;
 	}
 	
-	
+	@ExceptionHandler(value = {Exception.class})
+	@GetMapping("/test")
+	public ModelAndView movieTest() {
+			
+			throw new ArithmeticException();
+		
+			
+		
+	}
 }
