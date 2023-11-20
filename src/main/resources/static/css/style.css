@@ -113,5 +113,15 @@
           a {
 			  text-decoration: none;
 		  }
+		  
+		  inputsuccess {
+			  border: 1px solid limegreen ;
+		  }
+		  
+		  inputfail {
+			  border:1px solid red;
+		  }
+		   
+		  
 
           /* board.css 끝 */

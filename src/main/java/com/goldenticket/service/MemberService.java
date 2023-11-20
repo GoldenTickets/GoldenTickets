@@ -29,9 +29,13 @@ public class MemberService {
 		return memberMapper.getMember(email);
 	}
 	
-	//회원가입하기
+	//회원가입하기 1
 	public int createMember(Member member) {
 		return memberMapper.createMember(member);
+	}
+	//회원가입하기 2 (회원이 선호하는장르 )
+	public int setMemberGenre(int genre_id,int id) {
+		return memberMapper.setMemberGenre(genre_id, id);
 	}
 	
 }

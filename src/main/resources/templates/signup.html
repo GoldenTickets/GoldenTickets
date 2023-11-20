@@ -5,7 +5,6 @@
   <div class="container">
     <div class="d-flex justify-content-center"><p class="fw-bold fs-3">골든티켓 회원가입</p></div>
     <div style="height:20px;"></div>
-    
       <!-- 토큰을 추가하여 CSRF 공격 방지 -->
       <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
       <div class="row">
@@ -15,7 +14,7 @@
       </div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><input type="text" class="form-control" name="name" placeholder="이름을 입력해주세요"></div>
+        <div class="col-4"><input type="text" class="form-control" onchange="namecheck()" name="name" placeholder="이름을 입력해주세요"><div style="display:none;color:red;font-size:10px;">이름은 2글자이상입력입니다.</div></div>
         <div class="col-4"></div>
       </div>
 
@@ -26,7 +25,7 @@
       </div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요"></div>
+        <div class="col-4"><input type="email" name="email" onchange="emailcheck()" class="form-control" placeholder="이메일을 입력해주세요"><div style="display:none;color:red;font-size:10px;">이메일을 확인해주세요.</div></div>
         <div class="col-4"></div>
       </div>
       <div style="height:10px;"></div>
@@ -37,7 +36,7 @@
       </div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><input type="password" name="password" class="form-control" placeholder="비밀번호를 입력해주세요"></div>
+        <div class="col-4"><input type="password" name="password" onchange="passwordcheck()" class="form-control" placeholder="비밀번호를 입력해주세요"><div style="display:none;color:red;font-size:10px;">비밀번호는 4글자이상입력입니다.</div></div>
         <div class="col-4"></div>
       </div>
       <div style="height:10px;"></div>
@@ -48,7 +47,7 @@
       </div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요"></div>
+        <div class="col-4"><input type="password" name="repassword" onchange="repasswordcheck()" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요"><div style="display:none;color:red;font-size:10px;">비밀번호가 일치하지않습니다</div></div>
         <div class="col-4"></div>
       </div>
       <div style="height:10px;"></div>
@@ -59,7 +58,7 @@
       </div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4"><input type="text" name="nickname" class="form-control" placeholder="사용하실 닉네임을 입력해주세요"></div>
+        <div class="col-4"><input type="text" name="nickname" onchange="nicknamecheck()" class="form-control" placeholder="사용하실 닉네임을 입력해주세요"><div style="display:none;color:red;font-size:10px;">닉네임을 2글자이상입력해주세요</div></div>
         <div class="col-4"></div>
       </div>
       <div style="height:10px;"></div>
@@ -71,43 +70,42 @@
       <div style="height:10px;"></div>
       <div class="row">
         <div class="col-4"></div>
-        <div class="col-4">
-          <!--
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="액션">
-            <label class="form-check-label" for="inlineCheckbox1">액션</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="공포/스릴러">
-            <label class="form-check-label" for="inlineCheckbox2">공포/스릴러</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="코미디">
-            <label class="form-check-label" for="inlineCheckbox3">코미디</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="SF/판타지">
-            <label class="form-check-label" for="inlineCheckbox4">SF/판타지</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="드라마">
-            <label class="form-check-label" for="inlineCheckbox5">드라마</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="멜로">
-            <label class="form-check-label" for="inlineCheckbox6">멜로</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="애니메이션">
-            <label class="form-check-label" for="inlineCheckbox7">애니메이션</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="다큐멘터리">
-            <label class="form-check-label" for="inlineCheckbox8">다큐멘터리</label>
-          </div>
-          -->
+        <div class="col-6 row">
+          <div class="col-4">
+			  	<label><input type="checkbox" name="member_genre" value="1"> 액션</label><br>
+				<label><input type="checkbox" name="member_genre" value="2"> 로맨스</label><br>
+				<label><input type="checkbox" name="member_genre" value="3"> 드라마</label><br>
+				<label><input type="checkbox" name="member_genre" value="4"> 시대극</label><br>
+				<label><input type="checkbox" name="member_genre" value="5"> 어드벤처</label><br>
+				<label><input type="checkbox" name="member_genre" value="6"> 전쟁</label><br>
+				<label><input type="checkbox" name="member_genre" value="7"> 버디 무비</label><br>
+				<label><input type="checkbox" name="member_genre" value="8"> 로드 무비</label><br>
+				<label><input type="checkbox" name="member_genre" value="9"> 밀리터리</label><br>
+		  </div>
+          <div class="col-4">
+			   <label><input type="checkbox" name="member_genre" value="10"> 공포</label><br>
+				<label><input type="checkbox" name="member_genre" value="11"> 코미디</label><br>
+				<label><input type="checkbox" name="member_genre" value="12"> SF</label><br>
+				<label><input type="checkbox" name="member_genre" value="13"> 범죄</label><br>
+				<label><input type="checkbox" name="member_genre" value="14"> 스포츠</label><br>
+				<label><input type="checkbox" name="member_genre" value="15"> 판타지</label><br>
+				<label><input type="checkbox" name="member_genre" value="16"> 음악</label><br>
+				<label><input type="checkbox" name="member_genre" value="17"> 재난</label><br>
+				<label><input type="checkbox" name="member_genre" value="18"> 교육</label><br>
+		  </div>
+          <div class="col-4">
+			    <label><input type="checkbox" name="member_genre" value="19"> 좀비</label><br>
+				<label><input type="checkbox" name="member_genre" value="20"> 성인</label><br>
+				<label><input type="checkbox" name="member_genre" value="21"> 정치</label><br>
+				<label><input type="checkbox" name="member_genre" value="22"> 애니메이션</label><br>
+				<label><input type="checkbox" name="member_genre" value="23"> 가족</label><br>
+				<label><input type="checkbox" name="member_genre" value="24"> 미스터리</label><br>
+				<label><input type="checkbox" name="member_genre" value="25"> 모험</label><br>
+				<label><input type="checkbox" name="member_genre" value="26"> 스릴러</label><br>
+				<label><input type="checkbox" name="member_genre" value="27"> 요리</label><br>
+		  </div>
         </div>
-        <div class="col-4"></div>
+        <div class="col-2"></div>
       </div>
       <div style="height:20px;"></div>
       <div class="row">
@@ -115,7 +113,10 @@
         <div class="col-4"><div class="d-grid gap-2"><button type="submit" class="btn btn-outline-dark" id="signup-btn">회원가입</button></div></div>
         <div class="col-4"></div>
       </div>
-
+	<script>
+		
+		$(document).on()
+	</script>
   </div>
 </th:block>
 </html>

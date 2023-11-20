@@ -31,6 +31,7 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 	
+
 	@GetMapping("/{id}")
 	public ModelAndView getAllMovies(@PathVariable int id)throws Exception {
 		ModelAndView mav=new ModelAndView("movieinfo");
@@ -46,6 +47,7 @@ public class MovieController {
 		return mav;
 		}
 	
+
 	@PostMapping("/submitreview/{id}")
 	public int reviewSubmit(@RequestBody Review review,@PathVariable int id) {
 		int result = movieService.createMovieReview(review,id);
@@ -53,6 +55,7 @@ public class MovieController {
 		return result;
 	}
 	
+
 	@GetMapping("")
 	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
@@ -73,6 +76,7 @@ public class MovieController {
 		return mav;
 	}
 	
+
 	@GetMapping("/ranking")
 		public ModelAndView getRanking(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
@@ -91,13 +95,4 @@ public class MovieController {
 		return mav;
 	}
 	
-	@ExceptionHandler(value = {Exception.class})
-	@GetMapping("/test")
-	public ModelAndView movieTest() {
-			
-			throw new ArithmeticException();
-		
-			
-		
-	}
 }

@@ -3,6 +3,8 @@ package com.goldenticket.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,7 @@ public class MemberController {
 		
 	}
 	
+	/*
 	@PostMapping("/login")
 	public ModelAndView login(@RequestParam("email") String email,
 			 					  @RequestParam("password") String password,
@@ -49,31 +52,33 @@ public class MemberController {
 		}
 		
 	}
-
+	*/
 	
-	@PostMapping("/loginwithcheck")
-	public int loginwithCheck(@RequestParam("email") String email,
-							 @RequestParam("password") String password,
-							 HttpSession session) {//로그인 
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@RequestParam("email") String email,
+			 					  @RequestParam("password") String password,
+			 					  HttpSession session) {
 		int result = memberService.loginCheck(email,password);
 		
 		int membeno=memberService.getMember(email).getId();
 		String nickname=memberService.getMember(email).getNickname();
-				
 		
 		if(result==1) {
 			session.setAttribute("id",membeno);
-			session.setAttribute("nickname",nickname);
-			return 1;
+			session.setAttribute("nickname",nickname);		
+			
+			return new ResponseEntity<>("ok",HttpStatus.OK);
 		}else {
-			return 0;
+			return new ResponseEntity<>("ok",HttpStatus.NOT_FOUND);
 		}
+		
 	}
+
 	
 	@GetMapping("/logout")
-	public ModelAndView logout(HttpSession session) {
+	public ResponseEntity<String> logout(HttpSession session) {
 		session.invalidate();
-		return new ModelAndView("main"); 
+		return new ResponseEntity<>("logout",HttpStatus.OK); 
 	}
 	
 	@GetMapping("/signup")
