@@ -21,6 +21,7 @@
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
+              <a th:href="@{/movie/{movieId}(movieId=${newmovie1.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie1.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie1.title}"></th:block></h2>
@@ -34,8 +35,10 @@
 					<th:block th:text="${newmovie1.rating}"></th:block>
 				</p>
               </div>
+            </a>  
             </div>
             <div class="carousel-item">
+			  <a th:href="@{/movie/{movieId}(movieId=${newmovie2.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie2.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie2.title}"></th:block></h2>
@@ -49,8 +52,10 @@
 					<th:block th:text="${newmovie2.rating}"></th:block>
 				</p>
               </div>
+              </a>
             </div>
             <div class="carousel-item">
+			  <a th:href="@{/movie/{movieId}(movieId=${newmovie3.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie3.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie3.title}"></th:block></h2>
@@ -64,8 +69,10 @@
 					<th:block th:text="${newmovie3.rating}"></th:block>
 				</p>
               </div>
+              </a>
             </div>
             <div class="carousel-item">
+			  <a th:href="@{/movie/{movieId}(movieId=${newmovie4.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie4.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie4.title}"></th:block></h2>
@@ -79,6 +86,7 @@
 					<th:block th:text="${newmovie4.rating}"></th:block>
 				</p>
               </div>
+              </a>
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
