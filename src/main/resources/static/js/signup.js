@@ -114,7 +114,7 @@ if (signupButton) {
                 email:emailValue.val(),
                 password:passwordValue.val(),
                 nickname:nicknameValue.val(),
-                mem_genre:mem_genreList
+                member_genre:mem_genreList
             })
         })
             .then(() => {

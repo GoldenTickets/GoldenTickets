@@ -81,7 +81,7 @@ public class MemberController {
 		return new ResponseEntity<>("logout",HttpStatus.OK); 
 	}
 	
-	@GetMapping("/signup")
+	@GetMapping("/signup")//회원가입페이지로 이동
 	public ModelAndView signup(HttpSession session) {
 		if(session.getAttribute("nickname")!=null) {
 			return new ModelAndView("main");
@@ -90,9 +90,33 @@ public class MemberController {
 		}
 	}
 	
-	@PostMapping("/signup")
-	public ModelAndView createMember(@RequestBody Member member) {
-		memberService.createMember(member);
-		return new ModelAndView("redirect:/login");
+	@PostMapping("/signup")//회원가입하기
+	public int createMember(@RequestBody Member member) {
+		
+			memberService.createMember(member);//DB에 이름,이메일,비밀번호,닉네임을 입력. 성공하면 1을 반환 
+			int mem_id = memberService.getMember(member.getEmail()).getId();//DB의 member테이블에 새 레코드가 추가되면 pk인 id를 가져옴 
+			
+			for(int member_genre:member.getMember_genre()) {//회원가입시 선택한 선호 장르 갯수와 똑같은 횟수로 DB에 입력
+				memberService.setMemberGenre(member_genre,mem_id );
+			}
+			return 1;//signup.js 의 fetch의 결과로 200을 반환
+		
 	}
+	/*
+	@PostMapping("/signup")//회원가입하기
+	public ResponseEntity<String> createMember(@RequestBody Member member) {
+		
+		if(memberService.createMember(member)==1){//DB에 이름,이메일,비밀번호,닉네임을 입력. 성공하면 1을 반환 
+			int mem_id = memberService.getMember(member.getEmail()).getId();//DB의 member테이블에 새 레코드가 추가되면 pk인 id를 가져옴 
+			
+			for(int member_genre:member.getMember_genre()) {//회원가입시 선택한 선호 장르 갯수와 똑같은 횟수로 DB에 입력
+				memberService.setMemberGenre(member_genre,mem_id );
+			
+			return new ResponseEntity<>("success",HttpStatus.OK);//signup.js 의 fetch의 결과로 200을 반환
+			}
+		}else {//createMember()가 실패하면 0을 반환
+			return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);//signup.js 의 fetch의 결과로 400을 반환
+		}
+	*/
+	
 }
