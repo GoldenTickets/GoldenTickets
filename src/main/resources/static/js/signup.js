@@ -147,9 +147,14 @@ if (signupButton) {
                 member_genre:mem_genreList
             })
         })
-            .then(() => {
-                alert('회원가입이 완료되었습니다.');
-                location.replace('login');
+            .then(response => {
+				if(response.ok){
+	                alert('회원가입이 완료되었습니다.');
+	                location.href="/login";
+	             }else{
+					alert('회원가입이 실패했습니다.'); 
+					location.reload();
+				 }
             });
         }
     });
