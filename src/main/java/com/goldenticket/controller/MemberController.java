@@ -21,67 +21,47 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	//로그인페이지로 이동
 	@GetMapping("/login")
 	public ModelAndView loginPage(HttpSession session){
 		
-		if(session.getAttribute("id") == null) {
+		if(session.getAttribute("id") == null) {//로그인이 되어있지않다면
 			return new ModelAndView("/login");
 		}else {
-			return new ModelAndView("redirect:/");
+			return new ModelAndView("redirect:/");//로그인이 이미 되어있다면
 		}
 		
 	}
 	
-	/*
-	@PostMapping("/login")
-	public ModelAndView login(@RequestParam("email") String email,
-			 					  @RequestParam("password") String password,
-			 					  HttpSession session) {
-		int result = memberService.loginCheck(email,password);
-		
-		int membeno=memberService.getMember(email).getId();
-		String nickname=memberService.getMember(email).getNickname();
-		
-		if(result==1) {
-			session.setAttribute("id",membeno);
-			session.setAttribute("nickname",nickname);
-			
-			return new ModelAndView ("redirect:/");
-		}else {
-			return new ModelAndView ("redirect:/");
-		}
-		
-	}
-	*/
-	
+	//로그인 기능 ( login페이지나 offcanvas에서 로그인 모두 포함
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestParam("email") String email,
 			 					  @RequestParam("password") String password,
 			 					  HttpSession session) {
-		int result = memberService.loginCheck(email,password);
+		try {
+			memberService.loginCheck(email,password);
 		
-		int membeno=memberService.getMember(email).getId();
-		String nickname=memberService.getMember(email).getNickname();
-		
-		if(result==1) {
+			int membeno=memberService.getMember(email).getId();
+			String nickname=memberService.getMember(email).getNickname();
+
 			session.setAttribute("id",membeno);
-			session.setAttribute("nickname",nickname);		
+			session.setAttribute("nickname",nickname);	
 			
-			return new ResponseEntity<>("ok",HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>("ok",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("ok",HttpStatus.OK);//로그인 성공할 경우 OK실행
+		}catch(Exception e) {//ㅇ
+			return new ResponseEntity<>("ok",HttpStatus.BAD_REQUEST);//로그인 실패할경우 400 반환 
 		}
-		
 	}
 
-	
+	//로그아웃
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session) {
 		session.invalidate();
 		return new ResponseEntity<>("logout",HttpStatus.OK); 
 	}
 	
-	@GetMapping("/signup")//회원가입페이지로 이동
+	//회원가입페이지로 이동
+	@GetMapping("/signup")
 	public ModelAndView signup(HttpSession session) {
 		if(session.getAttribute("nickname")!=null) {
 			return new ModelAndView("main");
@@ -89,34 +69,21 @@ public class MemberController {
 			return new ModelAndView("signup"); 
 		}
 	}
-	
-	@PostMapping("/signup")//회원가입하기
-	public int createMember(@RequestBody Member member) {
-		
+
+	//회원가입하기
+	@PostMapping("/signup")
+	public ResponseEntity<String> createMember(@RequestBody Member member) {
+		try{
 			memberService.createMember(member);//DB에 이름,이메일,비밀번호,닉네임을 입력. 성공하면 1을 반환 
 			int mem_id = memberService.getMember(member.getEmail()).getId();//DB의 member테이블에 새 레코드가 추가되면 pk인 id를 가져옴 
-			
 			for(int member_genre:member.getMember_genre()) {//회원가입시 선택한 선호 장르 갯수와 똑같은 횟수로 DB에 입력
 				memberService.setMemberGenre(member_genre,mem_id );
 			}
-			return 1;//signup.js 의 fetch의 결과로 200을 반환
-		
-	}
-	/*
-	@PostMapping("/signup")//회원가입하기
-	public ResponseEntity<String> createMember(@RequestBody Member member) {
-		
-		if(memberService.createMember(member)==1){//DB에 이름,이메일,비밀번호,닉네임을 입력. 성공하면 1을 반환 
-			int mem_id = memberService.getMember(member.getEmail()).getId();//DB의 member테이블에 새 레코드가 추가되면 pk인 id를 가져옴 
-			
-			for(int member_genre:member.getMember_genre()) {//회원가입시 선택한 선호 장르 갯수와 똑같은 횟수로 DB에 입력
-				memberService.setMemberGenre(member_genre,mem_id );
-			
 			return new ResponseEntity<>("success",HttpStatus.OK);//signup.js 의 fetch의 결과로 200을 반환
-			}
-		}else {//createMember()가 실패하면 0을 반환
+		}catch(Exception e) {
 			return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);//signup.js 의 fetch의 결과로 400을 반환
 		}
-	*/
-	
+		
+
+	}
 }

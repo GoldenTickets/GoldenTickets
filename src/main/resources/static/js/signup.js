@@ -1,3 +1,33 @@
+//로그인페이지
+function loginIdCheck(){
+	var inputid = document.getElementById('loginidinput');
+	var inputpw = document.getElementById('loginpwinput');
+	if(inputid.value.length<1){
+		alert('이메일을 다시 확인해주세요');
+	}else if(inputpw.value.length<4){
+		alert('비밀번호를 다시 확인해주세요');
+	}else{
+		var loginformdata=new FormData();
+		loginformdata.append('email',inputid.value);
+		loginformdata.append('password',inputpw.value);
+		fetch('/login', {
+            method:'POST',
+            body:loginformdata 
+        })
+            .then(response => {
+				if(response.ok){
+	                alert('로그인이 완료되었습니다.');
+	                location.reload();
+	             }else{
+					alert('로그인이 실패했습니다.'); 
+					location.reload();
+				 }
+            });
+		 }//else
+		}
+	
+
+
 //회원가입페이지 
 function namecheck(){
 	if($('input[name=name]').val().length<2){
@@ -18,7 +48,7 @@ function emailcheck(){
 		$('input[name=email]').removeClass("inputSuccess");
 		$('input[name=email]').addClass("inputfail");
 		$('input[name=email]').next().css('display','block');
-		$('input[name=name]').css('border','1px solid red')
+		$('input[name=email]').css('border','1px solid red')
 	}else{
 		$('input[name=email]').removeClass("inputfail");
 		$('input[name=email]').addClass("inputSuccess");
@@ -32,7 +62,7 @@ function passwordcheck(){
 		$('input[name=password]').removeClass("inputSuccess");
 		$('input[name=password]').addClass("inputfail");
 		$('input[name=password]').next().css('display','block');
-		$('input[name=name]').css('border','1px solid red')
+		$('input[name=password]').css('border','1px solid red');
 	}else{
 		$('input[name=password]').removeClass("inputfail");
 		$('input[name=password]').addClass("inputSuccess");
@@ -117,9 +147,14 @@ if (signupButton) {
                 member_genre:mem_genreList
             })
         })
-            .then(() => {
-                alert('회원가입이 완료되었습니다.');
-                location.replace('login');
+            .then(response => {
+				if(response.ok){
+	                alert('회원가입이 완료되었습니다.');
+	                location.href="/login";
+	             }else{
+					alert('회원가입이 실패했습니다.'); 
+					location.reload();
+				 }
             });
         }
     });
