@@ -7,38 +7,47 @@
     <hr>
     <div style="height:5px;"></div>
     <input type="hidden" id="article-id" th:value="${article.id}">
-    <div><b th:text="${article.title}"></b></div>
+    <div><b style="font-size:20px;"><th:block th:text="'[' + ${article.categoryname} + ']'" style="margin-right: 5px;"></th:block><th:block th:text="${article.title}"></th:block></b></div>
     <div style="height:6px;"></div>
     <div class="row">
-      <div class="col"></div>
-      <div class="col" style="text-align: right;">조회 <span th:text="${article.hit}"></span> │ 👍🏻 <span></span> │ 댓글 <span>0</span></div>
+      <div class="col"><th:block th:text="${article.nickname}"></th:block> │ <th:block  style="color:#555;font-size:15px;" th:text="${#temporals.format(article.regdate,'yyyy-MM-dd HH:mm')}"></th:block></div>
+      <div class="col" style="text-align: right;"><th:block th:text="'조회 ' + ${article.hit}"></th:block> │ <th:block th:text="'댓글 ' + ${totalReplies}"></th:block></div>
     </div>
     <hr>
     <div style="height:10px;"></div>
     <div th:text="${article.content}"></div>
-    <div style="height:200px;"></div>
-    <div class="d-flex justify-content-center">
-      <button type="button" class="btn btn-light">👍🏻 <span></span></button>
+    <div style="height:350px;"></div>
+    <!--<div class="d-flex justify-content-center">
+      <button type="button" class="btn btn-light"><span>👍🏻 </span></button>
       <span style="width:15px"></span>
       <button type="button" class="btn btn-light">👎🏻 0</button>
-    </div>
-    <div style="font-size: 14px;">전체 댓글 <span>0</span>개</div>
-    <hr>
-    <table class="table">
+    </div>-->
+    <div style="font-size: 14px;">전체 댓글 <th:block th:text="${totalReplies}"></th:block>개</div>
+    <!--<hr>-->
+    <div style="height:10px;"></div>
+    <div class="row" th:each="item, iterStat: ${replies}">
+		<hr>
+		<div class="col-2"><th:block th:text="${item.nickname}"></th:block></div>
+		<div class="col-8"><th:block th:text="${item.content}"></th:block></div>
+		<div class="col-2"><th:block th:text="${#temporals.format(item.regdate,'yyyy-MM-dd HH:mm')}" ></th:block></div>
+		<div style="height:13px;"></div>
+		<hr th:if="${iterStat.last}">
+	</div>
+    <!--<table class="table">
 	  <tbody th:each="item : ${replies}">
 	    <tr>
 	      <td th:text="${item.nickname}"></td>
 	      <td colspan="3" th:text="${item.content}"></td>
 	      <td>
-			  <button type="button" class="btn btn-light">👍🏻 <span th:text="${item.likes}"></span></button>
+			  <button type="button" class="btn btn-light"><span th:text="${item.likes}">👍🏻 </span></button>
 			  <button type="button" class="btn btn-light">👎🏻<span th:text="${item.dislikes}"></span></button>
 		  </td>
 		  <td th:text="${#temporals.format(item.regdate,'yyyy-MM-dd HH:mm')}"></td>
 	    </tr>
 	  </tbody>
-	</table>
-    <div style="height:10px"></div>
-    <nav aria-label="Page navigation example">
+	</table>-->
+    <div style="height:20px"></div>
+    <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center text-dark">
         <!--<li class="page-item">
           <a class="page-link" href="#" aria-label="Previous">
@@ -57,25 +66,25 @@
     </nav>
     <div style="height:10px"></div>
     <div class="row">
-      <div class="col-1"><input type="text" class="form-control" placeholder="닉네임"></div>
-      <div class="col-11">
+      <div class="col-2"><input class="form-control" type="text" th:placeholder="${session.nickname != null} ? ${session.nickname} : '로그인 필요'" disabled/></div>
+      <div class="col-10">
         <textarea class="form-control" rows="3"></textarea>
       </div>
     </div>
     <div style="height:15px"></div>
     <div class="row">
       <div class="col">
-        <!--<button type="button" onclick="/articles" class="btn btn-outline-secondary">글 목록</button>-->
-        <th:block th:if="${session.id}==${article.mem_id}">
-	        <button type="button" th:onclick="|location.href=@{'/board/{articleId}'(articleId=${article.id})}|" class="btn btn-outline-secondary">수정</button>
-	        <button type="button" id="delete-btn" class="btn btn-outline-secondary">삭제</button>
-        </th:block>
+        <button style="margin-right: 10px;" type="button" onclick="location.href='/board'" class="btn btn-outline-secondary">글 목록</button>
+        <!--<th:block th:if="${session.nickname}==${article.mem_id}">-->
+	        <button style="margin-right: 10px;" type="button" th:onclick="|location.href=@{'/board/{articleId}'(articleId=${article.id})}|" class="btn btn-outline-dark">수정</button>
+	        <button type="button" id="delete-btn" class="btn btn-outline-danger">삭제</button>
+        <!--</th:block>-->
       </div>
       <input type="hidden" th:value="${article.id}" id="article_id">
       <input type="hidden" th:value="${session.id}" id="replywriter_id">
       <div class="col d-flex justify-content-end"><button class="btn btn-outline-success" id="replySubmitButton">댓글 쓰기</button></div>
     </div>
-    <div style="height:25px"></div>
+    <div style="height:120px"></div>
   </div>
 </th:block>
 </html>

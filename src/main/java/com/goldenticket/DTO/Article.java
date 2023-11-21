@@ -1,5 +1,7 @@
 package com.goldenticket.DTO;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
@@ -9,8 +11,8 @@ public class Article {
 	private String title;
 	private String content;
 	private int hit;
-	private String regdate;
-	private String updatedate;
+	private LocalDateTime regdate;
+	private LocalDateTime updatedate;
 	private int likes;
 	private int dislikes;
 	private int category_id;

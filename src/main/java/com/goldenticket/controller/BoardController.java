@@ -63,11 +63,13 @@ public class BoardController {
 		List<Reply> replies = boardMapper.getByArticle_id(id, rowBounds);
 		mav.addObject("article", article);
 		mav.addObject("replies", replies);
+		System.out.println(article);
 		
-		int totalArticles = boardMapper.getTotalreply(id);
-		int totalPages = (int) Math.ceil((double) totalArticles / pageSize); // 전체 페이지 수 구하기
+		int totalReplies = boardMapper.getTotalreply(id);
+		int totalPages = (int) Math.ceil((double) totalReplies / pageSize); // 전체 페이지 수 구하기
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);
+        mav.addObject("totalReplies", totalReplies);
         
 		return mav;
 	}
