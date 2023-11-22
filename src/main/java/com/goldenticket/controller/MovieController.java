@@ -67,7 +67,7 @@ public class MovieController {
 	
 
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "all") String genre, @RequestParam(defaultValue = "update") String order) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int genre, @RequestParam(defaultValue = "update") String order) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieInfo_all");
 		int pageSize = 15;
@@ -75,7 +75,7 @@ public class MovieController {
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		List<Movie> movies;
 		
-		if (genre.equals("all")) {
+		if (genre == 0) {
 			movies = movieMapper.getAllMovies(rowBounds, order);
 		}else {
 			movies = movieMapper.getAllMoviesByGenre(rowBounds, order, genre);
