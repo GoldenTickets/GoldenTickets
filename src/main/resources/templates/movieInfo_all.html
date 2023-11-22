@@ -4,21 +4,39 @@
     <div class="container">
       <div style="height:80px"></div>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;" th:onclick="'window.location.href = \'/movie?page=\' + ${pageNumber} + \'&genre=\' + ${genre} + \'$order=\' + ${order}'">전체</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">액션</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">공포/스릴러</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">코미디</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">SF/판타지</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">드라마</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">멜로/로맨스</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">애니메이션</button>
-            <button type="button" class="btn btn-light fw-bold">다큐멘터리</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=0&order=' + ${order}}">전체</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=1&order=' + ${order}}">액션</a style="color:black;" >
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=2&order=' + ${order}}">공포/스릴러</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=3&order=' + ${order}}">코미디</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=4&order=' + ${order}}">SF/판타지</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=5&order=' + ${order}}">드라마</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=6&order=' + ${order}}">멜로/로맨스</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=7&order=' + ${order}}">애니메이션</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold">
+				<a style="color:black;" th:href="@{'/movie?page=' + ${currentPage} + '&genre=8&order=' + ${order}}">다큐멘터리</a>
+			</button>
           </div>
         <div style="height:80px"></div>
         <div class="row">
           <div class="col-10"><b class="fs-3">전체</b></div><!--전체(영화 갯수)-->
           <div class="col-2">
-            <select class="form-select" aria-label="정렬순서"> 이것도 추후에 살리기
+            <select class="form-select" aria-label="정렬순서"><!-- 추후에 추가하기-->
               <option value="1">업데이트순</option>
               <option value="2">조회순</option>
             </select>
@@ -50,7 +68,7 @@
 		              </a>
 		            </li>-->
 		            <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
-		                <a th:href="@{'/movie?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+		                <a th:href="@{'/movie?page=' + ${pageNumber} + '&genre=' + ${genre} + '&order=' + ${order}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
 		            </li>
 		            <!--<li class="page-item">
 		              <a class="page-link" href="#" aria-label="Next">

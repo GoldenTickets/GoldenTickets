@@ -52,7 +52,7 @@ public interface MovieMapper {
 	List<Movie> getAllMovies(RowBounds rowBounds, String order);
 	
 	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY #{order} DESC")
-	List<Movie> getAllMoviesByGenre(RowBounds rowBounds, String order, String genre);
+	List<Movie> getAllMoviesByGenre(RowBounds rowBounds, String order, int genre);
 	
 	@Select("SELECT count(*) FROM movie")
 	int totalMovies();
