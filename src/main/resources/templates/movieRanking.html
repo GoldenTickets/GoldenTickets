@@ -10,7 +10,7 @@
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">코미디</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">SF/판타지</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">드라마</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">멜로</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">멜로/로맨스</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">애니메이션</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">다큐멘터리</button>
           </div>
@@ -20,11 +20,13 @@
         <!--<hr>-->
         <div class="row" th:each="item, iterStat: ${movies}">
           <hr>
-          <div class="col-1"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:110px;"></div>
+          <div class="col-1"><a th:href="@{/movie/{id}(id=${item.id})}"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:110px;"></a></div>
           <div class="col-9">
-            <h5><a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;"><b><th:block th:text="${item.ranking}"></th:block>&nbsp;<th:block th:text="${item.title}"></th:block></b></a></h5>
-            <p style="color:grey"><th:block th:text="${#temporals.format(item.releasedate, 'yyyy')}"></th:block>&nbsp;&nbsp;<th:block th:text="${item.runningtime}+'분'"></th:block></p>
-            <p style="color:grey"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+			<a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;">
+            <h5><b th:text="${item.ranking} + '  ' + ${item.title}"></b></h5>
+            <p style="color:grey;" th:text="${#temporals.format(item.releasedate, 'yyyy')} + '  ' + ${item.runningtime} + '분'"></p>
+            <p style="color:grey;"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+            </a>
           </div>
           <div class="col-2"><div style="height: 35px;"></div><button type="button" class="btn btn-outline-secondary">북마크에 추가</button></div> <!--나중에 북마크 추가 기능 만들기-->
 		  <div style="height:15px"></div>

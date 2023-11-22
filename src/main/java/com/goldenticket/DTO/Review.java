@@ -8,7 +8,7 @@ import lombok.Data;
 public class Review {
 	private int id; 
 	private int movie_id;
-	private String mem_id;
+	private int mem_id;
 	private int rating;
 	private String content;
 	private LocalDateTime regdate;

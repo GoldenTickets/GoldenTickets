@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.DTO.Platform;
 import com.goldenticket.DTO.Review;
@@ -22,7 +23,14 @@ public class MovieService {
 		return movieMapper.getMovieById(id);
 	};
 	
-	public List<Object> getMoviePhoto(int id){//영화 사진 가져오기 
+
+	public int updateHit(int id) {
+		Movie movie=movieMapper.getMovieById(id);
+		movie.setHit(movie.getHit()+1);//조회수 1 증가
+		return movieMapper.updateHit(movie);
+	}
+	
+	public List<Object> getMoviePhoto(int id) {//영화 사진 가져오기 
 		//만약 사진이 5장이면 1장,4장으로 분리해야됨. carousel이 첫번째 사진을 class를 active로 따로 설정해야되기때문
 		List<String> moviePhotoList=movieMapper.getMoviePhoto(id);
 		String moviePhotoFirst= moviePhotoList.get(0);//carousel에 첫번째로 노출될 사진 
@@ -54,16 +62,7 @@ public class MovieService {
 			int result = movieMapper.createMovieReview(review,id);//해당영화에 대해 작성한 리뷰갯수가 0일경우,그리고 성공했을경우 1 반환. 실패하면 예외발생
 				try {
 				double newRating = movieMapper.getReviewRating(id);
-;
-				/*
-				System.out.println("rating=>"+rating);
-				System.out.println("review.getRating()=>"+review.getRating());
-				System.out.println("ratingSum=>"+ratingSum);
-				System.out.println("ratingCount=>"+ratingCount);
-				System.out.println("(double)review.getRating()+ratingSum=>"+(double)review.getRating()+ratingSum);
-				System.out.println("ratingCount+1=>"+ratingCount+1);
-				System.out.println("newRating=>"+newRating);
-				*/
+
 				movieMapper.updateReviewRating(newRating,id);//새로 구한 평균으로 rating 컬럼값 업데이트
 				
 				return result;
@@ -74,7 +73,14 @@ public class MovieService {
 		}
 	}
 	
-	public int getReviewCount(int movie_id,int mem_id){//리뷰 작성하기 위해 
+	public int getReviewCount(int movie_id,int mem_id){//리뷰 작성하기 위해 이미 작성한 리뷰가 몇개인지확인
 		return movieMapper.getReviewCount(movie_id, mem_id);
+	}
+	
+	public int deleteReview(int movie_id,int mem_id) {//리뷰 삭제기능. 
+		int result = movieMapper.deleteReview(movie_id, mem_id);
+		double newRating = movieMapper.getReviewRating(movie_id);
+		result=movieMapper.updateReviewRating(newRating,movie_id);
+		return result;
 	}
 }

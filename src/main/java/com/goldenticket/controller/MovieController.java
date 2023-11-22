@@ -36,7 +36,8 @@ public class MovieController {
 	
 
 	@GetMapping("/{id}")
-	public ModelAndView getAllMovies(@RequestParam(defaultValue = "1") int page, @PathVariable int id){
+	public ModelAndView getAllMovies(@RequestParam(defaultValue = "1") int page, @PathVariable int id)throws Exception {
+		movieService.updateHit(id); //조회수 1 증가
 		ModelAndView mav=new ModelAndView("movieinfo");
 		
 		int pageSize = 10;
@@ -84,15 +85,37 @@ public class MovieController {
 		}
 	}
 	
+	//리뷰삭제기능
+	@GetMapping("/deleteReview/{movie_id}")
+	public ResponseEntity<String> deleteReview(@PathVariable int movie_id,
+												HttpSession session){
+		try {
+			movieMapper.deleteReview(movie_id, (int)session.getAttribute("id"));
+			return new ResponseEntity("success",HttpStatus.OK);
+		}catch(NullPointerException e) {
+			return new ResponseEntity("needLogin",HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity("오류로 인해 삭제에 실패했습니다",HttpStatus.OK);
+		}
+	}
 
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "all") String genre, @RequestParam(defaultValue = "update") String order) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieInfo_all");
 		int pageSize = 15;
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		List<Movie> movies = movieMapper.getAll(rowBounds);
+		List<Movie> movies;
+		
+		if (genre.equals("all")) {
+			movies = movieMapper.getAllMovies(rowBounds, order);
+		}else {
+			movies = movieMapper.getAllMoviesByGenre(rowBounds, order, genre);
+		}
+		mav.addObject("order", order);
+		mav.addObject("genre", genre);
 		
 		int totalMovies = movieMapper.totalMovies();
 		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기

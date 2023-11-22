@@ -188,8 +188,19 @@
 			  <div class="col-8"><th:block th:text="${item.nickname}"></th:block></div>
 			  <div class="col-6"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></div>
 		  </div>
-		  <div class="col-8"><th:block th:text="${item.content}"></th:block></div>
-		  <div class="col-2"><th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block></div>
+		  <div class="col-7"><th:block th:text="${item.content}"></th:block></div>
+		  <!--로그인하지 않았거나 내가 쓴 리뷰가 아닌 경우-->
+		  <div class="col-1" th:if="${session.id == null or session.id != item.mem_id}"></div>
+		  <div class="col-2" th:if="${session.id == null or session.id != item.mem_id}">
+			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
+		  </div>
+		  <!-- 내가 쓴 리뷰는 삭제버튼 생성 -->
+		  <div class="col-2" th:if="${session.id == item.mem_id}">
+			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
+		  </div>
+		  <div class="col-1" th:if="${session.id == item.mem_id}">
+			  <button type="button" class="btn btn-danger" id="reviewDeleteButton">X</button>
+		  </div>
 		  <div style="height:13px;"></div>
 		  <hr th:if="${iterStat.last}">
 	  </div>

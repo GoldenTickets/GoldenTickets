@@ -2,6 +2,7 @@ package com.goldenticket.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,9 +17,12 @@ import com.goldenticket.DTO.Review;
 @Mapper
 public interface MovieMapper {
 	
-	//DB 영화 모두 가져오기(영화 평점은 해당영화의 리뷰 테이블의 평균을 조인으로 가져와서 avg_rating 별칭사용한 컬럼으로 가져옴)
+	//DB 영화 가져오기(영화 평점은 해당영화의 리뷰 테이블의 평균을 조인으로 가져와서 avg_rating 별칭사용한 컬럼으로 가져옴)
 	@Select("SELECT M.*, format(AVG(R.RATING),1) AS avg_rating FROM movie M LEFT JOIN review R ON M.id = R.movie_id WHERE M.id = #{id} GROUP BY M.id")
 	Movie getMovieById(@Param("id")int id);
+	
+	@Update("UPDATE movie SET hit=#{hit} WHERE id=#{id}")
+	int updateHit(Movie movie);
 	
 	//영화의 사진 모두 가져오기 (poster아님)
 	@Select("SELECT photoname FROM movie_photo WHERE movie_id = #{movie_id}")
@@ -44,8 +48,11 @@ public interface MovieMapper {
 	@Insert("INSERT INTO review (movie_id,mem_id,rating,content,regdate) values(#{review.movie_id},#{review.mem_id},#{review.rating},#{review.content},current_timestamp)")
 	int createMovieReview(Review review,int id);
 	
-	@Select("SELECT id, title, poster, rating FROM movie")
-	List<Movie> getAll(RowBounds rowBounds);
+	@Select("SELECT id, title, poster, rating FROM movie ORDER BY #{order} DESC")
+	List<Movie> getAllMovies(RowBounds rowBounds, String order);
+	
+	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY #{order} DESC")
+	List<Movie> getAllMoviesByGenre(RowBounds rowBounds, String order, String genre);
 	
 	@Select("SELECT count(*) FROM movie")
 	int totalMovies();
@@ -100,4 +107,8 @@ public interface MovieMapper {
 	//리뷰 작성후 해당영화 평균 평점 업데이트
 	@Update("UPDATE movie SET rating = #{newRating} WHERE id = #{movie_id}")
 	int updateReviewRating(double newRating,int movie_id);
+	
+	//리뷰 삭제기능
+	@Delete("DELETE FROM review WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
+	int deleteReview(int movie_id,int mem_id);
 }
