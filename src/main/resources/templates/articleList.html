@@ -3,6 +3,18 @@
 <th:block layout:fragment="content">
 <!--Content-->
 <div class="container">
+  <script>
+	$(function(){
+		const pageSizeFromParam=document.getElementById('pageSizeValue').value;
+	    if(pageSizeFromParam=="15"){
+			document.getElementById('selectoptionfirst').setAttribute("selected","selected");
+		}else if(pageSizeFromParam=="20"){
+			document.getElementById('selectoptionsecond').setAttribute("selected","selected");
+		}else if(pageSizeFromParam=="25"){
+			document.getElementById('selectoptionthird').setAttribute("selected","selected");
+		}
+	})
+  </script>
   <div style="height:100px;"></div>
   <div><h2 class="fw-bold">골든티켓 라운지</h2></div>
   <hr>

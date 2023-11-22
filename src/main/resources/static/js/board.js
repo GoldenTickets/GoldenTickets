@@ -1,14 +1,3 @@
-$(function(){
-	const pageSizeFromParam=document.getElementById('pageSizeValue').value;
-    if(pageSizeFromParam=="15"){
-		document.getElementById('selectoptionfirst').setAttribute("selected","selected");
-	}else if(pageSizeFromParam=="20"){
-		document.getElementById('selectoptionsecond').setAttribute("selected","selected");
-	}else if(pageSizeFromParam=="25"){
-		document.getElementById('selectoptionthird').setAttribute("selected","selected");
-	}
-})
-
 
 // 삭제 기능
 const deleteButton = document.getElementById('delete-btn');
