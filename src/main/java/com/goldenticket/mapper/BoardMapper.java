@@ -60,5 +60,6 @@ public interface BoardMapper {
 	
 	@Update("UPDATE article SET hit=#{hit} WHERE id=#{id}")
 	int updateReplyHit(Article article);
+	
 }
 

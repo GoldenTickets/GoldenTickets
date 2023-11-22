@@ -77,10 +77,28 @@ public class MovieService {
 		return movieMapper.getReviewCount(movie_id, mem_id);
 	}
 	
+
+
 	public int deleteReview(int movie_id,int mem_id) {//리뷰 삭제기능. 
 		int result = movieMapper.deleteReview(movie_id, mem_id);
 		double newRating = movieMapper.getReviewRating(movie_id);
 		result=movieMapper.updateReviewRating(newRating,movie_id);
 		return result;
+	}
+	
+	public int IsitBookdmarkedById(int movie_id,int mem_id){//movieinfo 페이지에서 로그인한 회원에 대해 해당영화가 북마크되었는지 확인
+		return movieMapper.IsitBookdmarkedById(movie_id, mem_id);//1이 반환되면 해당영화의 해당 아이디가 북마크 이미 한것. 0이면 안한것
+	}
+	
+	public List<Integer> bookmarkListById(int mem_id){//해당 아이디의 북마크한 모든 영화목록
+		return movieMapper.getBookmarkedMoviesById(mem_id);
+	};
+	
+	public int createBookmark(int movie_id,int mem_id) {//북마크 추가
+		return movieMapper.createBookmark(movie_id, mem_id);
+	}
+	
+	public int deleteBookmark(int movie_id,int mem_id) {//북마크 삭제
+		return movieMapper.deleteBookmark(movie_id, mem_id);
 	}
 }

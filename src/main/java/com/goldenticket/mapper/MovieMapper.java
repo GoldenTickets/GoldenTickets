@@ -118,4 +118,20 @@ public interface MovieMapper {
 	//리뷰 삭제기능
 	@Delete("DELETE FROM review WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
 	int deleteReview(int movie_id,int mem_id);
+	
+	//회원아이디의 아이디에 해당영화가 북마크 되었는지 확인 
+	@Select("SELECT COUNT(*) FROM bookmark WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
+	int IsitBookdmarkedById(int movie_id,int mem_id);
+	
+	//회원아이디에 따른 북마크된 영화 목록
+	@Select("SELECT movie_id FROM bookmark WHERE mem_id = #{mem_id}")
+	List<Integer> getBookmarkedMoviesById(int mem_id);
+	
+	//북마크 추가
+	@Insert("INSERT INTO bookmark(movie_id,mem_id) VALUES (#{movie_id},#{mem_id})")
+	int createBookmark(int movie_id,int mem_id);
+	
+	//북마크 삭제
+	@Delete("DELETE FROM bookmark WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
+	int deleteBookmark(int movie_id,int mem_id);
 }

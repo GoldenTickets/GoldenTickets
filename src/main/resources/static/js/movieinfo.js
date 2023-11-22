@@ -39,7 +39,7 @@ if (reviewSubmitButton) {
 	
 	   }
 	})
-	
+}	
 	
 	
 //리뷰 삭제기능
@@ -66,15 +66,47 @@ if (reviewDeleteButton) {
 	   })
 	 }
 	 
-//movieinfo_all 조회수 또는 업데이트
-function selectboxchange(){
-	var movieinfogenre=document.getElementById('movieinfoallgenre').value;
-	var selectboxvalue=document.getElementById('select-order').value;
-	if(selectboxvalue=='update'){
-		location.href="/movie?page=1&genre="+movieinfogenre+"&order="+selectboxvalue;
-	}else if(selectboxvalue=='hit'){
-		location.href="/movie?page=1&genre="+movieinfogenre+"&order="+selectboxvalue;
-	}
-}
 
-}
+//북마크 추가
+function bookmark_append(movie_id){
+	fetch('/movie/bookmark/'+movie_id,{
+		method:'GET'
+	}).then(response => {
+	  if(response.ok){
+		  alert('북마크가 추가되었습니다');
+		  location.reload();
+		  return response.text();
+	  }else{
+		  alert('로그인 후 이용가능합니다.');
+		  document.getElementById('offCanvasToggleButton').click();
+		  response.text()
+	  }
+	  })
+	  .catch(error => {
+		  alert('북마크 등록에 실패하었습니다');
+		  location.reload();
+	  })
+	}
+
+//북마크 취소
+function bookmark_cancel(movie_id){
+	fetch('/movie/deletebookmark/'+movie_id,{
+		method:'GET'
+	}).then(response => {
+	  if(response.ok){
+		  alert('북마크가 취소되었습니다');
+		  location.reload();
+		  return response.text();
+	  }else{
+		  alert('로그인 후 이용가능합니다.');
+		  document.getElementById('offCanvasToggleButton').click();
+		  response.text()
+	  }
+	  })
+	  .catch(error => {
+		  alert('북마크 취소에 실패하었습니다');
+		  location.reload();
+	  })
+	}
+
+
