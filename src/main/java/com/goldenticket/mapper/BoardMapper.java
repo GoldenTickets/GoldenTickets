@@ -21,6 +21,9 @@ public interface BoardMapper {
 	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id")
 	List<Article> getAll(RowBounds rowBounds);
 	
+	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE C.id = #{category}")
+	List<Article> getAllByCategory(RowBounds rowBounds, int category);
+	
 	@Insert("INSERT INTO article (mem_id, title, content, hit, regdate, updatedate, likes, dislikes) VALUES (#{article.mem_id}, #{article.title}, #{article.content}, #{article.hit}, curdate(), curdate(), #{article.likes}, #{article.dislikes})")
 	int save(@Param("article") Article article);
 	

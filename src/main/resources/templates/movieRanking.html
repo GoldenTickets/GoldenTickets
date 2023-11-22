@@ -4,15 +4,33 @@
     <div class="container">
       <div style="height:80px"></div>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">전체</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">액션</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">공포/스릴러</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">코미디</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">SF/판타지</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">드라마</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">멜로/로맨스</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">애니메이션</button>
-            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">다큐멘터리</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=0">전체</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=1">액션</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=2">공포/스릴러</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=3">코미디</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=4">SF/판타지</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=5">드라마</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=6">멜로/로맨스</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=7">애니메이션</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold">
+				<a style="color:black;" href="/movie/ranking?page=1&genre=8">다큐멘터리</a>
+			</button>
           </div>
         <div style="height:70px"></div>
         <div class=><b class="fs-2">전체 영화 순위</b></div>
@@ -43,7 +61,7 @@
               </a>
             </li>-->
             <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
-	                <a th:href="@{'/movie/ranking?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+	                <a th:href="@{'/movie/ranking?page=' + ${pageNumber} + '&genre=' + ${genre}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
 	            </li>
             <!--<li class="page-item">
               <a class="page-link" href="#" aria-label="Next">

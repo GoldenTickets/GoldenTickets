@@ -33,17 +33,24 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "15") int pagesize){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("articleList");
-		int pageSize = 10;
-		int startRow = (page-1)*pageSize;
-		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+		int startRow = (page-1)*pagesize;
+		RowBounds rowBounds = new RowBounds(startRow, pagesize); // 페이징 처리
 		List<Article> articles = boardMapper.getAll(rowBounds);
+		
+		if (category == 0) {
+			articles = boardMapper.getAll(rowBounds);
+		}else {
+			articles = boardMapper.getAllByCategory(rowBounds, category);
+		}
+		mav.addObject("pagesize", pagesize);
+		mav.addObject("category", category);
 		mav.addObject("articles", articles);
 		
 		int totalArticles = boardMapper.totalArticles();
-		int totalPages = (int) Math.ceil((double) totalArticles / pageSize); // 전체 페이지 수 구하기
+		int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);
 		
