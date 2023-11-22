@@ -26,11 +26,13 @@
 		</button>
     </div>
     <div class="col-1">
-      <select class="form-select form-select-sm" aria-label="Default select example">
-        <option value="1">15개</option>
-        <option value="2">20개</option>
-        <option value="3">25개</option>
+      <select class="form-select form-select-sm" aria-label="Default select example" id="pageSizeChange" onchange="selectpageSizeChange()">
+        <option value="15" id="selectoptionfirst">15개</option>
+        <option value="20" id="selectoptionsecond">20개</option>
+        <option value="25" id="selectoptionthird">25개</option>
       </select>
+    <input type="hidden" th:value="${pagesize}" id="pageSizeValue">
+    <input type="hidden" th:value="${category}" id="pageCategoryValue">
     </div>
   </div>
   <div style="height:15px;"></div>
