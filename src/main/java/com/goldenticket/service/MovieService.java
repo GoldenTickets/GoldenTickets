@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.DTO.Platform;
 import com.goldenticket.DTO.Review;
@@ -21,6 +22,12 @@ public class MovieService {
 	public Movie getMovieById(int id){//영화 정보 보기
 		return movieMapper.getMovieById(id);
 	};
+	
+	public int updateHit(int id) {
+		Movie movie=movieMapper.getMovieById(id);
+		movie.setHit(movie.getHit()+1);//조회수 1 증가
+		return movieMapper.updateHit(movie);
+	}
 	
 	public List<Object> getMoviePhoto(int id) {//영화 사진 가져오기 
 		//만약 사진이 5장이면 1장,4장으로 분리해야됨. carousel이 첫번째 사진을 class를 active로 따로 설정해야되기때문
