@@ -90,4 +90,16 @@ public class MemberController {
 		
 
 	}
+	
+	//북마크 추가하기
+	@PostMapping("/")
+	public ResponseEntity<String> saveBookmark(@RequestParam("movie_id") int movie_id, HttpSession session) throws Exception {
+		try {
+			int mem_id = (int) session.getAttribute("id");
+			memberService.saveBookmark(movie_id, mem_id);
+			return new ResponseEntity<>("success",HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
+		}
+	}
 }

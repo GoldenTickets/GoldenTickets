@@ -43,10 +43,10 @@
 			<a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;">
             <h5><b th:text="${item.ranking} + '  ' + ${item.title}"></b></h5>
             <p style="color:grey;" th:text="${#temporals.format(item.releasedate, 'yyyy')} + '  ' + ${item.runningtime} + '분'"></p>
-            <p style="color:grey;"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+            <p style="color:grey;"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${#numbers.formatDecimal(item.rating, 1, 1)}"></th:block></p>
             </a>
           </div>
-          <div class="col-2"><div style="height: 35px;"></div><button type="button" class="btn btn-outline-secondary">북마크에 추가</button></div> <!--나중에 북마크 추가 기능 만들기-->
+          <div class="col-2"><div style="height: 35px;"></div><button type="button" class="btn btn-outline-warning">북마크에 추가</button></div> <!--나중에 북마크 추가 기능 만들기-->
 		  <div style="height:15px"></div>
 		  <hr th:if="${iterStat.last}">
         </div>

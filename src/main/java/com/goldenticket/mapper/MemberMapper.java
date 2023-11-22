@@ -25,4 +25,8 @@ public interface MemberMapper {
 	//회원가입선호하는장르
 	@Insert("INSERT INTO member_genre (genre_id,mem_id) VALUES (#{genre_id},#{id})")
 	int setMemberGenre(@Param("genre_id")int genre_id,@Param("id")int id);
+	
+	//북마크 추가
+	@Insert("INSERT INTO bookmark (movie_id,mem_id) VALUES (#{movie_id},#{mem_id})")
+	int saveBookmark(@Param("movie_id")int movie_id,@Param("id")int mem_id);
 }
