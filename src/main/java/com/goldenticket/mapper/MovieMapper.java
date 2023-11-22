@@ -72,7 +72,7 @@ public interface MovieMapper {
 	List<Integer> getNewmovie_ids();
 	
 	//신작영화 id, title, rating, 사진이름 가져오기
-	@Select("SELECT M.id, M.title, M.rating, MP.photoname FROM movie M JOIN movie_photo MP ON M.id = MP.movie_id WHERE M.id = #{id} ORDER BY RAND() LIMIT 1")
+	@Select("SELECT DISTINCT M.id, M.title, M.rating, MP.photoname FROM movie M JOIN movie_photo MP ON M.id = MP.movie_id WHERE M.id = #{id} ORDER BY RAND() LIMIT 1")
 	Movie getNewmovie(int id);
 	
 	//신작영화 장르가져오기
@@ -87,12 +87,20 @@ public interface MovieMapper {
 	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN today_movie TM ON M.id = TM.movie_id WHERE TM.id BETWEEN 1 AND 5")
 	List<Movie> getTodaymovies();
 	
-	//오늘의 추천 영화 5개 갱신
-	@Insert("INSERT INTO today_movie (id, movie_id) VALUES (1, (SELECT id FROM movie WHERE rating >= 8.5 ORDER BY RAND() LIMIT 1)), (2, (SELECT id FROM movie WHERE rating >= 8.5 ORDER BY RAND() LIMIT 1)), (3, (SELECT id FROM movie WHERE rating >= 8.5 ORDER BY RAND() LIMIT 1)), (4, (SELECT id FROM movie WHERE rating >= 8.5 ORDER BY RAND() LIMIT 1)), (5, (SELECT id FROM movie WHERE rating >= 8.5 ORDER BY RAND() LIMIT 1)) ON DUPLICATE KEY UPDATE")
-	int updateTodaymovie();
+	//새로운 오늘의 추천 영화 id 5개 가져오기
+	@Select("SELECT DISTINCT id FROM movie WHERE rating >= 8.5 AND id NOT IN (select movie_id FROM today_movie) ORDER BY RAND() LIMIT 5")
+	List<Integer> getNewtodaymovie();
+	
+	//오늘의 추천 영화 테이블 비우기
+	@Delete("DELETE FROM today_movie WHERE id BETWEEN 1 AND 5")
+	int deletetodaymovies();
+	
+	//새로운 오늘의 추천 영화 갱신하기
+	@Insert("INSERT INTO today_movie (id, movie_id) VALUES (#{id}, #{movie_id}) ON DUPLICATE KEY UPDATE id=id")
+	int saveNewtodaymovie(int id, int movie_id);
 	
 	//회원님을 위한 맞춤 영화 10개 가져오기
-	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON MG.movie_id = M.id JOIN genre G ON MG.movie_id = G.id WHERE genre_id IN (SELECT genre_id FROM member_genre WHERE mem_id = #{id}) ORDER BY RAND() LIMIT 10")
+	@Select("SELECT DISTINCT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON MG.movie_id = M.id WHERE MG.genre_id IN (SELECT genre_id FROM member_genre WHERE mem_id = 1) ORDER BY RAND() LIMIT 10")
 	List<Movie> getCustommovies(int id);
 	
 	//골든티켓 회원들이 사랑하는 영화 10개

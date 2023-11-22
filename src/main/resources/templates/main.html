@@ -32,7 +32,7 @@
 					<th:block th:each="item, iterStat : ${newmovieGenres1}">
 					    <th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
 					</th:block>│
-					<th:block th:text="${newmovie1.rating}"></th:block>
+					<th:block th:text="${#numbers.formatDecimal(newmovie1.rating, 1,1)}"></th:block>
 				</p>
               </div>
             </a>  
@@ -49,7 +49,7 @@
 					<th:block th:each="item, iterStat : ${newmovieGenres2}">
 					    <th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
 					</th:block>│
-					<th:block th:text="${newmovie2.rating}"></th:block>
+					<th:block th:text="${#numbers.formatDecimal(newmovie2.rating, 1,1)}"></th:block>
 				</p>
               </div>
               </a>
@@ -66,7 +66,7 @@
 					<th:block th:each="item, iterStat : ${newmovieGenres3}">
 					    <th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
 					</th:block>│
-					<th:block th:text="${newmovie3.rating}"></th:block>
+					<th:block th:text="${#numbers.formatDecimal(newmovie3.rating, 1,1)}"></th:block>
 				</p>
               </div>
               </a>
@@ -83,7 +83,7 @@
 					<th:block th:each="item, iterStat : ${newmovieGenres4}">
 					    <th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
 					</th:block>│
-					<th:block th:text="${newmovie4.rating}"></th:block>
+					<th:block th:text="${#numbers.formatDecimal(newmovie4.rating, 1,1)}"></th:block>
 				</p>
               </div>
               </a>
@@ -165,7 +165,7 @@
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
 	                <b class="card-title" th:text="${item.title}"></b>
-	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${#numbers.formatDecimal(item.rating, 1,1)}"></th:block></p>
 	              </div>
             	</div>
             </a>
@@ -185,7 +185,7 @@
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
 	                <b class="card-title" th:text="${item.title}"></b>
-	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${#numbers.formatDecimal(item.rating, 1,1)}"></th:block></p>
 	              </div>
             	</div>
             </a>
@@ -196,7 +196,7 @@
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
 	                <b class="card-title" th:text="${item.title}"></b>
-	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></p>
+	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${#numbers.formatDecimal(item.rating, 1,1)}"></th:block></p>
 	              </div>
             	</div>
             </a>
@@ -206,14 +206,30 @@
         <div><b class="fs-4">영화 장르별로 보기</b></div>
         <hr>
         <div>
-          <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">액션</button>
-          <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">공포/스릴러</button>
-          <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">코미디</button>
-          <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">SF/판타지</button>
-          <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">드라마</button>
-          <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">멜로/로맨스</button>
-          <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">애니메이션</button>
-          <button type="button" class="btn btn-light fw-bold">다큐멘터리</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=1&order=' + ${order}}">액션</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=2&order=' + ${order}}">공포/스릴러</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=3&order=' + ${order}}">코미디</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=4&order=' + ${order}}">SF/판타지</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=5&order=' + ${order}}">드라마</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=6&order=' + ${order}}">멜로/로맨스</a>
+			</button>
+			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=7&order=' + ${order}}">애니메이션</a>
+			</button>
+            <button type="button" class="btn btn-light fw-bold">
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=8&order=' + ${order}}">다큐멘터리</a>
+			</button>
         </div>
       </div>
       <div class="col-3">

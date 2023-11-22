@@ -14,4 +14,5 @@ public class Member {
 	
 	//조인 컬럼
 	private List<Integer> member_genre;
+	//private int movie_id;
 }
