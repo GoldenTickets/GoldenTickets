@@ -48,17 +48,24 @@ public interface MovieMapper {
 	@Insert("INSERT INTO review (movie_id,mem_id,rating,content,regdate) values(#{review.movie_id},#{review.mem_id},#{review.rating},#{review.content},current_timestamp)")
 	int createMovieReview(Review review,int id);
 	
+	//모든 영화 가져오기
 	@Select("SELECT id, title, poster, rating FROM movie ORDER BY #{order} DESC")
 	List<Movie> getAllMovies(RowBounds rowBounds, String order);
 	
+	//장르별 영화 가져오기
 	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY #{order} DESC")
 	List<Movie> getAllMoviesByGenre(RowBounds rowBounds, String order, int genre);
 	
 	@Select("SELECT count(*) FROM movie")
 	int totalMovies();
 	
-	@Select("SELECT id, title, synopsis, releasedate, director, runningtime, poster, trailer, rating, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC")
+	//모든 영화 평점순으로 가져오기
+	@Select("SELECT id, title, synopsis, releasedate, runningtime, poster, rating, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC")
 	List<Movie> getRanking(RowBounds rowBounds);
+	
+	//장르별 영화 평점순으로 가져오기
+	@Select("SELECT M.id, M.title, M.synopsis, M.releasedate, M.runningtime, M.poster, M.rating, ROW_NUMBER() OVER (ORDER BY M.rating DESC) as ranking FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY M.rating DESC")
+	List<Movie> getRankingByGenre(RowBounds rowBounds, int genre);
 	
 	//신작영화 번호 리스트 가져오기 -> 관리자 관리
 	@Select("SELECT movie_id FROM new_movie")

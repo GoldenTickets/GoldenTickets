@@ -101,7 +101,7 @@ public class MovieController {
 	}
 
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int genre, @RequestParam(defaultValue = "update") String order) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int genre, @RequestParam(defaultValue = "id") String order) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieInfo_all");
 		int pageSize = 15;
@@ -129,13 +129,20 @@ public class MovieController {
 	
 
 	@GetMapping("/ranking")
-		public ModelAndView getRanking(@RequestParam(defaultValue = "1") int page){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+		public ModelAndView getRanking(@RequestParam(defaultValue = "1") int page,  @RequestParam(defaultValue = "0") int genre){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieRanking");
 		int pageSize = 10;
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		List<Movie> movies = movieMapper.getRanking(rowBounds);
+		List<Movie> movies;
+		
+		if (genre == 0) {
+			movies = movieMapper.getRanking(rowBounds);
+		}else {
+			movies = movieMapper.getRankingByGenre(rowBounds, genre);
+		}
+		mav.addObject("genre", genre);
 		mav.addObject("movies", movies);
 		
 		int totalMovies = movieMapper.totalMovies();

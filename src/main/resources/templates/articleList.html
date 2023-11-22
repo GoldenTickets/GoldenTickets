@@ -9,17 +9,30 @@
   <!--<div style="height:10px;"></div>-->
   <div class="row">
     <div class="col-11">
-      <button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">공지</button>
-      <button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">뉴스</button>
-      <button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">리뷰</button>
-      <button type="button" class="btn btn-outline-dark fw-bold">일반</button>
+		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=0&pagesize=' + ${pagesize}}">전체</a>
+		</button>
+		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=1&pagesize=' + ${pagesize}}">공지</a>
+		</button>
+		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=2&pagesize=' + ${pagesize}}">뉴스</a>
+		</button>
+		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=3&pagesize=' + ${pagesize}}">리뷰</a>
+		</button>
+		<button type="button" class="btn btn-outline-dark fw-bold">
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=4&pagesize=' + ${pagesize}}">일반</a>
+		</button>
     </div>
     <div class="col-1">
-      <select class="form-select form-select-sm" aria-label="Default select example">
-        <option value="1">15개</option>
-        <option value="2">30개</option>
-        <option value="3">50개</option>
+      <select class="form-select form-select-sm" aria-label="Default select example" id="pageSizeChange" onchange="selectpageSizeChange()">
+        <option value="15" id="selectoptionfirst">15개</option>
+        <option value="20" id="selectoptionsecond">20개</option>
+        <option value="25" id="selectoptionthird">25개</option>
       </select>
+    <input type="hidden" th:value="${pagesize}" id="pageSizeValue">
+    <input type="hidden" th:value="${category}" id="pageCategoryValue">
     </div>
   </div>
   <div style="height:15px;"></div>
@@ -31,21 +44,19 @@
       <th scope="col">닉네임</th>
       <th scope="col">날짜</th>
       <th scope="col">조회</th>
-      <th scope="col">👍🏻</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="item : ${articles}">
       <td th:text="${item.categoryname}"></td>
-      <td colspan="3"><a th:href="@{/board/{id}(id=${item.id})}"><at th:text="${item.title}"></at></a></td>
+      <td colspan="3"><a style="color:black" th:href="@{/board/{id}(id=${item.id})}"><th:block th:text="${item.title}"></th:block></a></td>
       <td th:text="${item.nickname}"></td>
-      <td th:text="${item.regdate}"></td>
+      <td th:text="${#temporals.format(item.regdate,'yyyy-MM-dd HH:mm')}"></td>
       <td th:text="${item.hit}"></td>
-      <td th:text="${item.likes}"></td>
     </tr>
     </tbody>
   </table>
-  <div style="height:20px"></div>
+  <div style="height:20px;"></div>
   <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center text-dark">
       <!--<li class="page-item">   추후에 적용시키기 10개씩 끊기
