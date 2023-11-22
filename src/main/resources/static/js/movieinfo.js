@@ -65,4 +65,16 @@ if (reviewDeleteButton) {
 	
 	   })
 	 }
+	 
+//movieinfo_all 조회수 또는 업데이트
+function selectboxchange(){
+	var movieinfogenre=document.getElementById('movieinfoallgenre').value;
+	var selectboxvalue=document.getElementById('select-order').value;
+	if(selectboxvalue=='update'){
+		location.href="/movie?page=1&genre="+movieinfogenre+"&order="+selectboxvalue;
+	}else if(selectboxvalue=='hit'){
+		location.href="/movie?page=1&genre="+movieinfogenre+"&order="+selectboxvalue;
+	}
+}
+
 }
