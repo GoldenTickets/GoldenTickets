@@ -2,10 +2,13 @@ package com.goldenticket.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +36,7 @@ public class MovieController {
 	
 
 	@GetMapping("/{id}")
-	public ModelAndView getAllMovies(@RequestParam(defaultValue = "1") int page, @PathVariable int id)throws Exception {
+	public ModelAndView getAllMovies(@RequestParam(defaultValue = "1") int page, @PathVariable int id){
 		ModelAndView mav=new ModelAndView("movieinfo");
 		
 		int pageSize = 10;
@@ -56,17 +59,34 @@ public class MovieController {
 		return mav;
 		}
 	
-
+	//리뷰작성기능. 회원당 리뷰 작성 횟수 1회 제한. (평점을 여러번 매길수없도록)
 	@PostMapping("/submitreview/{id}")
-	public int reviewSubmit(@RequestBody Review review,@PathVariable int id) {
-		int result = movieService.createMovieReview(review,id);
-		
-		return result;
+	public ResponseEntity<String> reviewSubmit(@RequestBody Review review,
+											   @PathVariable int id,
+											   HttpSession session){
+		try {
+			int result = movieService.createMovieReview(review,id,(int)session.getAttribute("id"));
+
+			if(result==2) {//해당 리뷰에대해 회원이 이미 작성한 리뷰가 있을경우
+				return new ResponseEntity<>("duplicated",HttpStatus.OK);
+			
+			}else if(result==1) {//최종적으로 리뷰 작성에 성공했을경우
+				return new ResponseEntity<>("success",HttpStatus.OK);
+			}else{
+				return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
+			}
+		}catch(NullPointerException e) {//로그인이 안되어있으면 위의 session.getAttriute를 하는과정에서 nullPointException 발생함
+			e.printStackTrace();
+			return new ResponseEntity<>("needLogin",HttpStatus.OK);
+		}catch(Exception e) {//그 외의 이유로 회원가입이 실패했을경우 예외 반환
+			e.printStackTrace();
+			return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieInfo_all");
 		int pageSize = 15;
@@ -86,7 +106,7 @@ public class MovieController {
 	
 
 	@GetMapping("/ranking")
-		public ModelAndView getRanking(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+		public ModelAndView getRanking(@RequestParam(defaultValue = "1") int page){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieRanking");
 		int pageSize = 10;

@@ -117,16 +117,12 @@ if (signupButton) {
 		}
 		
 		if(nameValue.val().length<1){
-		    
 			alert('이름을 확인해주세요');
-		}else if(emailValue.val().length<1){
-			
+		}else if(emailValue.val().length<1){	
 			alert('이메일을 확인해주세요');
 		}else if(passwordValue.val().length<4){
-		
 			alert('비밀번호를 확인해주세요');
 		}else if(repasswordValue.val()!=passwordValue.val()){
-		
 			alert('비밀번호가 일치하는지 확인해주세요');
 		}else if(nicknameValue.val().length<2){
 			alert('닉네임을 확인해주세요');

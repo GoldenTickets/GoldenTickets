@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.goldenticket.DTO.Movie;
@@ -87,4 +88,16 @@ public interface MovieMapper {
 	//상위 10개 영화 가져오기
 	@Select("SELECT id, title, poster, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC LIMIT 10;")
 	List<Movie> getTopMovies();
+	
+	//리뷰 이미 작성했는지 확인하기 위해 해당영화에 대한 회원의 리뷰 갯수확인
+	@Select("SELECT count(*) FROM review WHERE movie_id=#{movie_id} and mem_id=#{mem_id}")
+	int getReviewCount(int movie_id,int mem_id);
+	
+	//리뷰평점 가져오기
+	@Select("SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id}")
+	double getReviewRating(int movie_id);
+	
+	//리뷰 작성후 해당영화 평균 평점 업데이트
+	@Update("UPDATE movie SET rating = #{newRating} WHERE id = #{movie_id}")
+	int updateReviewRating(double newRating,int movie_id);
 }

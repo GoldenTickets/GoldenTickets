@@ -22,7 +22,7 @@ public class MovieService {
 		return movieMapper.getMovieById(id);
 	};
 	
-	public List<Object> getMoviePhoto(int id) {//영화 사진 가져오기 
+	public List<Object> getMoviePhoto(int id){//영화 사진 가져오기 
 		//만약 사진이 5장이면 1장,4장으로 분리해야됨. carousel이 첫번째 사진을 class를 active로 따로 설정해야되기때문
 		List<String> moviePhotoList=movieMapper.getMoviePhoto(id);
 		String moviePhotoFirst= moviePhotoList.get(0);//carousel에 첫번째로 노출될 사진 
@@ -46,7 +46,35 @@ public class MovieService {
 		return movieMapper.getMovieReview(id, rowBounds);
 	}
 	
-	public int createMovieReview(Review review,int id) {//영화 리뷰 작성하기
-		return movieMapper.createMovieReview(review,id);
+	public int createMovieReview(Review review,int id,int mem_id){//영화 리뷰 작성하기
+		int reviewCount = movieMapper.getReviewCount(id, mem_id);//리뷰 작성하기 위해 해당리뷰에 작성한 사용자의 리뷰갯수 가져옴
+		if(reviewCount==1) {
+			return 2;//해당영화에 대해 작성한 리뷰가 이미 있는경우 2를 반환
+		}else {
+			int result = movieMapper.createMovieReview(review,id);//해당영화에 대해 작성한 리뷰갯수가 0일경우,그리고 성공했을경우 1 반환. 실패하면 예외발생
+				try {
+				double newRating = movieMapper.getReviewRating(id);
+;
+				/*
+				System.out.println("rating=>"+rating);
+				System.out.println("review.getRating()=>"+review.getRating());
+				System.out.println("ratingSum=>"+ratingSum);
+				System.out.println("ratingCount=>"+ratingCount);
+				System.out.println("(double)review.getRating()+ratingSum=>"+(double)review.getRating()+ratingSum);
+				System.out.println("ratingCount+1=>"+ratingCount+1);
+				System.out.println("newRating=>"+newRating);
+				*/
+				movieMapper.updateReviewRating(newRating,id);//새로 구한 평균으로 rating 컬럼값 업데이트
+				
+				return result;
+				}catch(Exception e) {
+					e.printStackTrace();
+					return 3;
+				}
+		}
+	}
+	
+	public int getReviewCount(int movie_id,int mem_id){//리뷰 작성하기 위해 
+		return movieMapper.getReviewCount(movie_id, mem_id);
 	}
 }

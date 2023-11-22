@@ -21,7 +21,7 @@ public class MainController {
 	private MovieMapper movieMapper;
 	
 	@GetMapping("")
-	public ModelAndView getAll(HttpSession session) {
+	public ModelAndView getAll(HttpSession session){
 		
 		ModelAndView mav = new ModelAndView("main");
 		List<Integer> list = movieMapper.getNewmovie_ids();

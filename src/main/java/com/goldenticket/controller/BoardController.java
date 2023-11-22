@@ -33,7 +33,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("articleList");
 		int pageSize = 10;
@@ -51,7 +51,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/{id}")
-	public ModelAndView getById(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id) {
+	public ModelAndView getById(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id){
 		boardService.updateHit(id);//조회수 1 증가
 		
 		int pageSize = 10;
@@ -75,14 +75,14 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write")
-	public ModelAndView writeArticle() {
+	public ModelAndView writeArticle(){
 		ModelAndView mav = new ModelAndView("newArticle");
 		return mav;
 	}
 	
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PostMapping("")
-	public Article post(@RequestBody Article article) {
+	public Article post(@RequestBody Article article){
 		System.out.println(article);
 		int cid = article.getCategory_id();
 		boardMapper.save(article);
@@ -94,7 +94,7 @@ public class BoardController {
 	
 	//글 수정하기 페이지로 이동
 	@GetMapping("/update/{id}")
-	public ModelAndView update(@PathVariable int id) {
+	public ModelAndView update(@PathVariable int id){
 		
 		Article article = boardService.getArticleById(id);
 		ModelAndView mav = new ModelAndView("update/"+id);
@@ -104,7 +104,7 @@ public class BoardController {
 	
 	@Transactional(rollbackFor=Exception.class)
 	@PutMapping("")
-	public Article update(@RequestBody Article article) {
+	public Article update(@RequestBody Article article){
 		boardService.updateArticle(article);
 		//boardService.acUpdate(article); // 조건문 넣기
 		return article;
@@ -113,14 +113,14 @@ public class BoardController {
 	//글 삭제하기
 	@Transactional(rollbackFor=Exception.class)
 	@DeleteMapping("/delete/{id}")
-	public ModelAndView delete(@PathVariable int id) {
+	public ModelAndView delete(@PathVariable int id){
 		//boardMapper.deleteac(article);
 		boardService.deleteArticle(id);
 		return new ModelAndView("redirect:/board");
 	}
 	
 	@PostMapping("/submitreply/{id}")
-	public ModelAndView createReply(@RequestBody Reply reply,@PathVariable int id) {
+	public ModelAndView createReply(@RequestBody Reply reply,@PathVariable int id){
 		boardService.createReply(reply);
 		return new ModelAndView("redirect:/board/"+id);
 	}

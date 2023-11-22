@@ -14,31 +14,31 @@ public class BoardService {
 	private BoardMapper boardMapper;
 	
 	//게시글 상세
-	public Article getArticleById(int id) {
+	public Article getArticleById(int id){
 		Article article=boardMapper.getById(id);
 		return article;
 	}
 	
 	
 	//게시글 조회수증가
-	public int updateHit(int id) {
+	public int updateHit(int id){
 		Article article=boardMapper.getById(id);
 		article.setHit(article.getHit()+1);//조회수 1 증가
 		return boardMapper.updateReplyHit(article);
 	}
 	
 	//리뷰작성하기
-	public int createReply(Reply reply) {
+	public int createReply(Reply reply){
 		return boardMapper.createReply(reply);
 	};
 	
 	//글수정하기
-	public int updateArticle(Article article) {
+	public int updateArticle(Article article){
 		return boardMapper.articleUpdate(article);
 	}
 	
 	//글삭제하기
-	public int deleteArticle(int id) {
+	public int deleteArticle(int id){
 		return boardMapper.deleteArticle(id);
 	}
 	

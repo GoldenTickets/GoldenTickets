@@ -37,17 +37,21 @@ public class MemberController {
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestParam("email") String email,
 			 					  @RequestParam("password") String password,
-			 					  HttpSession session) {
+			 					  HttpSession session) throws Exception {
 		try {
-			memberService.loginCheck(email,password);
-		
-			int membeno=memberService.getMember(email).getId();
-			String nickname=memberService.getMember(email).getNickname();
+			int result = memberService.loginCheck(email,password);
+			if(result==1) {//로그인 아이디비밀번호 일치할경우
+				int membeno=memberService.getMember(email).getId();
+				String nickname=memberService.getMember(email).getNickname();
 
-			session.setAttribute("id",membeno);
-			session.setAttribute("nickname",nickname);	
-			
-			return new ResponseEntity<>("ok",HttpStatus.OK);//로그인 성공할 경우 OK실행
+				session.setAttribute("id",membeno);
+				session.setAttribute("nickname",nickname);
+				
+				return new ResponseEntity<>("ok",HttpStatus.OK);//로그인 성공할 경우 OK실행
+			}else {//아이디 비밀번호 불일치일 경우 result = 0 
+				return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);//로그인 실패할경우 400 반환 
+			}	
+
 		}catch(Exception e) {//ㅇ
 			return new ResponseEntity<>("ok",HttpStatus.BAD_REQUEST);//로그인 실패할경우 400 반환 
 		}
@@ -55,14 +59,14 @@ public class MemberController {
 
 	//로그아웃
 	@GetMapping("/logout")
-	public ResponseEntity<String> logout(HttpSession session) {
+	public ResponseEntity<String> logout(HttpSession session){
 		session.invalidate();
 		return new ResponseEntity<>("logout",HttpStatus.OK); 
 	}
-	
+
 	//회원가입페이지로 이동
 	@GetMapping("/signup")
-	public ModelAndView signup(HttpSession session) {
+	public ModelAndView signup(HttpSession session){
 		if(session.getAttribute("nickname")!=null) {
 			return new ModelAndView("main");
 		}else {
