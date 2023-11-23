@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
+	<script src="/js/board.js"></script>
     <div class="container">
       <div style="height:100px;"></div>
       <div><h2 class="fw-bold">글쓰기</h2></div>
@@ -38,7 +39,7 @@
         <div class="col-3 d-flex justify-content-end">
 		  <button type="button" onclick="location.herf='/board'" class="btn btn-outline-secondary">취소</button>
           <span style="width: 20px;"></span>
-          <button type="button" id="create-btn" class="btn btn-outline-primary">등록</button>
+          <button type="button" class="btn btn-outline-primary" onclick="writeValidate()">등록</button>
       </div>
       <div style="height:75px"></div>
     </div>

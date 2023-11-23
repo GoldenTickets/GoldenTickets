@@ -24,14 +24,17 @@ public interface BoardMapper {
 	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE C.id = #{category}")
 	List<Article> getAllByCategory(RowBounds rowBounds, int category);
 	
-	@Insert("INSERT INTO article (mem_id, title, content, hit, regdate, updatedate, likes, dislikes) VALUES (#{article.mem_id}, #{article.title}, #{article.content}, #{article.hit}, curdate(), curdate(), #{article.likes}, #{article.dislikes})")
-	int save(@Param("article") Article article);
+	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id}")//댓글가져오기
+	List<Reply> getByArticle_id(@Param("id") int id, RowBounds rowBounds);
+	
+	@Insert("INSERT INTO article (mem_id, title, content, regdate) VALUES (#{article.mem_id}, #{article.title}, #{article.content}, curdate())")
+	int createArticle(@Param("article") Article article);
+	
+	@Insert("INSERT INTO article_category (article_id,category_id) VALUES (#{article_id}, #{category_id})")
+	int createArticleCategory(int article_id,int category_id);
 	
 	@Select("SELECT MAX(id) AS id FROM article")
 	Article getNewId();
-	
-	@Insert("INSERT INTO article_category (article_id, category_id) VALUES (#{article.id}, #{article.category_id})")
-	int save2(@Param("article") Article article);
 	
 	@Update("UPDATE article SET title = #{article.title}, content = #{article.content}, updatedate = curdate() WHERE id = #{article.id}")
 	int articleUpdate(@Param("article") Article article);
@@ -40,17 +43,17 @@ public interface BoardMapper {
 	int acUpdate(@Param("article") Article article);
 	
 	@Delete("DELETE FROM article WHERE id = #{id}")
-	int deleteArticle(int id); // 파라미터 그냥 id로 바꾸기
+	int deleteArticle(int id) throws Exception; // 파라미터 그냥 id로 바꾸기
 	
-	@Delete("DELETE FROM article_category WHERE article_id = #{article.id}") // cascade 옵션 써서 이 메서드 지워버리기
-	int deleteac(@Param("article") Article article);
+	@Delete("DELETE FROM reply WHERE id = #{id}") //댓글삭제기능
+	int deleteReply(int id) throws Exception;
+	
+	@Select("SELECT mem_id FROM reply WHERE id = #{reply_id}")//댓글 삭제 위해서 해당 댓글의 작성자가 session의 사용자와 일치하는지확인
+	int confirmIdOfReply(int id);
 	
 	// 페이징 처리
 	@Select("SELECT count(*) FROM article")
 	int totalArticles();
-	
-	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id}")
-	List<Reply> getByArticle_id(@Param("id") int id, RowBounds rowBounds);
 	
 	@Select("SELECT COUNT(*) FROM reply WHERE article_id = #{id}")
 	int getTotalreply(int id);

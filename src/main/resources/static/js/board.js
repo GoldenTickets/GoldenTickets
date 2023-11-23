@@ -1,23 +1,4 @@
 
-// 삭제 기능
-const deleteButton = document.getElementById('delete-btn');
-
-if (deleteButton) {
-    deleteButton.addEventListener('click', event => {
-        let id = document.getElementById('article-id').value;
-        function success() {
-            alert('삭제가 완료되었습니다.');
-            location.replace('/articles');
-        }
-
-        function fail() {
-            alert('삭제 실패했습니다.');
-            location.replace('/articles');
-        }
-
-        httpRequest('DELETE',`/api/articles/${id}`, null, success, fail);
-    });
-}
 
 // 수정 기능
 const modifyButton = document.getElementById('modifycomplete-btn');
@@ -47,56 +28,6 @@ if (modifyButton) {
     });
 }
 
-// 생성 기능
-const createButton = document.getElementById('create-btn');
-
-if (createButton) {
-    // 등록 버튼을 클릭하면 /api/articles로 요청을 보낸다
-    createButton.addEventListener('click', event => {
-        body = JSON.stringify({
-			mem_id: document.getElementById('mem_id').value,
-            title: document.getElementById('title').value,
-            content: document.getElementById('content').value,
-            hit: 0,
-            likes: 0,
-            dislikes: 0,
-            category_id: document.querySelector('input[name="category"]:checked').value
-        });
-        function success() {
-            alert('등록 완료되었습니다.');
-            location.replace('/board');
-        };
-        function fail() {
-            alert('등록 실패했습니다.');
-            location.replace('/board');
-        };
-
-        httpRequest('POST','/board', body, success, fail)
-    });
-}
-
-//댓글쓰기 기능
-const replySubmitButton=document.getElementById('replySubmitButton');
-
-if (replySubmitButton) {
-	replySubmitButton.addEventListener('click',event => {
-		var article_id = document.getElementById('article_id').value;
-		var replywriter_id = document.getElementById('replywriter_id').value;
-		
-		fetch('/board/submitreply/'+article_id,{
-			method:'POST',
-			headers:{"Content-Type":"application/json"},
-			body:JSON.stringify({
-				article_id:article_id,
-				mem_id:replywriter_id,
-				content:$('#reviewcontent').val()	
-			})
-		}).then(()=>{
-			alert('리뷰 등록이 완료되었습니다.');
-			location.reload();
-		})
-	})
-}
 
 // 쿠키를 가져오는 함수
 function getCookie(key) {
@@ -166,3 +97,150 @@ function selectpageSizeChange(){
 	//pageSizeFromParam=document.getElementById('pageSizeValue').value;
 	location.href="/board?category="+pageCategoryFromParam+"&pagesize="+selectedValue;
 }
+
+
+//게시판 글쓰기 검증 
+function writeValidate(){
+	
+	var categoryValue = $('input[name=category]:checked').val();
+	var titleValue = $('#title').val();
+	var contentValue = $('#content').val();
+	
+	if(categoryValue==null){
+		alert('카테고리를 선택해주세요.');
+	}else if(titleValue.length<1){
+		alert('제목을 입력해주세요.');
+	}else if(contentValue.length<1){
+		alert('내용을 입력해주세요.');
+	}else{
+		let askbeforewrite = confirm("등록 하시겠습니까?");
+		if(askbeforewrite){
+			fetch('/board/write',{
+			    method:'POST',
+			    headers:{"Content-Type":"application/json"}
+			    ,body:JSON.stringify({
+			        category_id:categoryValue,
+			        title:titleValue,
+			        content:contentValue
+			    })
+			}).then(response => response.text())
+	  		.then(data => {
+	     		 if(data=="success"){
+	          		alert('등록되었습니다.');
+	          		location.href="/board";
+	      		 }else if(data=="needLogin"){
+	          		alert('로그인이 필요합니다.');
+	          		document.getElementById('offCanvasToggleButton').click();
+	      		 }
+	  		})
+		}
+	}
+}
+
+//게시판 검증 후 수정 
+function updateArticle(){
+	
+	var categoryValue = $('input[name=category]:checked').val();
+	var titleValue = $('#title').val();
+	var contentValue = $('#content').val();
+	
+	if(categoryValue==null){
+		alert('카테고리를 선택해주세요.');
+	}else if(titleValue.length<1){
+		alert('제목을 입력해주세요.');
+	}else if(contentValue.length<1){
+		alert('내용을 입력해주세요.');
+	}else{
+		let askbeforewrite = confirm("등록 하시겠습니까?");
+		if(askbeforewrite){
+			fetch('/board/update/'+$('#article_id').val(),{
+			    method:'PUT',
+			    headers:{"Content-Type":"application/json"}
+			    ,body:JSON.stringify({
+			        category_id:categoryValue,
+			        title:titleValue,
+			        content:contentValue
+			    })
+			}).then(response => response.text())
+	  		.then(data => {
+	     		 if(data=="success"){
+	          		alert('수정되었습니다.');
+	          		location.href="/board/"+$('#article_id').val();
+	      		 }else if(data=="needLogin"){
+	          		alert('로그인이 필요합니다.');
+	          		document.getElementById('offCanvasToggleButton').click();
+	      		 }else{
+					alert('수정 실패했습니다.'); 
+				 }
+	  		})
+		}
+	}
+}
+
+//게시판 글삭제
+function delete_article(){
+		let askbeforedelete = confirm("삭제 하시겠습니까?");
+		if(askbeforedelete){
+			fetch('/board/delete/'+$('#article_id').val(),{
+			    method:'DELETE'
+			}).then(response => response.text())
+	  		.then(data => {
+	     		 if(data=="success"){
+	          		alert('삭제되었습니다.');
+	          		location.href="/board"
+	      		 }else if(data=="needLogin"){
+	          		alert('로그인이 필요합니다.');
+	          		document.getElementById('offCanvasToggleButton').click();
+	      		 }
+	  		})
+  		}
+}
+
+
+//게시판 댓글쓰기 검증
+function replyValidate(){
+	
+	let contentValue = $('#replyTextArea').val();
+	
+	if(contentValue.length<1){
+		alert('내용을 입력해주세요.');
+	}else{
+		fetch('/board/replywrite',{
+		    method:'POST',
+		    headers:{"Content-Type":"application/json"}
+		    ,body:JSON.stringify({
+				article_id:$('#article_id').val()
+				,content:contentValue
+		    })
+		}).then(response => response.text())
+  		.then(data => {
+     		 if(data=="success"){
+          		alert('등록되었습니다.');
+          		location.reload();
+      		 }else if(data=="needLogin"){
+          		alert('로그인이 필요합니다.');
+          		document.getElementById('offCanvasToggleButton').click();
+      		 }
+  		})
+	}
+}
+
+//게시판 댓글글삭제
+function delete_reply(){
+		let askbeforedelete = confirm("삭제 하시겠습니까?");
+		if(askbeforedelete){
+			fetch('/board/deleteReply/'+$('#reply_id').val(),{
+			    method:'DELETE'
+			}).then(response => response.text())
+	  		.then(data => {
+	     		 if(data=="success"){
+	          		alert('삭제되었습니다.');
+	          		location.href="/board"
+	      		 }else if(data=="needLogin"){
+	          		alert('로그인이 필요합니다.');
+	          		document.getElementById('offCanvasToggleButton').click();
+	      		 }
+	  		})
+  		}
+}
+
