@@ -108,12 +108,14 @@ public class MovieController {
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		List<Movie> movies;
+		System.out.println(order);
 		
 		if (genre == 0) {
 			movies = movieMapper.getAllMovies(rowBounds, order);
 		}else {
 			movies = movieMapper.getAllMoviesByGenre(rowBounds, order, genre);
 		}
+		System.out.println(movies);
 		mav.addObject("order", order);
 		mav.addObject("genre", genre);
 		

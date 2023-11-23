@@ -38,8 +38,8 @@ public class MemberService {
 		return memberMapper.setMemberGenre(genre_id, id);
 	}
 	
-	//북마크 추가
-	public int saveBookmark(int movie_id, int mem_id) throws Exception {
-		return memberMapper.saveBookmark(movie_id, mem_id);
-	}
+	//회원정보 전부 가져오기
+		public Member getMemberinfo(int id) { //예외처리 나중에 하기
+			return memberMapper.getMemberinfo(id);
+		}
 }

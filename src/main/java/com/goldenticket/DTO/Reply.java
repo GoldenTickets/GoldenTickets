@@ -15,4 +15,7 @@ public class Reply {
 	private LocalDateTime regdate;
 	private LocalDateTime updatedate;
 	private String nickname;
+	
+	//조인 컬럼
+	private String title;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
-   <div class="container">
+    <div class="container">
       <div class="row">
         <div class="col-2">
           <div style="height:75px;"></div>
@@ -21,21 +21,23 @@
         </div>
         <div class="col-10">
           <div style="height:70px;"></div>
-          <div class="d-flex justify-content-start"><b class="fw-bold fs-3">북마크 관리</b></div>
+          <div class="d-flex justify-content-start"><b class="fw-bold fs-3">작성 댓글 관리</b></div>
           <div style="height:50px;"></div>
-          <div class="row row-cols-1 row-cols-md-5 g-4">
-          <div class="col" th:each="item : ${movies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;">
-            	<div class="card">
-	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
-	              <div class="card-body">
-	                <b class="card-title" th:text="${item.title}"></b>
-	                <p class="card-text"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${#numbers.formatDecimal(item.rating, 1, 1)}"></th:block></p>
-	              </div>
-            	</div>
-            </a>
-          </div>
-          </div>
+          <div class="row" th:each="item, iterStat: ${replies}">
+		  <hr>
+		  <div class="col-4">
+			  <a th:href="@{/board/{id}(id=${item.article_id})}" style="text-decoration: none; color: inherit;" th:text="${item.title}"></a>
+		  </div>
+		  <div class="col-5"><a th:href="@{/board/{id}(id=${item.article_id})}" style="text-decoration: none; color: inherit;" th:text="${item.content}"></a></div>
+		  <div class="col-2">
+			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
+		  </div>
+		  <div class="col-1">
+			  <button type="button" class="btn btn-danger" id="reviewDeleteButton">X</button>
+		  </div>
+		  <div style="height:13px;"></div>
+		  <hr th:if="${iterStat.last}">
+	  </div>
           <div style="height:30px"></div>
           <!-- 페이지네이션 버튼 수정하기 -->
         <div class="d-flex justify-content-center">
@@ -47,7 +49,7 @@
 		              </a>
 		            </li>-->
 		            <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
-		                <a th:href="@{'/mypage/bookmark?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+		                <a th:href="@{'/mypage/reply?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
 		            </li>
 		            <!--<li class="page-item">
 		              <a class="page-link" href="#" aria-label="Next">

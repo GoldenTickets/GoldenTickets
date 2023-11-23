@@ -126,4 +126,5 @@ public interface MovieMapper {
 	//리뷰 삭제기능
 	@Delete("DELETE FROM review WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
 	int deleteReview(int movie_id,int mem_id);
+	
 }

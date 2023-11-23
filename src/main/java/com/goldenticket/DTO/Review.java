@@ -15,7 +15,8 @@ public class Review {
 	private int liked;//해당 리뷰에 대한 좋아요
 	private int disliked;//해당 리뷰에 대한 싫어요
 	
-	//조인해서 가져온 작성자 nickname;
+	//조인 컬럼;
 	private String nickname;
+	private String title;
 
 }
