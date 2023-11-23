@@ -1,10 +1,9 @@
-const reviewSubmitButton = document.getElementById('reviewwrite-btn');
+const reviewSubmitButton = document.getElementById('reviewwrite-btn');//자꾸 로드 안돼서 onclick으로 변경
 const reviewLikeButton = document.getElementById('reviewlike');
 const reviewDislikeButton = document.getElementById('reviewdislike');
 
 //리뷰 등록기능
-if (reviewSubmitButton) {
-	reviewSubmitButton.addEventListener('click',event => {
+function reviewSubmit() {
 		var reviewmovieid=document.getElementById('movie_id').value;
 		var reviewmemberid=document.getElementById('member_id').value;
 		if($('input[name=starpoint]:checked').val()==null){
@@ -38,13 +37,11 @@ if (reviewSubmitButton) {
 				  
 	
 	   }
-	})
 }	
 	
 	
 //리뷰 삭제기능
-if (reviewDeleteButton) {
-	reviewDeleteButton.addEventListener('click',event => {
+function reviewDelete() {
 			var reviewDeleteButton = document.getElementById('reviewDeleteButton');
 			var movie_id_fordelete=document.getElementById('movie_id').value;
 			fetch('/movie/deleteReview/'+movie_id_fordelete,{
@@ -61,9 +58,7 @@ if (reviewDeleteButton) {
 			  }).catch(error=>{
 				  alert('삭제에 실패했습니다.');
 			  })
-				  
-	
-	   })
+
 	 }
 	 
 

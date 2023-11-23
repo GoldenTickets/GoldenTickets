@@ -8,8 +8,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -102,14 +105,59 @@ public class MemberController {
 
 	}
 	
+	//마이페이지 회원 수정페이지로 이동 
 	@GetMapping("/mypage")
 	public ModelAndView mypage(HttpSession session) {
-		ModelAndView mav = new ModelAndView("mypage");
-		int id = (int) session.getAttribute("id");
-		Member member = memberService.getMemberinfo(id);
-		mav.addObject("member", member);
-		return mav;
+		try {
+			int mem_id;
+			Object session_id = session.getAttribute("id");
+			if(session_id != null) {//로그인이 되어있으면 
+				mem_id = (int)session_id;
+				ModelAndView mav = new ModelAndView("mypage");
+				int id = (int) session.getAttribute("id");
+				Member member = memberService.getMemberinfo(mem_id);//회원의 기존 정보
+				
+				//회원이 선호하는 장르 목록
+				List<Integer> mem_genre_list = memberService.getMemGenreList(mem_id);
+				
+				mav.addObject("member", member);
+				mav.addObject("mem_genre_list",mem_genre_list);
+				
+				return mav;
+			}else {//로그인이 되어있지 않으면 main으로 
+				return new ModelAndView("redirect:/");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ModelAndView("redirect:/");
+		}
+
 	}
+	
+	//마이페이지 회원 수정
+	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
+	@PutMapping("/mypage/update")
+	public ResponseEntity<String> updateMember(@RequestBody Member member
+											   ,HttpSession session){
+			try {	
+				int id=(int)session.getAttribute("id");
+				member.setId(id);
+				System.out.println("member=>"+member);
+				System.out.println("member.getMember_genre()=>"+member.getMember_genre());
+				int result = memberService.updateMember(member,member.getMember_genre());
+				
+				if(result == 1) {//수정 성공
+					session.setAttribute("nickname", member.getNickname());//수정에 성공하고 나면 세션에 저장된 닉네임 변경
+					return new ResponseEntity<>("success",HttpStatus.OK);
+				}else {//수정 실패
+					return new ResponseEntity<>("fail",HttpStatus.OK);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	
 	@GetMapping("/mypage/bookmark")
 	public ModelAndView bookmark(@RequestParam(defaultValue = "1") int page, HttpSession session) {

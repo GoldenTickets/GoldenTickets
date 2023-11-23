@@ -2,10 +2,12 @@ package com.goldenticket.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 import com.goldenticket.DTO.Article;
@@ -34,8 +36,20 @@ public interface MemberMapper {
 	int setMemberGenre(@Param("genre_id")int genre_id,@Param("id")int id);
 	
 	//회원정보 전부 가져오기
-	@Select("SELECT * from Member WHERE id = #{id}")
+	@Select("SELECT * FROM member WHERE id = #{id}")
 	Member getMemberinfo(int id);
+	
+	//회원정보 수정페이지에서 회원이 선호하는 장르 목록 가져오기
+	@Select("SELECT genre_id FROM member_genre WHERE mem_id = #{mem_id}")
+	List<Integer> getMemGenreList(int mem_id);
+	
+	//회원정보 수정하기
+	@Update("UPDATE member set name=#{name},email=#{email},password=#{password},nickname=#{nickname} WHERE id=#{id}")
+	int updateMember(Member member);
+	
+	//회원 선호 장르 모두 삭제 (수정하기 위해서 먼저 삭제)
+	@Delete("DELETE FROM member_genre where mem_id=#{mem_id}")
+	int deleteMember(int id);
 	
 	// 북마크된 영화 가져오기
 	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN bookmark B ON M.id = B.movie_id WHERE B.mem_id = #{id}")

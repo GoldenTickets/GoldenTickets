@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<script src="/js/movieinfoall.js"></script>
 <th:block layout:fragment="content">
   <div class="container">
-	<script src="/js/movieinfo.js"></script>
     <div style="height:55px"></div>
     <div class="text-center" style="color:white;background: rgba(36,36,36,1)">
       <div style="color:white">
@@ -188,7 +188,7 @@
         <input type="hidden" th:value="${movie.id}" id="movie_id"></input>
         <input type="hidden" th:value="${session.id}" id="member_id"></input>
         <div class="col-9"><input class="form-control" type="text" id="reviewcontent" placeholder="감상평을 등록해주세요"></div>
-        <div class="col-2"><button type="button" id="reviewwrite-btn" class="btn btn-secondary">등록</button></div>
+        <div class="col-2"><button type="button" id="reviewwrite-btn" class="btn btn-secondary" onclick="reviewSubmit()">등록</button></div>
       </div>
       <div style="height:30px"></div>
       <div class="row" th:each="item, iterStat: ${movieReviewList}">
@@ -208,7 +208,7 @@
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>
 		  <div class="col-1" th:if="${session.id == item.mem_id}">
-			  <button type="button" class="btn btn-danger" id="reviewDeleteButton">X</button>
+			  <button type="button" class="btn btn-danger" id="reviewDeleteButton" onclick="reviewDelete()">X</button>
 		  </div>
 		  <div style="height:13px;"></div>
 		  <hr th:if="${iterStat.last}">

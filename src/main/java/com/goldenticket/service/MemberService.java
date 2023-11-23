@@ -1,5 +1,7 @@
 package com.goldenticket.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,26 @@ public class MemberService {
 	//회원정보 전부 가져오기
 		public Member getMemberinfo(int id) { //예외처리 나중에 하기
 			return memberMapper.getMemberinfo(id);
+		}
+		
+    //회원정보 수정페이지에서 회원이 선호하는 장르 목록 가져오기
+		public List<Integer> getMemGenreList(int id){
+			return memberMapper.getMemGenreList(id);
+		}
+	//회원정보 수정하기
+		public int updateMember(Member member,List<Integer> member_genres) {
+			try {
+			int mem_id=member.getId();
+			memberMapper.deleteMember(member.getId());//회원의 선호장르 레코드 모두 삭제
+			for(int genre:member_genres) {//회원이 선택한 선호 장르 갯수와 똑같은 횟수로 선호장르 입력 시킴 
+				memberMapper.setMemberGenre(genre,mem_id);
+				System.out.println("genre=>"+genre+",mem_id=>"+mem_id);
+			}
+		     return memberMapper.updateMember(member);//위의 과정이 모두 성공할경우 1을 반환
+			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("service 실패");
+				return 0;//위의 과정이 한개라도 실패할경우 0 반환
+			}
 		}
 }
