@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
   <div class="container">
+	<script src="/js/movieinfo.js"></script>
     <div style="height:55px"></div>
     <div class="text-center" style="color:white;background: rgba(36,36,36,1)">
       <div style="color:white">
@@ -11,8 +12,11 @@
 			<div class="col-7">
 	        	<div style="color:white;font-size:30px; margin-top: 25px;" th:text="${movie.title}"><!-- 제목 --></div><th:block th:text="${#temporals.format(movie.releasedate, '(yyyy)')}"></th:block><!-- 개봉년도 -->
 	        </div>
-	        <div class="col">
-				<button style="margin-top:35px; margin-left:35px;" type="button" class="btn btn-outline-warning">북마크에 추가</button>
+	        <div class="col" th:if="${bookmarked}==0">
+				<button style="margin-top:35px; margin-left:35px;" type="button" class="btn btn-outline-warning" th:onclick="'bookmark_append(' + ${movie.id} + ')'">북마크 추가</button>
+			</div>
+			<div class="col" th:unless="${bookmarked}==0">
+				<button style="margin-top:35px; margin-left:35px;" type="button" class="btn btn-outline-danger" th:onclick="'bookmark_cancel(' + ${movie.id} + ')'">북마크 취소</button>
 			</div>
 		</div>
       <div class="row">

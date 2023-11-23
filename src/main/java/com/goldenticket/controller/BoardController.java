@@ -2,8 +2,12 @@ package com.goldenticket.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +37,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "15") int pagesize){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "10") int pagesize){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("articleList");
 		int startRow = (page-1)*pagesize;
@@ -88,48 +92,162 @@ public class BoardController {
 	}
 	
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
-	@PostMapping("")
-	public Article post(@RequestBody Article article){
-		System.out.println(article);
-		int cid = article.getCategory_id();
-		boardMapper.save(article);
-		article = boardMapper.getNewId();
-		article.setCategory_id(cid);
-		boardMapper.save2(article);
-		return article;
+	@PostMapping("/write")
+	public ResponseEntity<String> post(@RequestBody Article article
+									   ,HttpSession session){
+		try {
+			Object session_id = session.getAttribute("id");
+			if(session_id!=null) {//로그인 상태
+				int mem_id=(int)session_id;
+				article.setMem_id(mem_id);
+				int result = boardService.createArticle(article);
+				if(result == 1) {
+					return new ResponseEntity<>("success",HttpStatus.OK);
+				}else {
+					return new ResponseEntity<>("fail",HttpStatus.OK);
+				}
+			}else {
+				return new ResponseEntity<>("needLogin",HttpStatus.OK);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	//글 수정하기 페이지로 이동
 	@GetMapping("/update/{id}")
-	public ModelAndView update(@PathVariable int id){
+	public ModelAndView update(@PathVariable int id,HttpSession session){
+		Object session_id = session.getAttribute("id");
+		int mem_id;
+		if(session_id!=null) {
+			mem_id=(int)session_id;
+			Article article = boardService.getArticleById(id);
+			if(mem_id == boardService.getArticleById(id).getMem_id()) {
+				ModelAndView mav = new ModelAndView("updateArticle");
+				mav.addObject("article",article);
+				return mav;
+			}else {
+				return new ModelAndView("redirect:/board");
+			}
+		}else {
+			return new ModelAndView("redirect:/board");
+		}
+	
 		
-		Article article = boardService.getArticleById(id);
-		ModelAndView mav = new ModelAndView("update/"+id);
-		return mav;
 	}
 	
 	
-	@Transactional(rollbackFor=Exception.class)
-	@PutMapping("")
-	public Article update(@RequestBody Article article){
-		boardService.updateArticle(article);
-		//boardService.acUpdate(article); // 조건문 넣기
-		return article;
+	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
+	@PutMapping("/update/{article_id}")
+	public ResponseEntity<String> updateArticle(@PathVariable int article_id
+									   			,@RequestBody Article article
+												,HttpSession session){
+		try {
+			System.out.println("article_id=>"+article_id);
+			Object session_id = session.getAttribute("id");
+			if(session_id!=null) {//로그인 상태
+				int mem_id=(int)session_id;
+
+				if(mem_id == boardService.getArticleById(article_id).getMem_id()){//글 삭제하기전 세션의 아이디와 글의 mem_id가 일치하는지 확인
+					article.setId(article_id);
+					System.out.println("article=>"+article);
+					int result = boardService.updateArticle(article);
+					if(result == 1) {
+						return new ResponseEntity<>("success",HttpStatus.OK);
+					}else {
+						return new ResponseEntity<>("fail",HttpStatus.OK);
+					}//삭제성공
+				}else{//세션과 일치하지 않으면
+					return new ResponseEntity<>("loginwrong",HttpStatus.OK);
+				}
+			}else {
+				return new ResponseEntity<>("needLogin",HttpStatus.OK);
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+		}
 	}
 	
-	//글 삭제하기
-	@Transactional(rollbackFor=Exception.class)
-	@DeleteMapping("/delete/{id}")
-	public ModelAndView delete(@PathVariable int id){
-		//boardMapper.deleteac(article);
-		boardService.deleteArticle(id);
-		return new ModelAndView("redirect:/board");
+	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
+	@DeleteMapping("/delete/{article_id}")
+	public ResponseEntity<String> deleteArticle(@PathVariable int article_id
+									   			,HttpSession session){
+		try {
+			System.out.println("article_id=>"+article_id);
+			Object session_id = session.getAttribute("id");
+			if(session_id!=null) {//로그인 상태
+				int mem_id=(int)session_id;
+				if(mem_id == boardService.getArticleById(article_id).getMem_id()){//글 삭제하기전 세션의 아이디와 글의 mem_id가 일치하는지 확인
+					int result = boardService.deleteArticle(article_id);
+					if(result == 1) {
+						return new ResponseEntity<>("success",HttpStatus.OK);
+					}else {
+						return new ResponseEntity<>("fail",HttpStatus.OK);
+					}//삭제성공
+				}else{//세션과 일치하지 않으면
+					return new ResponseEntity<>("loginwrong",HttpStatus.OK);
+				}
+			}else {
+				return new ResponseEntity<>("needLogin",HttpStatus.OK);
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+		}
 	}
 	
-	@PostMapping("/submitreply/{id}")
-	public ModelAndView createReply(@RequestBody Reply reply,@PathVariable int id){
-		boardService.createReply(reply);
-		return new ModelAndView("redirect:/board/"+id);
+	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
+	@PostMapping("/replywrite")
+	public ResponseEntity<String> createReply(@RequestBody Reply reply
+									   ,HttpSession session){
+		try {
+			Object session_id = session.getAttribute("id");
+			if(session_id!=null) {//로그인 상태
+				int mem_id=(int)session_id;
+				reply.setMem_id(mem_id);
+				int result = boardService.createReply(reply);
+				if(result == 1) {
+					return new ResponseEntity<>("success",HttpStatus.OK);
+				}else {
+					return new ResponseEntity<>("fail",HttpStatus.OK);
+				}
+			}else {
+				return new ResponseEntity<>("needLogin",HttpStatus.OK);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+		}
 	}
 		
+	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
+	@DeleteMapping("/deleteReply/{reply_id}")
+	public ResponseEntity<String> deleteReply(@PathVariable int reply_id
+									   			,HttpSession session){
+		try {
+			System.out.println("reply_id=>"+reply_id);
+			Object session_id = session.getAttribute("id");
+			if(session_id!=null) {//로그인 상태
+				int mem_id=(int)session_id;
+				if(mem_id == boardService.confirmIdOfReply(reply_id)){//글 삭제하기전 세션의 아이디와 댓글의 mem_id가 일치하는지 확인
+					int result = boardService.deleteReply(reply_id);
+					if(result == 1) {
+						return new ResponseEntity<>("success",HttpStatus.OK);
+					}else {
+						return new ResponseEntity<>("fail",HttpStatus.OK);
+					}//삭제성공
+				}else{//세션과 일치하지 않으면
+					return new ResponseEntity<>("loginwrong",HttpStatus.OK);
+				}
+			}else {
+				return new ResponseEntity<>("needLogin",HttpStatus.OK);
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

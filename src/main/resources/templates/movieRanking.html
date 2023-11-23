@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
     <div class="container">
+	  <script src="/js/movieranking.js"></script>
       <div style="height:80px"></div>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
@@ -36,17 +37,25 @@
         <div class=><b class="fs-2">전체 영화 순위</b></div>
         <div style="height:30px"></div>
         <!--<hr>-->
-        <div class="row" th:each="item, iterStat: ${movies}">
+        <div class="row" th:each="item, iterStat: ${moviebook}">
           <hr>
-          <div class="col-1"><a th:href="@{/movie/{id}(id=${item.id})}"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:110px;"></a></div>
+          <div class="col-1"><a th:href="@{/movie/{id}(id=${item[0].id})}"><img th:src="@{/images/{poster}(poster=${item[0].poster})}" style="height:110px;"></a></div>
           <div class="col-9">
-			<a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;">
-            <h5><b th:text="${item.ranking} + '  ' + ${item.title}"></b></h5>
-            <p style="color:grey;" th:text="${#temporals.format(item.releasedate, 'yyyy')} + '  ' + ${item.runningtime} + '분'"></p>
-            <p style="color:grey;"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${#numbers.formatDecimal(item.rating, 1, 1)}"></th:block></p>
+			<a th:href="@{/movie/{id}(id=${item[0].id})}" style="color: black;">
+            <h5><b th:text="${item[0].ranking} + '  ' + ${item[0].title}"></b></h5>
+            <p style="color:grey;" th:text="${#temporals.format(item[0].releasedate, 'yyyy')} + '  ' + ${item[0].runningtime} + '분'"></p>
+            <p style="color:grey;"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item[0].rating}"></th:block></p>
             </a>
           </div>
-          <div class="col-2"><div style="height: 35px;"></div><button type="button" class="btn btn-outline-warning">북마크에 추가</button></div> <!--나중에 북마크 추가 기능 만들기-->
+          <div class="col-2">
+			<div style="height: 35px;"></div>
+				<th:block th:if="${item[1]}==1">
+					<button type="button" class="btn btn-outline-danger" th:onclick="'bookmark_cancel(' + ${item[0].id} + ')'">북마크 취소</button>
+				</th:block>
+				<th:block th:unless="${item[1]}==1">
+					<button type="button" class="btn btn-outline-warning" th:onclick="'bookmark_append(' + ${item[0].id} + ')'">북마크 추가</button>
+				</th:block>
+			</div> <!--나중에 북마크 추가 기능 만들기-->
 		  <div style="height:15px"></div>
 		  <hr th:if="${iterStat.last}">
         </div>
