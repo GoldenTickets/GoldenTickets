@@ -40,7 +40,7 @@ public class MemberController {
 	public ModelAndView loginPage(HttpSession session){
 		
 		if(session.getAttribute("id") == null) {//로그인이 되어있지않다면
-			return new ModelAndView("/login");
+			return new ModelAndView("login");
 		}else {
 			return new ModelAndView("redirect:/");//로그인이 이미 되어있다면
 		}
