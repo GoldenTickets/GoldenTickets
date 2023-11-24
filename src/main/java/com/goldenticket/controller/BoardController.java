@@ -43,17 +43,19 @@ public class BoardController {
 		int startRow = (page-1)*pagesize;
 		RowBounds rowBounds = new RowBounds(startRow, pagesize); // 페이징 처리
 		List<Article> articles = boardMapper.getAll(rowBounds);
+		int totalArticles;
 		
 		if (category == 0) {
 			articles = boardMapper.getAll(rowBounds);
+			totalArticles = boardMapper.totalArticles();
 		}else {
 			articles = boardMapper.getAllByCategory(rowBounds, category);
+			totalArticles = boardMapper.totalArticlesByCategory(category);
 		}
 		mav.addObject("pagesize", pagesize);
 		mav.addObject("category", category);
 		mav.addObject("articles", articles);
 		
-		int totalArticles = boardMapper.totalArticles();
 		int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);

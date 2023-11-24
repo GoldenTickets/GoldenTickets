@@ -55,6 +55,9 @@ public interface BoardMapper {
 	@Select("SELECT count(*) FROM article")
 	int totalArticles();
 	
+	@Select("SELECT count(*) FROM article A JOIN article_category AC ON A.id = AC.article_id WHERE AC.category_id = #{category}")
+	int totalArticlesByCategory(int category);
+	
 	@Select("SELECT COUNT(*) FROM reply WHERE article_id = #{id}")
 	int getTotalreply(int id);
 	

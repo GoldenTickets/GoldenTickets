@@ -18,7 +18,7 @@ import com.goldenticket.DTO.Review;
 public interface MovieMapper {
 	
 	//DB 영화 가져오기(영화 평점은 해당영화의 리뷰 테이블의 평균을 조인으로 가져와서 avg_rating 별칭사용한 컬럼으로 가져옴)
-	@Select("SELECT M.*, format(AVG(R.RATING),1) AS avg_rating FROM movie M LEFT JOIN review R ON M.id = R.movie_id WHERE M.id = #{id} GROUP BY M.id")
+	@Select("SELECT * FROM movie WHERE id = #{id}")
 	Movie getMovieById(@Param("id")int id);
 	
 	@Update("UPDATE movie SET hit=#{hit} WHERE id=#{id}")
@@ -56,8 +56,13 @@ public interface MovieMapper {
 	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY #{order} DESC")
 	List<Movie> getAllMoviesByGenre(RowBounds rowBounds, String order, int genre);
 	
+	//모든 영화 갯수 가져오기
 	@Select("SELECT count(*) FROM movie")
 	int totalMovies();
+	
+	//장르별 영화 갯수 가져오기
+	@Select("SELECT count(*) FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id WHERE MG.genre_id = #{genre}")
+	int totalMoviesByGenre(int genre);
 	
 	//모든 영화 평점순으로 가져오기
 	@Select("SELECT id, title, synopsis, releasedate, runningtime, poster, rating, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC")

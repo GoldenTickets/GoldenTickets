@@ -126,17 +126,19 @@ public class MovieController {
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		List<Movie> movies;
 		System.out.println(order);
+		int totalMovies;
 		
 		if (genre == 0) {
 			movies = movieMapper.getAllMovies(rowBounds, order);
+			totalMovies = movieMapper.totalMovies();
 		}else {
 			movies = movieMapper.getAllMoviesByGenre(rowBounds, order, genre);
+			totalMovies = movieMapper.totalMoviesByGenre(genre);
 		}
 		System.out.println(movies);
 		mav.addObject("order", order);
 		mav.addObject("genre", genre);
 		
-		int totalMovies = movieMapper.totalMovies();
 		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
 		
 		mav.addObject("movies", movies);
@@ -160,16 +162,18 @@ public class MovieController {
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		List<Movie> movies;
+		int totalMovies;
 		try {
 		if (genre == 0) {
 			movies = movieMapper.getRanking(rowBounds);
+			totalMovies = movieMapper.totalMovies();
 		}else {
 			movies = movieMapper.getRankingByGenre(rowBounds, genre);
+			totalMovies = movieMapper.totalMoviesByGenre(genre);
 		}
 		mav.addObject("genre", genre);
 		//mav.addObject("movies", movies);
 		
-		int totalMovies = movieMapper.totalMovies();
 		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);

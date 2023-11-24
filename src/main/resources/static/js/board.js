@@ -151,7 +151,7 @@ function updateArticle(){
 	}else if(contentValue.length<1){
 		alert('내용을 입력해주세요.');
 	}else{
-		let askbeforewrite = confirm("등록 하시겠습니까?");
+		let askbeforewrite = confirm("수정 하시겠습니까?");
 		if(askbeforewrite){
 			fetch('/board/update/'+$('#article_id').val(),{
 			    method:'PUT',
