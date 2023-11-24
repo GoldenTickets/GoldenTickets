@@ -117,9 +117,9 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img th:src="@{/images/{photourl}(photourl=${PhotoFirst})}" class="d-inline w-100" alt="...">
+                <img th:src="@{/images/{photourl}(photourl=${photoFirst})}" class="d-inline w-100" alt="...">
               </div>
-              <div class="carousel-item" th:each="moviePhoto:${PhotoRemaining}">
+              <div class="carousel-item" th:each="moviePhoto:${photoRemaining}">
                 <img th:src="@{/images/{photourl}(photourl=${moviePhoto})}" class="d-inline w-100" alt="...">
               </div>
             </div>
@@ -203,7 +203,7 @@
 		  <div class="col-2" th:if="${session.id == null or session.id != item.mem_id}">
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>
-		  <!-- 내가 쓴 리뷰는 삭제버튼 생성 -->
+		   <!--내가 쓴 리뷰는 삭제버튼 생성 -->
 		  <div class="col-2" th:if="${session.id == item.mem_id}">
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>

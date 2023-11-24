@@ -88,7 +88,28 @@ function httpRequest(method, url, body, success, fail) {
     });
 
 }
+// 검색기능
+const searchButton = document.getElementById('search-btn');
 
+if (searchButton) {
+    searchButton.addEventListener('click', event => {
+
+        body = JSON.stringify({
+			subject: document.getElementById('subject').value,
+            keyword: document.getElementById('keyword').value
+        })
+
+        function success() {
+            location.replace(`/articles/search`);
+        }
+
+        function fail() {
+            location.replace(`/articles/${id}`);
+        }
+
+        httpRequest('PUT',`/api/articles/${id}`, body, success, fail);
+    });
+}
 
 //페이지 갯수 변경
 function selectpageSizeChange(){
