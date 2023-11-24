@@ -64,10 +64,11 @@ public class MovieController {
 		}
 		
 		List<Object> moviePhotoList = movieService.getMoviePhoto(id);
+		
 		mav.addObject("movie", movie);
 		mav.addObject("bookmarked",IsitBookmarked);//북마크여부
-		mav.addObject("PhotoFirst", moviePhotoList.get(0));//첫번째 사진
-		mav.addObject("PhotoRemaining", moviePhotoList.get(1));//첫번째 사진 제외한 나머지 사진
+		mav.addObject("PhotoFirst", (String)moviePhotoList.get(0));//첫번째 사진
+		mav.addObject("PhotoRemaining", (List)moviePhotoList.get(1));//첫번째 사진 제외한 나머지 사진
 		mav.addObject("movieGenre",movieService.getMovieGenre(id));//영화 장르가져오기 (List)
 		mav.addObject("moviePlatform", movieService.getMoviePlatform(id));//영화 플랫폼가져오기
 		mav.addObject("movieReviewList", movieService.getMovieReview(id, rowBounds));//영화 리뷰가져오기
@@ -104,7 +105,7 @@ public class MovieController {
 	public ResponseEntity<String> deleteReview(@PathVariable int movie_id,
 												HttpSession session){
 		try {
-			movieMapper.deleteReview(movie_id, (int)session.getAttribute("id"));
+			movieService.deleteReview(movie_id, (int)session.getAttribute("id"));
 			return new ResponseEntity("success",HttpStatus.OK);
 		}catch(NullPointerException e) {
 			return new ResponseEntity("needLogin",HttpStatus.OK);

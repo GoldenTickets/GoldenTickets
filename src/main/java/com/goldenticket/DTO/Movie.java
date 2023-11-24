@@ -23,7 +23,7 @@ public class Movie {
 	private int hit;
 	
 	//조인해서 가져온 데이터
-	private List<MoviePhoto> moviePhoto;
+	private List<String> moviePhoto;
 	private double avg_rating;
 	private int ranking;
 	private String photoname;

@@ -18,6 +18,7 @@ import com.goldenticket.DTO.Review;
 public interface MovieMapper {
 	
 	//DB 영화 가져오기(영화 평점은 해당영화의 리뷰 테이블의 평균을 조인으로 가져와서 avg_rating 별칭사용한 컬럼으로 가져옴)
+	//@Select("SELECT M.*, format(AVG(R.RATING),1) AS avg_rating FROM movie M LEFT JOIN review R ON M.id = R.movie_id WHERE M.id = #{id} GROUP BY M.id")
 	@Select("SELECT * FROM movie WHERE id = #{id}")
 	Movie getMovieById(@Param("id")int id);
 	
@@ -121,12 +122,13 @@ public interface MovieMapper {
 	int getReviewCount(int movie_id,int mem_id);
 	
 	//리뷰평점 가져오기
-	@Select("SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id}")
-	double getReviewRating(int movie_id);
+	//@Select("SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id}")
+	//double getReviewRating(int movie_id);
 	
-	//리뷰 작성후 해당영화 평균 평점 업데이트
-	@Update("UPDATE movie SET rating = #{newRating} WHERE id = #{movie_id}")
-	int updateReviewRating(double newRating,int movie_id);
+	//리뷰 작성 후,리뷰 삭제 후 해당영화 평균 평점 업데이트
+	//@Update("UPDATE movie SET rating = #{newRating} WHERE id = #{movie_id}") 서브쿼리사용으로 변경
+	@Update("UPDATE movie SET rating = (SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id})  WHERE id = #{movie_id}")
+	int updateReviewRating(int movie_id);
 	
 	//리뷰 삭제기능
 	@Delete("DELETE FROM review WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
