@@ -104,7 +104,7 @@ public class MovieController {
 	public ResponseEntity<String> deleteReview(@PathVariable int movie_id,
 												HttpSession session){
 		try {
-			movieMapper.deleteReview(movie_id, (int)session.getAttribute("id"));
+			movieService.deleteReview(movie_id, (int)session.getAttribute("id"));
 			return new ResponseEntity("success",HttpStatus.OK);
 		}catch(NullPointerException e) {
 			return new ResponseEntity("needLogin",HttpStatus.OK);

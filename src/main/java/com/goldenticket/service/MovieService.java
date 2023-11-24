@@ -59,11 +59,9 @@ public class MovieService {
 		if(reviewCount==1) {
 			return 2;//해당영화에 대해 작성한 리뷰가 이미 있는경우 2를 반환
 		}else {
-			int result = movieMapper.createMovieReview(review,id);//해당영화에 대해 작성한 리뷰갯수가 0일경우,그리고 성공했을경우 1 반환. 실패하면 예외발생
-				try {
-				double newRating = movieMapper.getReviewRating(id);
-
-				movieMapper.updateReviewRating(newRating,id);//새로 구한 평균으로 rating 컬럼값 업데이트
+			try {
+				int result = movieMapper.createMovieReview(review,id);//해당영화에 대해 작성한 리뷰갯수가 0일경우,그리고 성공했을경우 1 반환. 실패하면 예외발생
+				result = movieMapper.updateReviewRating(id);//새로 구한 평균으로 rating 컬럼값 업데이트
 				
 				return result;
 				}catch(Exception e) {
@@ -80,10 +78,15 @@ public class MovieService {
 
 
 	public int deleteReview(int movie_id,int mem_id) {//리뷰 삭제기능. 
-		int result = movieMapper.deleteReview(movie_id, mem_id);
-		double newRating = movieMapper.getReviewRating(movie_id);
-		result=movieMapper.updateReviewRating(newRating,movie_id);
-		return result;
+		try {
+			int result = movieMapper.deleteReview(movie_id, mem_id);
+			result=movieMapper.updateReviewRating(movie_id);
+			return result;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
 	}
 	
 	public int IsitBookdmarkedById(int movie_id,int mem_id){//movieinfo 페이지에서 로그인한 회원에 대해 해당영화가 북마크되었는지 확인

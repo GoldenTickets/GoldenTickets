@@ -117,12 +117,13 @@ public interface MovieMapper {
 	int getReviewCount(int movie_id,int mem_id);
 	
 	//리뷰평점 가져오기
-	@Select("SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id}")
-	double getReviewRating(int movie_id);
+	//@Select("SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id}")
+	//double getReviewRating(int movie_id);
 	
-	//리뷰 작성후 해당영화 평균 평점 업데이트
-	@Update("UPDATE movie SET rating = #{newRating} WHERE id = #{movie_id}")
-	int updateReviewRating(double newRating,int movie_id);
+	//리뷰 작성 후,리뷰 삭제 후 해당영화 평균 평점 업데이트
+	//@Update("UPDATE movie SET rating = #{newRating} WHERE id = #{movie_id}") 서브쿼리사용으로 변경
+	@Update("UPDATE movie SET rating = (SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id})  WHERE id = #{movie_id}")
+	int updateReviewRating(int movie_id);
 	
 	//리뷰 삭제기능
 	@Delete("DELETE FROM review WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
