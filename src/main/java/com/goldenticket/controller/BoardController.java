@@ -37,7 +37,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "10") int pagesize){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "10") int pagesize, @RequestParam(name = "keyword", required = false) String keyword, @RequestParam(name = "subject", defaultValue = "none") String subject){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("articleList");
 		int startRow = (page-1)*pagesize;
@@ -45,13 +45,25 @@ public class BoardController {
 		List<Article> articles;
 		int totalArticles;
 		
-		if (category == 0) {
-			articles = boardMapper.getAll(rowBounds);
-			totalArticles = boardMapper.totalArticles();
-		}else {
+		if (category == 0) { // 카테고리 전체
+			if (subject.equals("title")) { // 제목으로 검색
+				articles = boardMapper.getByTitle(rowBounds, keyword);
+				totalArticles = boardMapper.totalArticlesByTitle(keyword);
+			}else if (subject.equals("nickname")){ // 닉네임으로 검색
+				articles = boardMapper.getByNickname(rowBounds, keyword);
+				totalArticles = boardMapper.totalArticlesByNickname(keyword);
+			}else if (subject.equals("both")) { // 제목 + 닉네임으로 검색
+				articles = boardMapper.getByTitleAndNickname(rowBounds, keyword);
+				totalArticles = boardMapper.totalArticlesByTitleAndNickname(keyword);
+			}else { // 전체 조회
+				articles = boardMapper.getAll(rowBounds);
+				totalArticles = boardMapper.totalArticles();
+			}
+		}else { // 카테고리로 조회
 			articles = boardMapper.getAllByCategory(rowBounds, category);
 			totalArticles = boardMapper.totalArticlesByCategory(category);
 		}
+		
 		mav.addObject("pagesize", pagesize);
 		mav.addObject("category", category);
 		mav.addObject("articles", articles);
@@ -62,17 +74,15 @@ public class BoardController {
 		
 		return mav;
 	}
-	
-	@GetMapping("/search") //REST API 규칙 위배되는 것 아닌지? + 위에 메서드랑 합칠 수 있으면 합치기
-	public ModelAndView getBySearch(@RequestParam("keyword") String keyword, @RequestParam("subject") String subject, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pagesize) {
+	/*
+	@GetMapping("/search")
+	public ModelAndView getBySearch(@RequestParam(name = "keyword", required = false) String keyword, @RequestParam(name = "subject", required = false) String subject, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pagesize) {
 		
 		ModelAndView mav = new ModelAndView("articleList");
 		int startRow = (page-1)*pagesize;
 		RowBounds rowBounds = new RowBounds(startRow, pagesize); // 페이징 처리
 		List<Article> articles;
 		int totalArticles;
-		System.out.println(keyword);
-		System.out.println(subject);
 		
 		if (subject.equals("title")) {
 			articles = boardMapper.getByTitle(rowBounds, keyword);
@@ -80,15 +90,16 @@ public class BoardController {
 		}else if (subject.equals("nickname")){
 			articles = boardMapper.getByNickname(rowBounds, keyword);
 			totalArticles = boardMapper.totalArticlesByNickname(keyword);
-		}else {
+		}else if (subject.equals("both")) {
 			articles = boardMapper.getByTitleAndNickname(rowBounds, keyword);
 			totalArticles = boardMapper.totalArticlesByTitleAndNickname(keyword);
+		}else {
+			articles = boardMapper.getAll(rowBounds);
+			totalArticles = boardMapper.totalArticles();
 		}
 		
 		mav.addObject("pagesize", pagesize);
 		mav.addObject("articles", articles);
-		System.out.println(pagesize);
-		System.out.println(articles);
 		
 		int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
 		mav.addObject("currentPage", page);
@@ -96,7 +107,7 @@ public class BoardController {
 		
 		return mav;
 	}
-	
+	*/
 	@GetMapping("/{id}")
 	public ModelAndView getById(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id){
 		boardService.updateHit(id);//조회수 1 증가

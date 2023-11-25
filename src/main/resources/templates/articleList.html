@@ -87,9 +87,9 @@
     </ul>
   </nav>
   <div style="height:30px"></div>
+  <form action="/board" method="get">
   <div class="row">
     <div class="col-3"></div>
-    <!--<form action="/board/search" method="get">-->
     <div class="col-2 row">
       <div class="col-2"></div>
       <div class="col-10">
@@ -108,9 +108,9 @@
         </svg>
       </button>
     </div>
-    <!--</form>-->
     <div class="col-3 d-flex justify-content-end"><button type="button" th:onclick="|location.href='@{/board/write}'|" class="btn btn-outline-success">글쓰기</button></div>
   </div>
+  </form>
   <div style="height:120px"></div>
 </div>
 </th:block>
