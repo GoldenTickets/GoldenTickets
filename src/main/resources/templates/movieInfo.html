@@ -117,9 +117,9 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img th:src="@{/images/{photourl}(photourl=${PhotoFirst})}" class="d-inline w-100" alt="...">
+                <img th:src="@{/images/{photourl}(photourl=${photoFirst})}" class="d-inline w-100" alt="...">
               </div>
-              <div class="carousel-item" th:each="moviePhoto:${PhotoRemaining}">
+              <div class="carousel-item" th:each="moviePhoto:${photoRemaining}">
                 <img th:src="@{/images/{photourl}(photourl=${moviePhoto})}" class="d-inline w-100" alt="...">
               </div>
             </div>
