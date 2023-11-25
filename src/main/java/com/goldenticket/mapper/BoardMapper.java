@@ -55,6 +55,9 @@ public interface BoardMapper {
 	@Select("SELECT count(*) FROM article")
 	int totalArticles();
 	
+	@Select("SELECT count(*) FROM article A JOIN article_category AC ON A.id = AC.article_id WHERE AC.category_id = #{category}")
+	int totalArticlesByCategory(int category);
+	
 	@Select("SELECT COUNT(*) FROM reply WHERE article_id = #{id}")
 	int getTotalreply(int id);
 	
@@ -64,5 +67,22 @@ public interface BoardMapper {
 	@Update("UPDATE article SET hit=#{hit} WHERE id=#{id}")
 	int updateReplyHit(Article article);
 	
+	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE '%' || #{keyword} || '%'")
+	List<Article> getByTitle(RowBounds rowBounds, String keyword);
+	
+	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%'")
+	List<Article> getByNickname(RowBounds rowBounds, String keyword);
+	
+	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%' OR A.title LIKE '%#{keyword}%'")
+	List<Article> getByTitleAndNickname(RowBounds rowBounds, String keyword);
+	
+	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE '%' || #{keyword} || '%'")
+	int totalArticlesByTitle(String keyword);
+	
+	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%'")
+	int totalArticlesByNickname(String keyword);
+	
+	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%' OR A.title LIKE '%#{keyword}%'")
+	int totalArticlesByTitleAndNickname(String keyword);
 }
 

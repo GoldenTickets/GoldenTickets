@@ -57,8 +57,13 @@ public interface MovieMapper {
 	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY #{order} DESC")
 	List<Movie> getAllMoviesByGenre(RowBounds rowBounds, String order, int genre);
 	
+	//모든 영화 갯수 가져오기
 	@Select("SELECT count(*) FROM movie")
 	int totalMovies();
+	
+	//장르별 영화 갯수 가져오기
+	@Select("SELECT count(*) FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id WHERE MG.genre_id = #{genre}")
+	int totalMoviesByGenre(int genre);
 	
 	//모든 영화 평점순으로 가져오기
 	@Select("SELECT id, title, synopsis, releasedate, runningtime, poster, rating, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC")

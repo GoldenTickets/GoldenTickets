@@ -33,10 +33,11 @@ public class MovieService {
 	public List<Object> getMoviePhoto(int id) {//영화 사진 가져오기 
 		//만약 사진이 5장이면 1장,4장으로 분리해야됨. carousel이 첫번째 사진을 class를 active로 따로 설정해야되기때문
 		List<String> moviePhotoList=movieMapper.getMoviePhoto(id);
-		String moviePhotoFirst= moviePhotoList.get(0);//carousel에 첫번째로 노출될 사진 
+		String moviePhotoFirst= moviePhotoList.get(0);//carousel에 첫번째로 노출될 사진
+		
 		List<String> moviePhotoRemaining=moviePhotoList.subList(1,moviePhotoList.size());//2번째사진부터 마지막사진까지
 		
-		List<Object> list=new ArrayList<Object>();//List에 서로 다른 타입의 요소를 넣을수있게 제네릭 Object로 설정 
+		List<Object> list=new ArrayList<Object>();//List에 서로 다른 타입의 요소를 넣을수있게 제네릭 Object로 설정
 		list.add(moviePhotoFirst);//list 객체의 첫번째 요소는 String형
 		list.add(moviePhotoRemaining);//list 객체의 두번째 요소는 List<String>형
 		return list;

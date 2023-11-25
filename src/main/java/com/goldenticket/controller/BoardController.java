@@ -42,21 +42,57 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView("articleList");
 		int startRow = (page-1)*pagesize;
 		RowBounds rowBounds = new RowBounds(startRow, pagesize); // 페이징 처리
-		List<Article> articles = boardMapper.getAll(rowBounds);
+		List<Article> articles;
+		int totalArticles;
 		
 		if (category == 0) {
 			articles = boardMapper.getAll(rowBounds);
+			totalArticles = boardMapper.totalArticles();
 		}else {
 			articles = boardMapper.getAllByCategory(rowBounds, category);
+			totalArticles = boardMapper.totalArticlesByCategory(category);
 		}
 		mav.addObject("pagesize", pagesize);
 		mav.addObject("category", category);
 		mav.addObject("articles", articles);
 		
-		int totalArticles = boardMapper.totalArticles();
 		int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);
+		
+		return mav;
+	}
+	
+	@GetMapping("/search") //REST API 규칙 위배되는 것 아닌지? + 위에 메서드랑 합칠 수 있으면 합치기
+	public ModelAndView getBySearch(@RequestParam("keyword") String keyword, @RequestParam("subject") String subject, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pagesize) {
+		
+		ModelAndView mav = new ModelAndView("articleList");
+		int startRow = (page-1)*pagesize;
+		RowBounds rowBounds = new RowBounds(startRow, pagesize); // 페이징 처리
+		List<Article> articles;
+		int totalArticles;
+		System.out.println(keyword);
+		System.out.println(subject);
+		
+		if (subject.equals("title")) {
+			articles = boardMapper.getByTitle(rowBounds, keyword);
+			totalArticles = boardMapper.totalArticlesByTitle(keyword);
+		}else if (subject.equals("nickname")){
+			articles = boardMapper.getByNickname(rowBounds, keyword);
+			totalArticles = boardMapper.totalArticlesByNickname(keyword);
+		}else {
+			articles = boardMapper.getByTitleAndNickname(rowBounds, keyword);
+			totalArticles = boardMapper.totalArticlesByTitleAndNickname(keyword);
+		}
+		
+		mav.addObject("pagesize", pagesize);
+		mav.addObject("articles", articles);
+		System.out.println(pagesize);
+		System.out.println(articles);
+		
+		int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
+		mav.addObject("currentPage", page);
+		mav.addObject("totalPages", totalPages);
 		
 		return mav;
 	}
