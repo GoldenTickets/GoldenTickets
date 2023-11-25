@@ -35,42 +35,52 @@ public class MovieController {
 	
 	@Autowired
 	private MovieService movieService;
-	
 
-	@GetMapping("/{id}") // 북마크, 사진, 장르, 플랫폼 관련 코드 주석    
-	public ModelAndView getMovie(@RequestParam(defaultValue = "1") int page, @PathVariable int id, HttpSession session) throws Exception {
-		movieService.updateHit(id); //조회수 1 증가
-		ModelAndView mav = new ModelAndView("movieInfo");
-		
-		int pageSize = 10;
-		int startRow = (page-1)*pageSize;
-		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		
-		int totalReviews = movieMapper.getTotalreviews(id);
-		int totalPages = (int) Math.ceil((double) totalReviews / pageSize); // 전체 페이지 수 구하기
-		mav.addObject("currentPage", page);
-        mav.addObject("totalPages", totalPages);
-		
-		Movie movie = movieService.getMovieById(id);
-		
-		int IsitBookmarked = 0;//북마크 여부의 기본값은 0
+	@GetMapping("/{id}")
+	public ModelAndView getAllMovies(@RequestParam(defaultValue = "1") int page,
+									 @PathVariable int id,
+									 HttpSession session) {
+		try {
+			movieService.updateHit(id); //조회수 1 증가
+			ModelAndView mav=new ModelAndView("movieinfo");
+			
+			int pageSize = 10;
+			int startRow = (page-1)*pageSize;
+			RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+			
+			int totalArticles = movieMapper.getTotalreviews(id);
+			int totalPages = (int) Math.ceil((double) totalArticles / pageSize); // 전체 페이지 수 구하기
+			mav.addObject("currentPage", page);
+	        mav.addObject("totalPages", totalPages);
+			
+			Movie movie = movieService.getMovieById(id);
+			
+			int IsitBookmarked = 0;//북마크 여부의 기본값은 0
+			
+			Object session_id=session.getAttribute("id");
+			if(session_id!=null) {
+				int mem_id=(int)session_id;
+				IsitBookmarked = movieService.IsitBookdmarkedById(id, mem_id);//북마크되어있는지 확인. 북마크되어있다면 1로 변경
+			}
+			
+			List<Object> moviePhotoList = movieService.getMoviePhoto(id);
+			
+			mav.addObject("movie", movie);
+			mav.addObject("bookmarked",IsitBookmarked);//북마크여부
+			mav.addObject("photoFirst", (String)moviePhotoList.get(0));//첫번째 사진
+			mav.addObject("photoRemaining", (List)moviePhotoList.get(1));//첫번째 사진 제외한 나머지 사진
+			mav.addObject("movieGenre",movieService.getMovieGenre(id));//영화 장르가져오기 (List)
+			mav.addObject("moviePlatform", movieService.getMoviePlatform(id));//영화 플랫폼가져오기
+			mav.addObject("movieReviewList", movieService.getMovieReview(id, rowBounds));//영화 리뷰가져오기
+			
+			return mav;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ModelAndView("redirect:/");
 
-		Object session_id=session.getAttribute("id");
-		if(session_id!=null) {
-			int mem_id=(int)session_id;
-			IsitBookmarked = movieService.IsitBookdmarkedById(id, mem_id);//북마크되어있는지 확인. 북마크되어있다면 1로 변경
 		}
-
-		List<Object> moviePhotoList = movieService.getMoviePhoto(id);
-		mav.addObject("movie", movie);
-		mav.addObject("bookmarked",IsitBookmarked);//북마크여부
-		mav.addObject("photoFirst", (String)moviePhotoList.get(0));//첫번째 사진
-		mav.addObject("photoRemaining", (List)moviePhotoList.get(1));//첫번째 사진 제외한 나머지 사진
-		mav.addObject("movieGenre",movieService.getMovieGenre(id));//영화 장르가져오기 (List)
-		mav.addObject("moviePlatform", movieService.getMoviePlatform(id));//영화 플랫폼가져오기
-		mav.addObject("movieReviewList", movieService.getMovieReview(id, rowBounds));//영화 리뷰가져오기
-		return mav;
-		}
+	}
 	
 	//리뷰작성기능. 회원당 리뷰 작성 횟수 1회 제한. (평점을 여러번 매길수없도록)
 	@PostMapping("/submitreview/{id}")

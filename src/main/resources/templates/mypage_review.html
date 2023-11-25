@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <th:block layout:fragment="content">
+	<script src="/js/mypage.js"></script>
     <div class="container">
       <div class="row">
         <div class="col-2">
@@ -34,7 +35,7 @@
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>
 		  <div class="col-1">
-			  <button type="button" class="btn btn-danger" id="reviewDeleteButton">X</button>
+			  <button type="button" class="btn btn-danger" th:onclick="|mypage_review_delete(${item.movie_id})|">X</button>
 		  </div>
 		  <div style="height:13px;"></div>
 		  <hr th:if="${iterStat.last}">

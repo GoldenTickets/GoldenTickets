@@ -60,7 +60,7 @@ public interface MemberMapper {
 	int getTotalbookmark(int id);
 	
 	// 내가 쓴 리뷰 가져오기
-	@Select("SELECT R.movie_id, M.title, R.rating, R.content, R.regdate FROM review R JOIN movie M ON R.movie_id = M.id WHERE mem_id = #{id}")
+	@Select("SELECT R.movie_id, M.title, R.id , R.rating, R.content, R.regdate FROM review R JOIN movie M ON R.movie_id = M.id WHERE mem_id = #{id}")
 	List<Review> getMyreviews(RowBounds rowBounds, int id);
 	
 	// 내가 쓴 리뷰 갯수 가져오기
@@ -76,7 +76,7 @@ public interface MemberMapper {
 	int getMytotalarticles(int id);
 	
 	// 내가 쓴 댓글 가져오기
-	@Select("SELECT R.article_id, A.title, R.content, R.regdate FROM reply R JOIN article A ON R.article_id = A.id WHERE R.mem_id = #{id}")
+	@Select("SELECT R.article_id, A.title, R.id,R.content, R.regdate FROM reply R JOIN article A ON R.article_id = A.id WHERE R.mem_id = #{id}")
 	List<Reply> getMyreplies(RowBounds rowBounds, int id);
 		
 	// 내가 쓴 댓글 갯수 가져오기

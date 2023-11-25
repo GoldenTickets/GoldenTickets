@@ -64,6 +64,9 @@ function passwordcheck(){
 		$('input[name=password]').next().css('display','block');
 		$('input[name=password]').css('border','1px solid red');
 	}else{
+		
+		repasswordcheck();
+
 		$('input[name=password]').removeClass("inputfail");
 		$('input[name=password]').addClass("inputSuccess");
 		$('input[name=password]').next().css('display','none');
@@ -72,12 +75,12 @@ function passwordcheck(){
 	
 }
 function repasswordcheck(){
-		if($('input[name=repassword]').val()!=$('input[name=password]').val()){
+		if($('input[name=repassword]').val()!=$('input[name=password]').val() || $('input[name=repassword]').val().length<4 ){
 		$('input[name=repassword]').removeClass("inputSuccess");
 		$('input[name=repassword]').addClass("inputfail");
 		$('input[name=repassword]').next().css('display','block');
-		$('input[name=repassword]').css('border','1px solid red')
-	}else{
+		$('input[name=repassword]').css('border','1px solid red');
+	}else {
 		$('input[name=repassword]').removeClass("inputfail");
 		$('input[name=repassword]').addClass("inputSuccess");
 		$('input[name=repassword]').next().css('display','none');
@@ -123,7 +126,7 @@ if (signupButton) {
 		}else if(passwordValue.val().length<4){
 			alert('비밀번호를 확인해주세요');
 		}else if(repasswordValue.val()!=passwordValue.val()){
-			alert('비밀번호가 일치하는지 확인해주세요');
+			alert('비밀번호를 다시 확인해주세요');
 		}else if(nicknameValue.val().length<2){
 			alert('닉네임을 확인해주세요');
 		}else if(mem_genreList.length<1){

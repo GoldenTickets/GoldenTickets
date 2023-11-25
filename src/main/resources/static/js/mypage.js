@@ -62,8 +62,62 @@ function mypageUpdate(){
 			  })
 	}
 }
-	
-	
 
+function mypage_review_delete(movie_id) {
+			
+			fetch('/movie/deleteReview/'+movie_id,{
+				method:'GET',
+				}).then(response => response.text())
+			  .then(data => {
+				  if(data=="success"){
+	                alert('삭제 완료되었습니다.');
+	                location.reload();
+	             }else if(data=="needLogin"){
+					alert('로그인 후 이용가능합니다.');
+					document.getElementById('offCanvasToggleButton').click();
+				 }
+			  }).catch(error=>{
+				  alert('삭제에 실패했습니다.');
+			  })
+
+	 }
+	
+function mypage_article_delete(article_id){
+		let askbeforedelete = confirm("삭제 하시겠습니까?");
+		if(askbeforedelete){
+			fetch('/board/delete/'+article_id,{
+			    method:'DELETE'
+			}).then(response => response.text())
+	  		.then(data => {
+	     		 if(data=="success"){
+	          		alert('삭제되었습니다.');
+	          		location.href="/board"
+	      		 }else if(data=="needLogin"){
+	          		alert('로그인이 필요합니다.');
+	          		document.getElementById('offCanvasToggleButton').click();
+	      		 }
+	  		})
+  		}
+}
+
+
+//게시판 댓글글삭제
+function mypage_reply_delete(reply_id){
+		let askbeforedelete = confirm("삭제 하시겠습니까?");
+		if(askbeforedelete){
+			fetch('/board/deleteReply/'+reply_id,{
+			    method:'DELETE'
+			}).then(response => response.text())
+	  		.then(data => {
+	     		 if(data=="success"){
+	          		alert('삭제되었습니다.');
+	          		location.href="/board"
+	      		 }else if(data=="needLogin"){
+	          		alert('로그인이 필요합니다.');
+	          		document.getElementById('offCanvasToggleButton').click();
+	      		 }
+	  		})
+  		}
+}
 
 
