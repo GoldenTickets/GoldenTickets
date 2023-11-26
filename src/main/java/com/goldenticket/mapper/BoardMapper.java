@@ -67,22 +67,23 @@ public interface BoardMapper {
 	@Update("UPDATE article SET hit=#{hit} WHERE id=#{id}")
 	int updateReplyHit(Article article);
 	
-	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE '%' || #{keyword} || '%' ORDER BY A.id DESC")
+	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
 	List<Article> getByTitle(RowBounds rowBounds, String keyword);
 	
-	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%' ORDER BY A.id DESC")
+	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%')")
 	List<Article> getByNickname(RowBounds rowBounds, String keyword);
 	
-	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%' OR A.title LIKE '%#{keyword}%' ORDER BY A.id DESC")
+	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%') OR A.title CONCAT('%', #{keyword}, '%')")
+
 	List<Article> getByTitleAndNickname(RowBounds rowBounds, String keyword);
 	
-	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE '%' || #{keyword} || '%'")
+	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
 	int totalArticlesByTitle(String keyword);
 	
-	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%'")
+	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%')")
 	int totalArticlesByNickname(String keyword);
 	
-	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE '%#{keyword}%' OR A.title LIKE '%#{keyword}%'")
+	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%') OR A.title LIKE CONCAT('%', #{keyword}, '%')")
 	int totalArticlesByTitleAndNickname(String keyword);
 }
 

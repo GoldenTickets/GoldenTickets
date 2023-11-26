@@ -23,17 +23,21 @@
                 </ul>
             </div>
             <div class="position-absolute end-0 d-flex flex-row">
-                <div style="margin:auto 0;padding-right:15px;" class="hiddensearch">
+                <!--<div style="margin:auto 0;padding-right:15px;" class="hiddensearch">
                     <input type="text">
                     <button>검색</button>
-                </div>
+                </div>-->
                 <div style="width:54px;height:54px;">
-                    <a href="#" id="svciconsearch">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" id="svciconsearch">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search text-light" viewBox="-6 -6 30 30">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
                     </a>
                 </div>
+                <!-- Button trigger modal -->
+				<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				  Launch demo modal
+				</button>-->
                 <div style="width:54px;height:54px;">
                     <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" id="offCanvasToggleButton">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-fill text-light" data-bs-toggle="offcanvas.show" viewBox="-6 -6 30 30">
@@ -43,6 +47,26 @@
                 </div>
             </div>
         </nav>
+        <!-- 모달 -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-lg">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h1 class="modal-title fs-5" id="exampleModalLabel">영화 상세 검색</h1>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				       검색 분야 / 검색어
+				       <br>
+				       검색 장르
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				        <button type="button" class="btn btn-primary">검색</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 
         <!-- 오프캔버스 -->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
