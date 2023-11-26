@@ -125,7 +125,7 @@ public class MovieController {
 	@GetMapping("")
 	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, 
 							   @RequestParam(defaultValue = "0") int genre, 
-							   @RequestParam(defaultValue = "id") String order
+							   @RequestParam(defaultValue = "releasedate") String order
 							   ) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieInfo_all");
