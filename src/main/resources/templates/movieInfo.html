@@ -61,18 +61,24 @@
                 장르
               </th>
               <th>
-              	<th:block th:each="moviegenre:${movieGenre}">
-                	<th:block th:text="${moviegenre}+' '">장르가 들어갈곳</th:block>
+              	<th:block th:each="item, iterStat : ${movieGenre}">
+                	<th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
               	</th:block>
               </th>
              </tr>
              <tr>
               <th>
-                감독
+                배우
               </th>
-              <th th:text="${movie.director}">
-
+              <th:block th:each="item, iterStat : ${movieActor}">
+                	<th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
+              	</th:block>
+            </tr>
+            <tr>
+              <th>
+                배우
               </th>
+              <th th:text="${movie.director}"></th>
             </tr>
             <tr>
               <th>
