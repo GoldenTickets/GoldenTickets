@@ -137,10 +137,10 @@ public class MovieController {
 		int totalMovies;
 		
 		if (genre == 0) {
-			movies = movieMapper.getAllMovies(rowBounds, order);
+			movies = movieService.getAllMovies(rowBounds, order);
 			totalMovies = movieMapper.totalMovies();
 		}else {
-			movies = movieMapper.getAllMoviesByGenre(rowBounds, order, genre);
+			movies = movieService.getAllMovies(rowBounds, order, genre);
 			totalMovies = movieMapper.totalMoviesByGenre(genre);
 		}
 		System.out.println(movies);

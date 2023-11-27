@@ -7,7 +7,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.DTO.Platform;
 import com.goldenticket.DTO.Review;
@@ -23,11 +22,27 @@ public class MovieService {
 		return movieMapper.getMovieById(id);
 	};
 	
-
 	public int updateHit(int id) {
 		Movie movie=movieMapper.getMovieById(id);
 		movie.setHit(movie.getHit()+1);//조회수 1 증가
 		return movieMapper.updateHit(movie);
+	}
+	
+	//메서드 오버로딩
+	public List<Movie> getAllMovies(RowBounds rowBounds,String order) {
+		if (order.equals("hit")) {
+			return movieMapper.getAllMoviesByHit(rowBounds,order);
+		}else {
+			return movieMapper.getAllMoviesByReleasedate(rowBounds,order);
+		}
+	}
+	//메서드 오버로딩
+	public List<Movie> getAllMovies(RowBounds rowBounds,String order,int genre) {
+		if (order.equals("hit")) {
+			return movieMapper.getAllMoviesByGenreByHit(rowBounds,order,genre);
+		}else {
+			return movieMapper.getAllMoviesByGenreByReleasedate(rowBounds,order,genre);
+		}
 	}
 	
 	public List<Object> getMoviePhoto(int id) {//영화 사진 가져오기 
