@@ -34,7 +34,17 @@
 			</button>
           </div>
         <div style="height:70px"></div>
-        <div class=><b class="fs-2">전체 영화 순위</b></div>
+        <div class=>
+			<b th:if="${genre == 0}" class="fs-2">전체 영화 순위</b>
+			<b th:if="${genre == 1}" class="fs-2">액션 영화 순위</b>
+			<b th:if="${genre == 2}" class="fs-2">공포/스릴러 영화 순위</b>
+			<b th:if="${genre == 3}" class="fs-2">코미디 영화 순위</b>
+			<b th:if="${genre == 4}" class="fs-2">SF/판타지 영화 순위</b>
+			<b th:if="${genre == 5}" class="fs-2">드라마 영화 순위</b>
+			<b th:if="${genre == 6}" class="fs-2">멜로/로맨스 영화 순위</b>
+			<b th:if="${genre == 7}" class="fs-2">애니메이션 영화 순위</b>
+			<b th:if="${genre == 8}" class="fs-2">다큐멘터리 영화 순위</b>
+		</div>
         <div style="height:30px"></div>
         <!--<hr>-->
         <div class="row" th:each="item, iterStat: ${moviebook}">

@@ -27,13 +27,13 @@
                     <input type="text">
                     <button>검색</button>
                 </div>-->
-                <div style="width:54px;height:54px;">
+                <!--<div style="width:54px;height:54px;"> 영화 검색 기능 -> 추후에 다시 열기
                     <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" id="svciconsearch">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search text-light" viewBox="-6 -6 30 30">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
                     </a>
-                </div>
+                </div>-->
                 <!-- Button trigger modal -->
 				<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				  Launch demo modal
@@ -48,25 +48,79 @@
             </div>
         </nav>
         <!-- 모달 -->
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  <div class="modal-dialog modal-lg">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h1 class="modal-title fs-5" id="exampleModalLabel">영화 상세 검색</h1>
-				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				      </div>
-				      <div class="modal-body">
-				       검색 분야 / 검색어
-				       <br>
-				       검색 장르
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-				        <button type="button" class="btn btn-primary">검색</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+				 <form action="/movie/search" method="get">
+			      <div class="modal-header">
+			        <h1 class="modal-title fs-5" id="exampleModalLabel"><b>영화 상세 검색</b></h1>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+					<div>
+				       	<h4><b>검색 분야 선택</b></h4>
+				       	<div style="height: 5px;"></div>
+				       	<input type="radio" class="btn-check" name="subject" value="title" id="title" autocomplete="off" checked>
+						<label class="btn btn-outline-secondary" for="title" style="margin-right: 10px;">제목</label>
+						<input type="radio" class="btn-check" name="subject" value="actor" id="actor" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="actor" style="margin-right: 10px;">배우</label>
+						<input type="radio" class="btn-check" name="subject" value="director" id="director" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="director"  style="margin-right: 10px;">감독</label>
+						<input type="radio" class="btn-check" name="subject" value="country" id="country" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="country" style="margin-right: 10px;">국가</label>
+					</div>
+					<div style="height: 40px;"></div>
+					<div>
+				       	<h4><b>장르 선택</b></h4>
+				       	<p style="font-size: 14px; color:#555">*다중 선택이 가능합니다. 선택하지 않을 경우는 전체 장르를 대상을 검색합니다.</p>
+				       	<input type="checkbox" name="genre" value="액션" class="btn-check" id="g1" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g1">액션</label>
+						<input type="checkbox" name="genre" value="공포/스릴러" class="btn-check" id="g2" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g2">공포/스릴러</label>
+						<input type="checkbox" name="genre" value="코미디" class="btn-check" id="g3" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g3">코미디</label>
+						<input type="checkbox" name="genre" value="SF/판타지" class="btn-check" id="g4" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g4">SF/판타지</label>
+						<input type="checkbox" name="genre" value="드라마" class="btn-check" id="g5" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g5">드라마</label>
+						<input type="checkbox" name="genre" value="멜로/로맨스" class="btn-check" id="g6" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g6">멜로/로맨스</label>
+						<input type="checkbox" name="genre" value="애니메이션" class="btn-check" id="g7" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g7">애니메이션</label>
+						<input type="checkbox" name="genre" value="다큐멘터리" class="btn-check" id="g8" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g8">다큐멘터리</label>
+						<input type="checkbox" name="genre" value="시대극" class="btn-check" id="g9" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g9">시대극</label>
+						<input type="checkbox" name="genre" value="전쟁" class="btn-check" id="g10" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g10">전쟁</label>
+						<input type="checkbox" name="genre" value="범죄" class="btn-check" id="g11" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g11">범죄</label>
+						<input type="checkbox" name="genre" value="스포츠" class="btn-check" id="g12" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g12">스포츠</label>
+						<input type="checkbox" name="genre" value="범죄" class="btn-check" id="g13" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g13">범죄</label>
+						<input type="checkbox" name="genre" value="음악" class="btn-check" id="g14" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g14">음악</label>
+						<input type="checkbox" name="genre" value="재난" class="btn-check" id="g15" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g15">재난</label>
+						<input type="checkbox" name="genre" value="가족" class="btn-check" id="g16" autocomplete="off">
+						<label class="btn btn-outline-secondary" for="g16">가족</label>
+					</div>
+					<div style="height: 40px;"></div>
+					<div>
+						<h4><b>검색어 입력</b></h4>
+						<div style="height: 5px;"></div>
+						<input class="form-control" type="text" name="keyword" placeholder="여기에 검색어를 입력해주세요" aria-label="default input example">
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			        <button type="submit" class="btn btn-primary">검색</button>
+			      </div>
+			     </form>
+			    </div>
+			  </div>
+			</div>
 
         <!-- 오프캔버스 -->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">

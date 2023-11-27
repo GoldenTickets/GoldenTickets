@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
+import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.DTO.Platform;
 import com.goldenticket.DTO.Review;
@@ -150,4 +151,13 @@ public interface MovieMapper {
 	@Delete("DELETE FROM bookmark WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
 	int deleteBookmark(int movie_id,int mem_id);
 
+	/*
+	//영화 검색
+	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
+	List<Article> getBySearch(RowBounds rowBounds, String subject, String genre, String keyword);
+	
+	//검색 결과 레코드 수
+	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
+	int totalmoviesBySearch(String subject, String genre, String keyword);
+	*/
 }
