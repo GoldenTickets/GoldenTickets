@@ -70,9 +70,11 @@
               <th>
                 배우
               </th>
-              <th:block th:each="item, iterStat : ${movieActor}">
+              <th>
+              	<th:block th:each="item, iterStat : ${movieActor}">
                 	<th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
               	</th:block>
+              </tr>
             </tr>
             <tr>
               <th>
