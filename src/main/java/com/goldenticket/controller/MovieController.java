@@ -125,7 +125,7 @@ public class MovieController {
 	@GetMapping("")
 	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, 
 							   @RequestParam(defaultValue = "0") int genre, 
-							   @RequestParam(defaultValue = "id") String order
+							   @RequestParam(defaultValue = "releasedate") String order
 							   ) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("movieInfo_all");
@@ -137,10 +137,10 @@ public class MovieController {
 		int totalMovies;
 		
 		if (genre == 0) {
-			movies = movieMapper.getAllMovies(rowBounds, order);
+			movies = movieService.getAllMovies(rowBounds, order);
 			totalMovies = movieMapper.totalMovies();
 		}else {
-			movies = movieMapper.getAllMoviesByGenre(rowBounds, order, genre);
+			movies = movieService.getAllMovies(rowBounds, order, genre);
 			totalMovies = movieMapper.totalMoviesByGenre(genre);
 		}
 		System.out.println(movies);

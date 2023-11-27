@@ -18,13 +18,13 @@ public interface BoardMapper {
 	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE A.id = #{id}")
 	Article getById(@Param("id") int id);
 	
-	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id")
+	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id ORDER BY A.id DESC")
 	List<Article> getAll(RowBounds rowBounds);
 	
-	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE C.id = #{category}")
+	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE C.id = #{category} ORDER BY A.id DESC")
 	List<Article> getAllByCategory(RowBounds rowBounds, int category);
 	
-	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id}")//댓글가져오기
+	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id} ORDER BY R.id DESC")//댓글가져오기
 	List<Reply> getByArticle_id(@Param("id") int id, RowBounds rowBounds);
 	
 	@Insert("INSERT INTO article (mem_id, title, content, regdate) VALUES (#{article.mem_id}, #{article.title}, #{article.content}, curdate())")
@@ -74,6 +74,7 @@ public interface BoardMapper {
 	List<Article> getByNickname(RowBounds rowBounds, String keyword);
 	
 	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%') OR A.title CONCAT('%', #{keyword}, '%')")
+
 	List<Article> getByTitleAndNickname(RowBounds rowBounds, String keyword);
 	
 	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")

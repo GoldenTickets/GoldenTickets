@@ -50,13 +50,21 @@ public interface MovieMapper {
 	@Insert("INSERT INTO review (movie_id,mem_id,rating,content,regdate) values(#{review.movie_id},#{review.mem_id},#{review.rating},#{review.content},current_timestamp)")
 	int createMovieReview(Review review,int id);
 	
-	//모든 영화 가져오기
-	@Select("SELECT id, title, poster, rating FROM movie ORDER BY #{order} DESC")
-	List<Movie> getAllMovies(RowBounds rowBounds, String order);
+	//모든 영화 가져오기 (조회수순)  //ORDER BY {order}이렇게 하고싶었으나 이런방식으로 order by가 적용이안되는관계로 hit에 따른 메서드를 따로 만듬
+	@Select("SELECT id, title, poster, rating FROM movie ORDER BY hit DESC")
+	List<Movie> getAllMoviesByHit(RowBounds rowBounds, @Param("order") String order);
 	
-	//장르별 영화 가져오기
-	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY #{order} DESC")
-	List<Movie> getAllMoviesByGenre(RowBounds rowBounds, String order, int genre);
+	//모든 영화 가져오기 (개봉일순)  //ORDER BY {order}이렇게 하고싶었으나 이런방식으로 order by가 적용이안되는관계로 releasedate에 따른 메서드를 따로 만듬
+	@Select("SELECT id, title, poster, rating FROM movie ORDER BY releasedate DESC")
+	List<Movie> getAllMoviesByReleasedate(RowBounds rowBounds, @Param("order") String order);
+	
+	//장르별 영화 가져오기(조회수순) //ORDER BY {order}이렇게 하고싶었으나 이런방식으로 order by가 적용이안되는관계로 hit에 따른 메서드를 따로 만듬
+	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY hit DESC")
+	List<Movie> getAllMoviesByGenreByHit(RowBounds rowBounds, String order, int genre);
+	
+	//장르별 영화 가져오기(조회수순) (개봉일순)  //ORDER BY {order}이렇게 하고싶었으나 이런방식으로 order by가 적용이안되는관계로 releasedate에 따른 메서드를 따로 만듬
+	@Select("SELECT M.id, M.title, M.poster, M.rating FROM movie M JOIN movie_genre MG ON M.id = MG.movie_id JOIN genre G ON G.id = MG.genre_id WHERE G.id = #{genre} ORDER BY releasedate DESC")
+	List<Movie> getAllMoviesByGenreByReleasedate(RowBounds rowBounds, String order, int genre);
 	
 	//모든 영화 갯수 가져오기
 	@Select("SELECT count(*) FROM movie")
