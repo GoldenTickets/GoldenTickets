@@ -22,6 +22,10 @@ public class MovieService {
 		return movieMapper.getMovieById(id);
 	};
 	
+	public List<String> getMovieActors(int id){//영화 배우 목록 가져오기
+		return movieMapper.getMovieActors(id);
+	}
+	
 	public int updateHit(int id) {
 		Movie movie=movieMapper.getMovieById(id);
 		movie.setHit(movie.getHit()+1);//조회수 1 증가

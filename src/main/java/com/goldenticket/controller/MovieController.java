@@ -54,6 +54,7 @@ public class MovieController {
 	        mav.addObject("totalPages", totalPages);
 			
 			Movie movie = movieService.getMovieById(id);
+			List<String> movieActor= movieService.getMovieActors(id);
 			
 			int IsitBookmarked = 0;//북마크 여부의 기본값은 0
 			
@@ -66,6 +67,7 @@ public class MovieController {
 			List<Object> moviePhotoList = movieService.getMoviePhoto(id);
 			
 			mav.addObject("movie", movie);
+			mav.addObject("movieActor",movieActor);//영화배우목록
 			mav.addObject("bookmarked",IsitBookmarked);//북마크여부
 			mav.addObject("photoFirst", (String)moviePhotoList.get(0));//첫번째 사진
 			mav.addObject("photoRemaining", (List)moviePhotoList.get(1));//첫번째 사진 제외한 나머지 사진

@@ -33,6 +33,9 @@ public interface MovieMapper {
 	@Select("SELECT G.name FROM movie_genre MG LEFT OUTER JOIN genre G ON MG.genre_id=G.id WHERE MG.movie_id=#{id}")
 	List<String> getMovieGenre(int id);
 	
+	@Select("SELECT A.name FROM movie_actor MA INNER JOIN actor A on MA.actor_id=A.id WHERE MA.movie_id = #{movie_id}")
+	List<String> getMovieActors(int id);
+	
 	//영화 볼수있는곳 플랫폼의 이름,url 모두 가져오기
 	@Select("SELECT P.name,P.url FROM movie_platform MP INNER JOIN platform P ON MP.platform_id=P.id WHERE MP.movie_id=#{id}")
 	List<Platform> getMoviePlatform(int id);
