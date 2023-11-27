@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<th:block layout:fragment="content">
+	<script src="/js/movieinfoall.js"></script>
+    <div class="container">
+      <div style="height:150px"></div>
+        <div>
+			<b class="fs-3">영화 검색 결과</b>
+        </div>
+        <hr>
+        <div style="height:10px;"></div>
+          <table class="table" style="text-align: center;">
+		    <thead class="table-light">
+		    <tr>
+		      <th scope="col">제목</th>
+		      <th scope="col">평점</th>
+		      <th scope="col">장르</th>
+		      <th scope="col">국가</th>
+		      <th scope="col">개봉일</th>
+		      <th scope="col">조회수</th>
+		    </tr>
+		    </thead>
+		    <tbody>
+		    <tr th:each="item : ${resultmovies}">
+		      <td><a style="color:black" th:href="@{/movie/{id}(id=${item.id})}"><th:block th:text="${item.title}"></th:block></a></td>
+		      <td th:text="${item.rating}"></td>
+		      <td>
+			  	<th:block th:each="genre, iterStat : ${genres}">
+					<th:block th:text="${genre + (iterStat.last ? '' : ',')}"></th:block>
+				</th:block>
+			  </td>
+		      <td th:text="${item.country}"></td>
+		      <td th:text="${#temporals.format(item.releasedate,'yyyy-MM-dd')}"></td>
+		      <td th:text="${item.hit}"></td>
+		    </tr>
+		    </tbody>
+		  </table>
+        <div style="height:30px"></div>
+        <!-- 페이지네이션 버튼 수정하기 -->
+        <div class="d-flex justify-content-center">
+		    <nav aria-label="Page navigation">
+		          <ul class="pagination text-dark">
+		            <!--<li class="page-item">
+		              <a class="page-link" href="#" aria-label="Previous">
+		                <span aria-hidden="true">&laquo;</span>
+		              </a>
+		            </li>-->
+		            <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+		                <a th:href="@{'/resultmovie?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+		            </li>
+		            <!--<li class="page-item">
+		              <a class="page-link" href="#" aria-label="Next">
+		                <span aria-hidden="true">&raquo;</span>
+		              </a>
+		            </li>-->
+		          </ul>
+		    </nav>
+	    </div>
+        <div style="height:120px"></div>
+    </div>
+    </div>
+</th:block>
+</html>
