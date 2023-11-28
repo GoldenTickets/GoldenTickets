@@ -94,6 +94,7 @@ const searchButton = document.getElementById('search-btn');
 if (searchButton) {
     searchButton.addEventListener('click', event => {
 			if(document.getElementsByName('keyword')[1].value<1){
+				event.preventDefault();
 				alert('검색어를 입력해주세요.');
 				this.focus();
 			}else{

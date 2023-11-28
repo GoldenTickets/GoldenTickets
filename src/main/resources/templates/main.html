@@ -238,8 +238,13 @@
         </div>
         <hr>
         <ul class="list-group" th:each="item : ${topmovies}">
-          <a th:href="@{/movie/{id}(id=${item.id})}"><li class="list-group-item"><img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:65px"
-              alt="...">&nbsp;&nbsp;<b th:text="${item.ranking}"></b>&nbsp;&nbsp;<th:block th:text="${item.title}"></th:block></li></a>
+          <a th:href="@{/movie/{id}(id=${item.id})}">
+			  <li class="list-group-item">
+				  <img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:65px" alt="...">&nbsp;&nbsp;
+				  <b th:text="${item.ranking}"></b>&nbsp;&nbsp;
+				  <span th:text="${#strings.abbreviate(item.title,13)}"></span>
+			  </li>
+          </a>
         </ul>
       </div>
     </div>

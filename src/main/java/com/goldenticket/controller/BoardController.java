@@ -59,6 +59,10 @@ public class BoardController {
 				articles = boardMapper.getAll(rowBounds);
 				totalArticles = boardMapper.totalArticles();
 			}
+			System.out.println("로그시작");
+			System.out.println(articles);
+			System.out.println(totalArticles);
+			
 		}else { // 카테고리로 조회
 			articles = boardMapper.getAllByCategory(rowBounds, category);
 			totalArticles = boardMapper.totalArticlesByCategory(category);
@@ -74,40 +78,7 @@ public class BoardController {
 		
 		return mav;
 	}
-	/*
-	@GetMapping("/search")
-	public ModelAndView getBySearch(@RequestParam(name = "keyword", required = false) String keyword, @RequestParam(name = "subject", required = false) String subject, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int pagesize) {
-		
-		ModelAndView mav = new ModelAndView("articleList");
-		int startRow = (page-1)*pagesize;
-		RowBounds rowBounds = new RowBounds(startRow, pagesize); // 페이징 처리
-		List<Article> articles;
-		int totalArticles;
-		
-		if (subject.equals("title")) {
-			articles = boardMapper.getByTitle(rowBounds, keyword);
-			totalArticles = boardMapper.totalArticlesByTitle(keyword);
-		}else if (subject.equals("nickname")){
-			articles = boardMapper.getByNickname(rowBounds, keyword);
-			totalArticles = boardMapper.totalArticlesByNickname(keyword);
-		}else if (subject.equals("both")) {
-			articles = boardMapper.getByTitleAndNickname(rowBounds, keyword);
-			totalArticles = boardMapper.totalArticlesByTitleAndNickname(keyword);
-		}else {
-			articles = boardMapper.getAll(rowBounds);
-			totalArticles = boardMapper.totalArticles();
-		}
-		
-		mav.addObject("pagesize", pagesize);
-		mav.addObject("articles", articles);
-		
-		int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
-		mav.addObject("currentPage", page);
-		mav.addObject("totalPages", totalPages);
-		
-		return mav;
-	}
-	*/
+
 	@GetMapping("/{id}")
 	public ModelAndView getById(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id){
 		boardService.updateHit(id);//조회수 1 증가
