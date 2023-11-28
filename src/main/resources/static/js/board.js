@@ -93,22 +93,26 @@ const searchButton = document.getElementById('search-btn');
 
 if (searchButton) {
     searchButton.addEventListener('click', event => {
-
-        body = JSON.stringify({
-			subject: document.getElementById('subject').value,
-            keyword: document.getElementById('keyword').value
-        })
-
-        function success() {
-            location.replace(`/articles/search`);
-        }
-
-        function fail() {
-            location.replace(`/articles/${id}`);
-        }
-
-        httpRequest('PUT',`/api/articles/${id}`, body, success, fail);
-    });
+			if(document.getElementsByName('keyword')[1].value<1){
+				alert('검색어를 입력해주세요.');
+				this.focus();
+			}else{
+		        body = JSON.stringify({
+					subject: document.getElementById('subject').value,
+		            keyword: document.getElementById('keyword').value
+		        })
+		
+		        function success() {
+		            location.replace(`/articles/search`);
+		        }
+		
+		        function fail() {
+		            location.replace(`/articles/${id}`);
+		        }
+		
+		        httpRequest('PUT',`/api/articles/${id}`, body, success, fail);
+		    }
+		   });
 }
 
 //페이지 갯수 변경
