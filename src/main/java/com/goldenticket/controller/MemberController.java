@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +25,10 @@ import com.goldenticket.DTO.Review;
 import com.goldenticket.mapper.MemberMapper;
 import com.goldenticket.service.MemberService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name="MemberController",description="회원 관련 메서드입니다.")
 @RestController
 public class MemberController {
 	
@@ -35,9 +38,10 @@ public class MemberController {
 	@Autowired
 	private MemberMapper memberMapper;
 	
+	@Operation(description="로그인 페이지로 이동합니다. 이미 로그인이 되어있다면 메인페이지로 이동합니다.")
 	//로그인페이지로 이동
 	@GetMapping("/login")
-	public ModelAndView loginPage(HttpSession session){
+	public ModelAndView getLoginPage(HttpSession session){
 		
 		if(session.getAttribute("id") == null) {//로그인이 되어있지않다면
 			return new ModelAndView("login");
@@ -47,7 +51,8 @@ public class MemberController {
 		
 	}
 	
-	//로그인 기능 ( login페이지나 offcanvas에서 로그인 모두 포함
+	//로그인 기능 ( login페이지나 offcanvas에서 로그인 모두 포함 )
+	@Operation(description="로그인 기능입니다.")
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestParam("email") String email,
 			 					  @RequestParam("password") String password,
@@ -66,12 +71,13 @@ public class MemberController {
 				return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);//로그인 실패할경우 400 반환 
 			}	
 
-		}catch(Exception e) {//ㅇ
+		}catch(Exception e) {
 			return new ResponseEntity<>("ok",HttpStatus.BAD_REQUEST);//로그인 실패할경우 400 반환 
 		}
 	}
 
 	//로그아웃
+	@Operation(description="로그아웃 기능입니다.")
 	@GetMapping("/logout")
 	public ResponseEntity<String> logout(HttpSession session){
 		session.invalidate();
@@ -79,8 +85,9 @@ public class MemberController {
 	}
 
 	//회원가입페이지로 이동
+	@Operation(description="회원가입 페이지로 이동합니다.")
 	@GetMapping("/signup")
-	public ModelAndView signup(HttpSession session){
+	public ModelAndView getSignupPage(HttpSession session){
 		if(session.getAttribute("nickname")!=null) {
 			return new ModelAndView("main");
 		}else {
@@ -89,6 +96,7 @@ public class MemberController {
 	}
 
 	//회원가입하기
+	@Operation(description="회원가입 기능입니다.")
 	@PostMapping("/signup")
 	public ResponseEntity<String> createMember(@RequestBody Member member) {
 		try{
@@ -105,9 +113,10 @@ public class MemberController {
 
 	}
 	
-	//마이페이지 회원 수정페이지로 이동 
+	//마이페이지 회원 수정페이지로 이동
+	@Operation(description="마이페이지로 이동합니다. 로그인이 되어있지않다면 메인으로 이동합니다.")
 	@GetMapping("/mypage")
-	public ModelAndView mypage(HttpSession session) {
+	public ModelAndView getMypage(HttpSession session) {
 		try {
 			int mem_id;
 			Object session_id = session.getAttribute("id");
@@ -135,8 +144,9 @@ public class MemberController {
 	}
 	
 	//마이페이지 회원 수정
+	@Operation(description="마이페이지에서 회원의 정보를 수정하는기능입니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
-	@PutMapping("/mypage/update")
+	@PutMapping("/mypage")
 	public ResponseEntity<String> updateMember(@RequestBody Member member
 											   ,HttpSession session){
 			try {	
@@ -158,9 +168,9 @@ public class MemberController {
 		}
 	}
 	
-	
+	@Operation(description="회원이 북마크한 영화들의 목록을 보여줍니다. 영화포스터를 클릭하면 해당 영화페이지로 이동합니다.")
 	@GetMapping("/mypage/bookmark")
-	public ModelAndView bookmark(@RequestParam(defaultValue = "1") int page, HttpSession session) {
+	public ModelAndView getMyBookmark(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_bookmark");
 		int id = (int) session.getAttribute("id");
 		int pageSize = 15;
@@ -179,8 +189,9 @@ public class MemberController {
 		return mav;
 	}
 	
+	@Operation(description="회원이 작성한 리뷰의 목록을 보여줍니다. 제목을 클릭하면 해당 영화페이지로 이동합니다. 목록의 페이징은 10개로 기본설정되어있습니다")
 	@GetMapping("/mypage/review")
-	public ModelAndView review(@RequestParam(defaultValue = "1") int page, HttpSession session) {
+	public ModelAndView getMyReview(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_review");
 		int id = (int) session.getAttribute("id");
 		int pageSize = 10;
@@ -199,8 +210,9 @@ public class MemberController {
 		return mav;
 	}
 	
+	@Operation(description="회원이 작성한 게시글의 목록을 보여줍니다. 회원이 작성한 게시글을 삭제할수있으며, 게시글의 제목을 클릭하면 해당 게시글로 이동합니다.")
 	@GetMapping("/mypage/article")
-	public ModelAndView article(@RequestParam(defaultValue = "1") int page, HttpSession session) {
+	public ModelAndView getMyArticle(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_article");
 		int id = (int) session.getAttribute("id");
 		int pageSize = 10;
@@ -219,8 +231,9 @@ public class MemberController {
 		return mav;
 	}
 	
+	@Operation(description="회원이 작성한 댓글의 목록을 보여줍니다. 회원이 작성한 댓글을 삭제할수있으며, 게시글의 제목을 클릭하면 해당 게시글로 이동합니다.")
 	@GetMapping("/mypage/reply")
-	public ModelAndView reply(@RequestParam(defaultValue = "1") int page, HttpSession session) {
+	public ModelAndView getMyReply(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_reply");
 		int id = (int) session.getAttribute("id");
 		int pageSize = 10;

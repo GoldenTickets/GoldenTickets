@@ -11,7 +11,7 @@ function reviewSubmit() {
 		}else if($('#reviewcontent').val().length<1){
 			alert('리뷰 내용을 입력해주세요.');
 		}else{
-			fetch('/movie/submitreview/'+reviewmovieid,{
+			fetch('/movies/review/'+reviewmovieid,{
 				method:'POST',
 				headers:{"Content-Type":"application/json"},
 				body:JSON.stringify({
@@ -44,7 +44,7 @@ function reviewSubmit() {
 function reviewDelete() {
 			var reviewDeleteButton = document.getElementById('reviewDeleteButton');
 			var movie_id_fordelete=document.getElementById('movie_id').value;
-			fetch('/movie/deleteReview/'+movie_id_fordelete,{
+			fetch('/movies/'+movie_id_fordelete,{
 				method:'GET',
 				}).then(response => response.text())
 			  .then(data => {
@@ -64,7 +64,7 @@ function reviewDelete() {
 
 //북마크 추가
 function bookmark_append(movie_id){
-	fetch('/movie/bookmark/'+movie_id,{
+	fetch('/movies/bookmark/'+movie_id,{
 		method:'GET'
 	}).then(response => {
 	  if(response.ok){
@@ -85,7 +85,7 @@ function bookmark_append(movie_id){
 
 //북마크 취소
 function bookmark_cancel(movie_id){
-	fetch('/movie/deletebookmark/'+movie_id,{
+	fetch('/movies/bookmark/'+movie_id,{
 		method:'GET'
 	}).then(response => {
 	  if(response.ok){

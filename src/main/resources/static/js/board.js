@@ -81,7 +81,7 @@ if (searchButton) {
 		            location.replace(`/articles/${id}`);
 		        }
 		
-		        httpRequest('PUT',`/api/articles/${id}`, body, success, fail);
+		        httpRequest('PUT',`/articles/${id}`, body, success, fail);
 		    }
 		   });
 }
@@ -91,7 +91,7 @@ function selectpageSizeChange(){
 	selectedValue=document.getElementById('pageSizeChange').value;
 	pageCategoryFromParam=document.getElementById('pageCategoryValue').value;
 	//pageSizeFromParam=document.getElementById('pageSizeValue').value;
-	location.href="/board?category="+pageCategoryFromParam+"&pagesize="+selectedValue;
+	location.href="/articles?category="+pageCategoryFromParam+"&pagesize="+selectedValue;
 }
 
 
@@ -111,7 +111,7 @@ function writeValidate(){
 	}else{
 		let askbeforewrite = confirm("등록 하시겠습니까?");
 		if(askbeforewrite){
-			fetch('/board/write',{
+			fetch('/articles',{
 			    method:'POST',
 			    headers:{"Content-Type":"application/json"}
 			    ,body:JSON.stringify({
@@ -123,7 +123,7 @@ function writeValidate(){
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('등록되었습니다.');
-	          		location.href="/board";
+	          		location.href="/articles";
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
@@ -149,7 +149,7 @@ function updateArticle(){
 	}else{
 		let askbeforewrite = confirm("수정 하시겠습니까?");
 		if(askbeforewrite){
-			fetch('/board/update/'+$('#article_id').val(),{
+			fetch('/articles/'+$('#article_id').val(),{
 			    method:'PUT',
 			    headers:{"Content-Type":"application/json"}
 			    ,body:JSON.stringify({
@@ -161,7 +161,7 @@ function updateArticle(){
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('수정되었습니다.');
-	          		location.href="/board/"+$('#article_id').val();
+	          		location.href="/articles/"+$('#article_id').val();
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
@@ -177,13 +177,13 @@ function updateArticle(){
 function delete_article(){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
-			fetch('/board/delete/'+$('#article_id').val(),{
+			fetch('/articles/'+$('#article_id').val(),{
 			    method:'DELETE'
 			}).then(response => response.text())
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('삭제되었습니다.');
-	          		location.href="/board"
+	          		location.href="/articles"
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
@@ -201,7 +201,7 @@ function replyValidate(){
 	if(contentValue.length<1){
 		alert('내용을 입력해주세요.');
 	}else{
-		fetch('/board/replywrite',{
+		fetch('/articles/reply',{
 		    method:'POST',
 		    headers:{"Content-Type":"application/json"}
 		    ,body:JSON.stringify({
@@ -225,7 +225,7 @@ function replyValidate(){
 function delete_reply(){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
-			fetch('/board/deleteReply/'+$('#reply_id').val(),{
+			fetch('/articles/reply/'+$('#reply_id').val(),{
 			    method:'DELETE'
 			}).then(response => response.text())
 	  		.then(data => {

@@ -25,7 +25,7 @@
           <div style="height:50px;"></div>
           <div class="row row-cols-1 row-cols-md-5 g-4">
           <div class="col" th:each="item : ${movies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;">
+			<a th:href="@{/movies/{id}(id=${item.id})}" style="color: black;">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">

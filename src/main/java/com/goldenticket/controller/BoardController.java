@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,8 +24,11 @@ import com.goldenticket.DTO.Reply;
 import com.goldenticket.mapper.BoardMapper;
 import com.goldenticket.service.BoardService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name="BoardController",description="게시판 관련 메서드입니다.")
 @RestController
-@RequestMapping("/board")
 public class BoardController {
 	
 	
@@ -36,8 +38,13 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "0") int category, @RequestParam(defaultValue = "10") int pagesize, @RequestParam(name = "keyword", required = false) String keyword, @RequestParam(name = "subject", defaultValue = "none") String subject){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	@Operation(description="게시판으로 이동합니다.")
+	@GetMapping("/articles")
+	public ModelAndView getArticles(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "0") int category, 
+			@RequestParam(defaultValue = "10") int pagesize, 
+			@RequestParam(name = "keyword", required = false) String keyword, 
+			@RequestParam(name = "subject", defaultValue = "none") String subject){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		ModelAndView mav = new ModelAndView("articleList");
 		int startRow = (page-1)*pagesize;
@@ -74,9 +81,10 @@ public class BoardController {
 		
 		return mav;
 	}
-
-	@GetMapping("/{id}")
-	public ModelAndView getById(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id){
+	
+	@Operation(description="게시글의 제목을 클릭하면 게시글을 볼수있게 해당 게시물페이지로 이동합니다. 해당 게시물의 작성자가 열람했을때만 수정,삭제 버튼이 생깁니다.")
+	@GetMapping("/articles/{id}")
+	public ModelAndView getArticle(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id){
 		boardService.updateHit(id);//조회수 1 증가
 		
 		int pageSize = 10;
@@ -99,15 +107,17 @@ public class BoardController {
 		return mav;
 	}
 	
-	@GetMapping("/write")
-	public ModelAndView writeArticle(){
+	@Operation(description="게시글을 작성할 수 있게 게시물 작성 페이지로 이동합니다.")
+	@GetMapping("/new-article")
+	public ModelAndView getNewArticlePage(){
 		ModelAndView mav = new ModelAndView("newArticle");
 		return mav;
 	}
 	
+	@Operation(description="게시물 작성 페이지에서 게시물을 작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
-	@PostMapping("/write")
-	public ResponseEntity<String> post(@RequestBody Article article
+	@PostMapping("/articles")
+	public ResponseEntity<String> createArticle(@RequestBody Article article
 									   ,HttpSession session){
 		try {
 			Object session_id = session.getAttribute("id");
@@ -130,9 +140,10 @@ public class BoardController {
 		}
 	}
 	
+	@Operation(description="게시글을 수정할 수 있게 게시물 수정 페이지로 이동합니다.")
 	//글 수정하기 페이지로 이동
-	@GetMapping("/update/{id}")
-	public ModelAndView update(@PathVariable int id,HttpSession session){
+	@GetMapping("/update-article/{id}")
+	public ModelAndView getUpdateArticlePage(@PathVariable int id,HttpSession session){
 		Object session_id = session.getAttribute("id");
 		int mem_id;
 		if(session_id!=null) {
@@ -152,9 +163,9 @@ public class BoardController {
 		
 	}
 	
-	
+	@Operation(description="게시물 수정 페이지에서 게시물을 수정하면 DB에 수정된 정보를 업데이트 후, 해당 게시물을 보여주는 페이지로 이동합니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
-	@PutMapping("/update/{article_id}")
+	@PutMapping("/articles/{article_id}")
 	public ResponseEntity<String> updateArticle(@PathVariable int article_id
 									   			,@RequestBody Article article
 												,HttpSession session){
@@ -185,8 +196,9 @@ public class BoardController {
 		}
 	}
 	
+	@Operation(description="회원이 작성한 게시물을 삭제하는 기능입니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
-	@DeleteMapping("/delete/{article_id}")
+	@DeleteMapping("/articles/{article_id}")
 	public ResponseEntity<String> deleteArticle(@PathVariable int article_id
 									   			,HttpSession session){
 		try {
@@ -213,8 +225,9 @@ public class BoardController {
 		}
 	}
 	
+	@Operation(description="게시물에 댓글을 작성하는 기능입니다.로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
-	@PostMapping("/replywrite")
+	@PostMapping("/articles/reply")
 	public ResponseEntity<String> createReply(@RequestBody Reply reply
 									   ,HttpSession session){
 		try {
@@ -236,9 +249,10 @@ public class BoardController {
 			return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
 		}
 	}
-		
+	
+	@Operation(description="회원의 게시물을 삭제하는 기능입니다. 해당 댓글의 작성자가 열람했을때만 삭제 버튼이 생깁니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
-	@DeleteMapping("/deleteReply/{reply_id}")
+	@DeleteMapping("/articles/reply/{reply_id}")
 	public ResponseEntity<String> deleteReply(@PathVariable int reply_id
 									   			,HttpSession session){
 		try {

@@ -22,19 +22,19 @@
   <div class="row">
     <div class="col-11">
 		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=0&pagesize=' + ${pagesize}}">전체</a>
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=0&pagesize=' + ${pagesize}}">전체</a>
 		</button>
 		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=1&pagesize=' + ${pagesize}}">공지</a>
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=1&pagesize=' + ${pagesize}}">공지</a>
 		</button>
 		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=2&pagesize=' + ${pagesize}}">뉴스</a>
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=2&pagesize=' + ${pagesize}}">뉴스</a>
 		</button>
 		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=3&pagesize=' + ${pagesize}}">리뷰</a>
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=3&pagesize=' + ${pagesize}}">리뷰</a>
 		</button>
 		<button type="button" class="btn btn-outline-dark fw-bold">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/board?category=4&pagesize=' + ${pagesize}}">일반</a>
+			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=4&pagesize=' + ${pagesize}}">일반</a>
 		</button>
     </div>
     <div class="col-1">
@@ -62,7 +62,7 @@
     <tbody>
     <tr th:each="item : ${articles}">
       <td th:text="${item.categoryname}"></td>
-      <td colspan="3"><a style="color:black" th:href="@{/board/{id}(id=${item.id})}"><th:block th:text="${item.title}"></th:block></a></td>
+      <td colspan="3"><a style="color:black" th:href="@{/articles/{id}(id=${item.id})}"><th:block th:text="${item.title}"></th:block></a></td>
       <td th:text="${item.nickname}"></td>
       <td th:text="${item.reply_count}"></td>
       <td th:text="${#temporals.format(item.regdate,'yyyy-MM-dd HH:mm')}"></td>
@@ -79,7 +79,7 @@
         </a>
       </li>-->
       <li th:if="${totalPages > 0}" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
-                <a th:href="@{'/board?page=' + ${pageNumber} + '&pagesize=' + ${pagesize} + '&keyword=' + ${keyword} + '&subject=' + ${subject}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+                <a th:href="@{'/articles?page=' + ${pageNumber} + '&pagesize=' + ${pagesize} + '&keyword=' + ${keyword} + '&subject=' + ${subject}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
             </li>
       <!--<li class="page-item">
         <a class="page-link" href="#" aria-label="Next">
@@ -110,7 +110,7 @@
         </svg>
       </button>
     </div>
-    <div class="col-3 d-flex justify-content-end"><button type="button" th:onclick="|location.href='@{/board/write}'|" class="btn btn-outline-success">글쓰기</button></div>
+    <div class="col-3 d-flex justify-content-end"><button type="button" th:onclick="|location.href='@{/new-article}'|" class="btn btn-outline-success">글쓰기</button></div>
   </div>
   </form>
   <div style="height:120px"></div>

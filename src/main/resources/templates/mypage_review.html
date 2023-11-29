@@ -27,10 +27,10 @@
           <div class="row" th:each="item, iterStat: ${reviews}">
 		  <hr>
 		  <div class="col-3 row">
-			  <div class="col-9"><a th:href="@{/movie/{id}(id=${item.movie_id})}" style="text-decoration: none; color: inherit;" th:text="${item.title}"></a></div>
+			  <div class="col-9"><a th:href="@{/movies/{id}(id=${item.movie_id})}" style="text-decoration: none; color: inherit;" th:text="${item.title}"></a></div>
 			  <div class="col-3"><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${item.rating}"></th:block></div>
 		  </div>
-		  <div class="col-6"><a th:href="@{/movie/{id}(id=${item.movie_id})}" style="text-decoration: none; color: inherit;" th:text="${item.content}"></a></div>
+		  <div class="col-6"><a th:href="@{/movies/{id}(id=${item.movie_id})}" style="text-decoration: none; color: inherit;" th:text="${item.content}"></a></div>
 		  <div class="col-2">
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>

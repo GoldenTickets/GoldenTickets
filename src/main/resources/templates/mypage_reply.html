@@ -27,9 +27,9 @@
           <div class="row" th:each="item, iterStat: ${replies}">
 		  <hr>
 		  <div class="col-4">
-			  <a th:href="@{/board/{id}(id=${item.article_id})}" style="text-decoration: none; color: inherit;" th:text="${item.title}"></a>
+			  <a th:href="@{/articles/{id}(id=${item.article_id})}" style="text-decoration: none; color: inherit;" th:text="${item.title}"></a>
 		  </div>
-		  <div class="col-5"><a th:href="@{/board/{id}(id=${item.article_id})}" style="text-decoration: none; color: inherit;" th:text="${item.content}"></a></div>
+		  <div class="col-5"><a th:href="@{/articles/{id}(id=${item.article_id})}" style="text-decoration: none; color: inherit;" th:text="${item.content}"></a></div>
 		  <div class="col-2">
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>

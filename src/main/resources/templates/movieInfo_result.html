@@ -22,7 +22,7 @@
 		    </thead>
 		    <tbody>
 		    <tr th:each="item : ${resultmovies}">
-		      <td><a style="color:black" th:href="@{/movie/{id}(id=${item.id})}"><th:block th:text="${item.title}"></th:block></a></td>
+		      <td><a style="color:black" th:href="@{/movies/{id}(id=${item.id})}"><th:block th:text="${item.title}"></th:block></a></td>
 		      <td th:text="${item.rating}"></td>
 		      <td>
 			  	<th:block th:each="genre, iterStat : ${genres}">

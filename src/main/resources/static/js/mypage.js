@@ -39,7 +39,7 @@ function mypageUpdate(){
 	}else if(member_genre_List.length<2){
 		alert('선호하는 장르를 1개 이상 선택해야됩니다.');
 	}else{
-		fetch('/mypage/update',{
+		fetch('/mypage',{
 				method:'PUT',
 				headers:{"Content-Type":"application/json"},
 				body:JSON.stringify({
@@ -65,7 +65,7 @@ function mypageUpdate(){
 
 function mypage_review_delete(movie_id) {
 			
-			fetch('/movie/deleteReview/'+movie_id,{
+			fetch('/movies/'+movie_id,{
 				method:'GET',
 				}).then(response => response.text())
 			  .then(data => {
@@ -85,13 +85,13 @@ function mypage_review_delete(movie_id) {
 function mypage_article_delete(article_id){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
-			fetch('/board/delete/'+article_id,{
+			fetch('/articles/'+article_id,{
 			    method:'DELETE'
 			}).then(response => response.text())
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('삭제되었습니다.');
-	          		location.href="/board"
+	          		location.href="/articles"
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
@@ -105,13 +105,13 @@ function mypage_article_delete(article_id){
 function mypage_reply_delete(reply_id){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
-			fetch('/board/deleteReply/'+reply_id,{
+			fetch('/articles/reply'+reply_id,{
 			    method:'DELETE'
 			}).then(response => response.text())
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('삭제되었습니다.');
-	          		location.href="/board"
+	          		location.href="/articles"
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();

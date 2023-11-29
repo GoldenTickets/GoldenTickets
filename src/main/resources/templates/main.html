@@ -21,7 +21,7 @@
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <a th:href="@{/movie/{movieId}(movieId=${newmovie1.id})}">
+              <a th:href="@{/movies/{movieId}(movieId=${newmovie1.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie1.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie1.title}"></th:block></h2>
@@ -38,7 +38,7 @@
             </a>  
             </div>
             <div class="carousel-item">
-			  <a th:href="@{/movie/{movieId}(movieId=${newmovie2.id})}">
+			  <a th:href="@{/movies/{movieId}(movieId=${newmovie2.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie2.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie2.title}"></th:block></h2>
@@ -55,7 +55,7 @@
               </a>
             </div>
             <div class="carousel-item">
-			  <a th:href="@{/movie/{movieId}(movieId=${newmovie3.id})}">
+			  <a th:href="@{/movies/{movieId}(movieId=${newmovie3.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie3.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie3.title}"></th:block></h2>
@@ -72,7 +72,7 @@
               </a>
             </div>
             <div class="carousel-item">
-			  <a th:href="@{/movie/{movieId}(movieId=${newmovie4.id})}">
+			  <a th:href="@{/movies/{movieId}(movieId=${newmovie4.id})}">
               <img th:src="@{/images/{photo}(photo=${newmovie4.photoname})}" class="d-block w-100 rounded" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h2><th:block th:text="${newmovie4.title}"></th:block></h2>
@@ -105,7 +105,7 @@
       <div class="col-4">
         <div style="height: 20px;"></div>
         <div class="card mb-3"> <!-- 카드 시작 -->
-         <a href="/board" style="color:black">
+         <a href="/articles" style="color:black">
           <div class="row g-0">
             <div class="col-md-4">
               <img src="/images/lounge.png" class="img-fluid rounded-start" alt="...">
@@ -121,7 +121,7 @@
         </div> <!-- 카드 끝 -->
         <div style="height: 10px;"></div>
         <div class="card mb-3" style="max-width: 540px;"> <!-- 카드 시작 -->
-         <a href="/movie/ranking" style="color:black">
+         <a href="/movies/ranking" style="color:black">
           <div class="row g-0">
             <div class="col-md-4">
               <img src="/images/rank.png" class="img-fluid rounded-start" alt="...">
@@ -137,7 +137,7 @@
         </div> <!-- 카드 끝 -->
         <div style="height: 10px;"></div>
         <div class="card mb-3" style="max-width: 540px;"> <!-- 카드 시작 -->
-         <a href="/movie" style="color:black">
+         <a href="/movies" style="color:black">
           <div class="row g-0">
             <div class="col-md-4">
               <img src="/images/info.png" class="img-fluid rounded-start" alt="...">
@@ -160,7 +160,7 @@
     <hr>
     <div class="row row-cols-1 row-cols-md-5 g-4">
 		<div class="col" th:each="item : ${todaymovies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}" style="color:black">
+			<a th:href="@{/movies/{id}(id=${item.id})}" style="color:black">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
@@ -180,7 +180,7 @@
         <hr>
         <div class="row row-cols-1 row-cols-md-5 g-4">
           <div class="col" th:if="${#session.getAttribute('id') != null}" th:each="item : ${custommovies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}"  style="color:black">
+			<a th:href="@{/movies/{id}(id=${item.id})}"  style="color:black">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
@@ -191,7 +191,7 @@
             </a>
           </div>
           <div class="col" th:unless="${#session.getAttribute('id') != null}" th:each="item : ${lovedmovies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}"  style="color:black">
+			<a th:href="@{/movies/{id}(id=${item.id})}"  style="color:black">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
@@ -207,28 +207,28 @@
         <hr>
         <div>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=1&order=' + ${order}}">액션</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=1&order=' + ${order}}">액션</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=2&order=' + ${order}}">공포/스릴러</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=2&order=' + ${order}}">공포/스릴러</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=3&order=' + ${order}}">코미디</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=3&order=' + ${order}}">코미디</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=4&order=' + ${order}}">SF/판타지</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=4&order=' + ${order}}">SF/판타지</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=5&order=' + ${order}}">드라마</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=5&order=' + ${order}}">드라마</a>
 			</button>
 			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=6&order=' + ${order}}">멜로/로맨스</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=6&order=' + ${order}}">멜로/로맨스</a>
 			</button>
 			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=7&order=' + ${order}}">애니메이션</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=7&order=' + ${order}}">애니메이션</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=8&order=' + ${order}}">다큐멘터리</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=8&order=' + ${order}}">다큐멘터리</a>
 			</button>
         </div>
       </div>
@@ -238,7 +238,7 @@
         </div>
         <hr>
         <ul class="list-group" th:each="item : ${topmovies}">
-          <a th:href="@{/movie/{id}(id=${item.id})}">
+          <a th:href="@{/movies/{id}(id=${item.id})}">
 			  <li class="list-group-item">
 				  <img th:src="@{/images/{poster}(poster=${item.poster})}" style="height:65px" alt="...">&nbsp;&nbsp;
 				  <b th:text="${item.ranking}"></b>&nbsp;&nbsp;

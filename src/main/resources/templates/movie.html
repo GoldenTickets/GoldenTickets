@@ -224,7 +224,7 @@
             </a>
           </li>-->
           <li th:if="${totalPages > 0}" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
-                <a th:href="@{'/movie/' + ${movie.id} + '?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage ? 'page-link active' : 'page-link'}"></a>
+                <a th:href="@{'/movies/' + ${movie.id} + '?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage ? 'page-link active' : 'page-link'}"></a>
             </li>
           <!--<li class="page-item">
             <a class="page-link" href="#" aria-label="Next">

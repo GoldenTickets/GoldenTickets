@@ -6,31 +6,31 @@
       <div style="height:80px"></div>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=0&order=' + ${order}}">전체</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=0&order=' + ${order}}">전체</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=1&order=' + ${order}}">액션</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=1&order=' + ${order}}">액션</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=2&order=' + ${order}}">공포/스릴러</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=2&order=' + ${order}}">공포/스릴러</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=3&order=' + ${order}}">코미디</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=3&order=' + ${order}}">코미디</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=4&order=' + ${order}}">SF/판타지</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=4&order=' + ${order}}">SF/판타지</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=5&order=' + ${order}}">드라마</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=5&order=' + ${order}}">드라마</a>
 			</button>
 			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=6&order=' + ${order}}">멜로/로맨스</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=6&order=' + ${order}}">멜로/로맨스</a>
 			</button>
 			<button type="button" class="btn btn-light fw-bold" style="margin-right:20px;">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=7&order=' + ${order}}">애니메이션</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=7&order=' + ${order}}">애니메이션</a>
 			</button>
             <button type="button" class="btn btn-light fw-bold">
-				<a style="text-decoration: none; color: inherit;" th:href="@{'/movie?genre=8&order=' + ${order}}">다큐멘터리</a>
+				<a style="text-decoration: none; color: inherit;" th:href="@{'/movies?genre=8&order=' + ${order}}">다큐멘터리</a>
 			</button>
           </div>
         <div style="height:80px"></div>
@@ -59,7 +59,7 @@
         <div style="height:10px;"></div>
         <div class="row row-cols-1 row-cols-md-5 g-4">
           <div class="col" th:each="item : ${movies}">
-			<a th:href="@{/movie/{id}(id=${item.id})}" style="color: black;">
+			<a th:href="@{/movies/{id}(id=${item.id})}" style="color: black;">
             	<div class="card">
 	              <img th:src="@{/images/{poster}(poster=${item.poster})}" class="card-img-top" alt="...">
 	              <div class="card-body">
@@ -81,7 +81,7 @@
 		              </a>
 		            </li>-->
 		            <li th:if="${totalPages > 0}" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
-		                <a th:href="@{'/movie?page=' + ${pageNumber} + '&genre=' + ${genre} + '&order=' + ${order}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
+		                <a th:href="@{'/movies?page=' + ${pageNumber} + '&genre=' + ${genre} + '&order=' + ${order}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
 		            </li>
 		            <!--<li class="page-item">
 		              <a class="page-link" href="#" aria-label="Next">
