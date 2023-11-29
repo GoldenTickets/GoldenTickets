@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.mapper.MovieMapper;
 
+
 @RestController
 @RequestMapping("")
 public class MainController {

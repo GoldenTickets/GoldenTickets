@@ -59,7 +59,6 @@ public class BoardController {
 				articles = boardMapper.getAll(rowBounds);
 				totalArticles = boardMapper.totalArticles();
 			}
-		
 		}else { // 카테고리로 조회
 			articles = boardMapper.getAllByCategory(rowBounds, category);
 			totalArticles = boardMapper.totalArticlesByCategory(category);

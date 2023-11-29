@@ -54,6 +54,7 @@
       <th scope="col">카테고리</th>
       <th scope="col" colspan="3">제목</th>
       <th scope="col">닉네임</th>
+      <th scope="col">댓글</th>
       <th scope="col">날짜</th>
       <th scope="col">조회</th>
     </tr>
@@ -63,6 +64,7 @@
       <td th:text="${item.categoryname}"></td>
       <td colspan="3"><a style="color:black" th:href="@{/board/{id}(id=${item.id})}"><th:block th:text="${item.title}"></th:block></a></td>
       <td th:text="${item.nickname}"></td>
+      <td th:text="${item.reply_count}"></td>
       <td th:text="${#temporals.format(item.regdate,'yyyy-MM-dd HH:mm')}"></td>
       <td th:text="${item.hit}"></td>
     </tr>
@@ -76,7 +78,7 @@
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>-->
-      <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+      <li th:if="${totalPages > 0}" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
                 <a th:href="@{'/board?page=' + ${pageNumber} + '&pagesize=' + ${pagesize} + '&keyword=' + ${keyword} + '&subject=' + ${subject}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
             </li>
       <!--<li class="page-item">

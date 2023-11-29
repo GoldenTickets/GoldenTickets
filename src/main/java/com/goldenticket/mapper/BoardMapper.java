@@ -18,10 +18,10 @@ public interface BoardMapper {
 	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE A.id = #{id}")
 	Article getById(@Param("id") int id);
 	
-	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id ORDER BY A.regdate DESC")
+	@Select("SELECT A.*, C.categoryname, M.nickname, COUNT(R.id) AS reply_count FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id LEFT JOIN reply R ON A.id = R.article_id GROUP BY A.id, C.categoryname, M.nickname ORDER BY A.regdate DESC")
 	List<Article> getAll(RowBounds rowBounds);
 	
-	@Select("SELECT A.*, C.categoryname, M.nickname FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id WHERE C.id = #{category} ORDER BY regdate DESC")
+	@Select("SELECT A.*, C.categoryname, M.nickname, COUNT(R.id) AS reply_count FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id LEFT JOIN reply R ON A.id = R.article_id WHERE C.id = #{category} GROUP BY A.id, C.categoryname, M.nickname ORDER BY regdate DESC")
 	List<Article> getAllByCategory(RowBounds rowBounds, int category);
 	
 	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id} ORDER BY R.regdate DESC")//댓글가져오기
@@ -67,13 +67,13 @@ public interface BoardMapper {
 	@Update("UPDATE article SET hit=#{hit} WHERE id=#{id}")
 	int updateReplyHit(Article article);
 	
-	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
+	@Select("SELECT C.categoryname, A.*, M.nickname, COUNT(R.id) AS reply_count FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id LEFT JOIN reply R ON A.id = R.article_id WHERE A.title LIKE CONCAT('%', #{keyword}, '%') GROUP BY A.id, C.categoryname, M.nickname ORDER BY regdate DESC")
 	List<Article> getByTitle(RowBounds rowBounds, String keyword);
 	
-	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%')")
+	@Select("SELECT C.categoryname, A.*, M.nickname, COUNT(R.id) AS reply_count FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id LEFT JOIN reply R ON A.id = R.article_id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%') GROUP BY A.id, C.categoryname, M.nickname ORDER BY regdate DESC")
 	List<Article> getByNickname(RowBounds rowBounds, String keyword);
 	
-	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%') OR A.title LIKE CONCAT('%', #{keyword}, '%')")
+	@Select("SELECT C.categoryname, A.*, M.nickname, COUNT(R.id) AS reply_count FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id LEFT JOIN reply R ON A.id = R.article_id WHERE M.nickname LIKE CONCAT('%', #{keyword}, '%') OR A.title LIKE CONCAT('%', #{keyword}, '%') GROUP BY A.id, C.categoryname, M.nickname ORDER BY regdate DESC")
 	List<Article> getByTitleAndNickname(RowBounds rowBounds, String keyword);
 	
 	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
