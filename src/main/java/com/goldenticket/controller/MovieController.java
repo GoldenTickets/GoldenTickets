@@ -42,7 +42,7 @@ public class MovieController {
 									 HttpSession session) {
 		try {
 			movieService.updateHit(id); //조회수 1 증가
-			ModelAndView mav=new ModelAndView("movieinfo");
+			ModelAndView mav=new ModelAndView("movie");
 			
 			int pageSize = 10;
 			int startRow = (page-1)*pageSize;
@@ -67,16 +67,16 @@ public class MovieController {
 			List<Object> moviePhotoList = movieService.getMoviePhoto(id);
 			
 			mav.addObject("movie", movie);
-			mav.addObject("movieActor",movieActor);//영화배우목록
+			mav.addObject("movieactor",movieActor);//영화배우목록
 			mav.addObject("bookmarked",IsitBookmarked);//북마크여부
-			mav.addObject("photoFirst", (String)moviePhotoList.get(0));//첫번째 사진
-			mav.addObject("photoRemaining", (List)moviePhotoList.get(1));//첫번째 사진 제외한 나머지 사진
-			mav.addObject("movieGenre",movieService.getMovieGenre(id));//영화 장르가져오기 (List)
-			mav.addObject("moviePlatform", movieService.getMoviePlatform(id));//영화 플랫폼가져오기
-			mav.addObject("movieReviewList", movieService.getMovieReview(id, rowBounds));//영화 리뷰가져오기
+			mav.addObject("photofirst", (String)moviePhotoList.get(0));//첫번째 사진
+			mav.addObject("photoremaining", (List)moviePhotoList.get(1));//첫번째 사진 제외한 나머지 사진
+			mav.addObject("moviegenre",movieService.getMovieGenre(id));//영화 장르가져오기 (List)
+			mav.addObject("movieplatform", movieService.getMoviePlatform(id));//영화 플랫폼가져오기
+			mav.addObject("reviewlist", movieService.getMovieReview(id, rowBounds));//영화 리뷰가져오기
 			
 			return mav;
-			
+
 		}catch(Exception e) {
 			e.printStackTrace();
 			return new ModelAndView("redirect:/");

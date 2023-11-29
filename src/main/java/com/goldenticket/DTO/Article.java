@@ -15,7 +15,10 @@ public class Article {
 	private LocalDateTime updatedate;
 	private int likes;
 	private int dislikes;
+	
+	//Article 테이블 컬럼X
 	private int category_id;
 	private String categoryname;
 	private String nickname;
+	private int reply_count;
 }

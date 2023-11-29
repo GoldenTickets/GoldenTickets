@@ -49,7 +49,7 @@
 		                <span aria-hidden="true">&laquo;</span>
 		              </a>
 		            </li>-->
-		            <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+		            <li th:if="${totalPages > 0}" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
 		                <a th:href="@{'/mypage/article?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage} ? 'page-link active' : 'page-link'"></a>
 		            </li>
 		            <!--<li class="page-item">

@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col"></div>
 			<div class="col-7">
-	        	<div style="color:white;font-size:30px; margin-top: 25px;" th:text="${movie.title}"><!-- 제목 --></div><th:block th:text="${#temporals.format(movie.releasedate, '(yyyy)')}"></th:block><!-- 개봉년도 -->
+	        	<div style="color:white;font-size:30px; margin-top: 25px;" th:text="${movie.title}"></div><th:block th:text="${#temporals.format(movie.releasedate, '(yyyy)')}"></th:block>
 	        </div>
 	        <div class="col" th:if="${bookmarked}==0">
 				<button style="margin-top:35px; margin-left:35px;" type="button" class="btn btn-outline-warning" th:onclick="'bookmark_append(' + ${movie.id} + ')'">북마크 추가</button>
@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col">
           <br>
-          <img th:src="@{/images/{poster}(poster=${movie.poster})}" width="600" alt="포스터"><!-- 포스터 경로 -->
+          <img th:src="@{/images/{poster}(poster=${movie.poster})}" width="600" alt="포스터">
         </div>
       </div>
       </div>
@@ -31,7 +31,7 @@
       <div class="row">
         <div class="col-1"></div>
         <div class="col">
-          <p th:text="${movie.synopsis}"></p><!-- 시놉시스 -->
+          <p th:text="${movie.synopsis}"></p> 
         </div>
         <div class="col-1"></div>
       </div>
@@ -45,7 +45,6 @@
                 개봉일
               </th>
               <th th:text="${#temporals.format(movie.releasedate, 'yyyy.MM')}">
-                <!-- 개봉일 -->
               </th>
             </tr>
             <tr>
@@ -61,7 +60,7 @@
                 장르
               </th>
               <th>
-              	<th:block th:each="item, iterStat : ${movieGenre}">
+              	<th:block th:each="item, iterStat : ${moviegenre}">
                 	<th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
               	</th:block>
               </th>
@@ -71,11 +70,10 @@
                 배우
               </th>
               <th>
-              	<th:block th:each="item, iterStat : ${movieActor}">
+              	<th:block th:each="item, iterStat : ${movieactor}">
                 	<th:block th:text="${item + (iterStat.last ? '' : ',')}"></th:block>
               	</th:block>
               </tr>
-            </tr>
             <tr>
               <th>
                 감독
@@ -95,7 +93,7 @@
                 볼 수 있는 곳
               </th>
               <th>
-                <th:block th:each="platform:${moviePlatform}">
+                <th:block th:each="platform:${movieplatform}">
 					<a th:href="${platform.url}" style="text-decoration:none;">
 						<img th:src="@{'/images/'+${platform.name}+'.png'}" width="60" height="25">
 					</a>	 
@@ -114,17 +112,17 @@
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Slide 1"></button>
-			  <th:block th:each="index : ${#numbers.sequence(1, photoRemaining.size())}">
+			  <th:block th:each="index : ${#numbers.sequence(1, photoremaining.size())}">
 			    <button type="button" th:data-bs-target="'#carouselExampleIndicators'" th:data-bs-slide-to="${index}"
 			      th:aria-label="'Slide ' + ${index + 1}"></button>
 			  </th:block>
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img th:src="@{/images/{photourl}(photourl=${photoFirst})}" class="d-inline w-100" alt="...">
+                <img th:src="@{/images/{photourl}(photourl=${photofirst})}" class="d-inline w-100" alt="...">
               </div>
-              <div class="carousel-item" th:each="moviePhoto:${photoRemaining}">
-                <img th:src="@{/images/{photourl}(photourl=${moviePhoto})}" class="d-inline w-100" alt="...">
+              <div class="carousel-item" th:each="moviephoto:${photoremaining}">
+                <img th:src="@{/images/{photourl}(photourl=${moviephoto})}" class="d-inline w-100" alt="...">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -195,7 +193,7 @@
         <div class="col-2"><button type="button" id="reviewwrite-btn" class="btn btn-secondary" onclick="reviewSubmit()">등록</button></div>
       </div>
       <div style="height:30px"></div>
-      <div class="row" th:each="item, iterStat: ${movieReviewList}">
+      <div class="row" th:each="item, iterStat: ${reviewlist}">
 		  <hr>
 		  <div class="col-2 row">
 			  <div class="col-8"><th:block th:text="${item.nickname}"></th:block></div>
@@ -207,7 +205,7 @@
 		  <div class="col-2" th:if="${session.id == null or session.id != item.mem_id}">
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>
-		   <!--내가 쓴 리뷰는 삭제버튼 생성 -->
+		   <!--내가 쓴 리뷰는 삭제버튼 생성--> 
 		  <div class="col-2" th:if="${session.id == item.mem_id}">
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>
@@ -217,20 +215,6 @@
 		  <div style="height:13px;"></div>
 		  <hr th:if="${iterStat.last}">
 	  </div>
-      <!--<table class="table">
-        <tbody>
-          <tr th:each="review: ${movieReviewList}">
-            <td><th:block th:text="${review.nickname}"></th:block></td>
-            <td><img src="/images/star2.png" style="height:13px">&nbsp;<th:block th:text="${review.rating}"></th:block></td>
-            <td colspan="3" th:text="${review.content}"></td>
-            <td th:text="${#temporals.format(review.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></td>
-            <td>
-              <button type="button" class="btn btn-outline-dark" id="reviewlike">👍🏻<mj th:text="${review.liked}"></mj></button>
-              <button type="button" class="btn btn-outline-dark" id="reviewdislike">👎🏻<mj th:text="${review.disliked}"></mj></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>-->
       <div style="height:20px"></div>
       <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center text-dark">
@@ -239,7 +223,7 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>-->
-          <li th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
+          <li th:if="${totalPages > 0}" th:each="pageNumber : ${#numbers.sequence(1, totalPages)}" class="page-item">
                 <a th:href="@{'/movie/' + ${movie.id} + '?page=' + ${pageNumber}}" th:text="${pageNumber}" th:class="${pageNumber == currentPage ? 'page-link active' : 'page-link'}"></a>
             </li>
           <!--<li class="page-item">

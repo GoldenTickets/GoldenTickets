@@ -59,9 +59,6 @@ public class BoardController {
 				articles = boardMapper.getAll(rowBounds);
 				totalArticles = boardMapper.totalArticles();
 			}
-			System.out.println("로그시작");
-			System.out.println(articles);
-			System.out.println(totalArticles);
 			
 		}else { // 카테고리로 조회
 			articles = boardMapper.getAllByCategory(rowBounds, category);
