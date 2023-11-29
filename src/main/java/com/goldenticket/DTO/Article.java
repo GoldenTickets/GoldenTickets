@@ -18,4 +18,5 @@ public class Article {
 	private int category_id;
 	private String categoryname;
 	private String nickname;
+	
 }

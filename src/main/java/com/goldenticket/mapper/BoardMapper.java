@@ -27,7 +27,7 @@ public interface BoardMapper {
 	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id} ORDER BY R.regdate DESC")//댓글가져오기
 	List<Reply> getByArticle_id(@Param("id") int id, RowBounds rowBounds);
 	
-	@Insert("INSERT INTO article (mem_id, title, content, regdate) VALUES (#{article.mem_id}, #{article.title}, #{article.content}, curdate())")
+	@Insert("INSERT INTO article (mem_id, title, content, regdate) VALUES (#{article.mem_id}, #{article.title}, #{article.content}, now())")
 	int createArticle(@Param("article") Article article);
 	
 	@Insert("INSERT INTO article_category (article_id,category_id) VALUES (#{article_id}, #{category_id})")
@@ -36,7 +36,7 @@ public interface BoardMapper {
 	@Select("SELECT MAX(id) AS id FROM article")
 	Article getNewId();
 	
-	@Update("UPDATE article SET title = #{article.title}, content = #{article.content}, updatedate = curdate() WHERE id = #{article.id}")
+	@Update("UPDATE article SET title = #{article.title}, content = #{article.content}, updatedate = now() WHERE id = #{article.id}")
 	int articleUpdate(@Param("article") Article article);
 	
 	@Update("UPDATE article_category SET category_id = #{article.category_id} WHERE article_id = #{article.id}")

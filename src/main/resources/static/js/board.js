@@ -1,34 +1,4 @@
 
-
-// 수정 기능
-const modifyButton = document.getElementById('modifycomplete-btn');
-
-if (modifyButton) {
-    modifyButton.addEventListener('click', event => {
-        let params = new URLSearchParams(location.search);
-        let id = params.get('id');
-
-        body = JSON.stringify({
-			category_id: $('input[name=category]:checked').val(),
-            title: $('#'),
-            content: document.getElementById('acontent').value
-        })
-
-        function success() {
-            alert('수정 완료되었습니다.');
-            location.replace(`/articles/${id}`);
-        }
-
-        function fail() {
-            alert('수정 실패했습니다.');
-            location.replace(`/articles/${id}`);
-        }
-
-        httpRequest('PUT',`/api/articles/${id}`, body, success, fail);
-    });
-}
-
-
 // 쿠키를 가져오는 함수
 function getCookie(key) {
     var result = null;
@@ -129,7 +99,7 @@ function selectpageSizeChange(){
 function writeValidate(){
 	
 	var categoryValue = $('input[name=category]:checked').val();
-	var titleValue = $('#title').val();
+	var titleValue = $('#article_title').val();
 	var contentValue = $('#content').val();
 	
 	if(categoryValue==null){
@@ -167,7 +137,7 @@ function writeValidate(){
 function updateArticle(){
 	
 	var categoryValue = $('input[name=category]:checked').val();
-	var titleValue = $('#title').val();
+	var titleValue = $('#article_title').val();
 	var contentValue = $('#content').val();
 	
 	if(categoryValue==null){
