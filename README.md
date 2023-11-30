@@ -37,32 +37,21 @@ Library : `Springdoc 1.6.14`
   
 # 🗂 디렉토리 구조
 ```
-📦src/
- ┣ 📂apis
- ┣ 📂assets
- ┃ ┣ 📂images
- ┃ ┗ 📂styles
- ┣ 📂components
- ┃ ┗ 📂common
- ┣ 📂hooks
- ┣ 📂pages
- ┃ ┣ 📜ErrorPage.tsx
- ┃ ┣ 📜FindProjectPage.tsx
- ┃ ┣ 📜LoadingPage.tsx
- ┃ ┣ 📜MainPage.tsx
- ┃ ┣ 📜MyPage.tsx
- ┃ ┣ 📜ProjectDetailPage.tsx
- ┃ ┣ 📜ProjectEditPage.tsx
- ┃ ┣ 📜ProjectWritePage.tsx
- ┃ ┣ 📜PublicProfilePage.tsx
- ┃ ┗ 📜Root.tsx
- ┣ 📂recoil
- ┣ 📂routes
- ┣ 📂types
- ┣ 📂utils
- ┣ 📜App.tsx
- ┣ 📜index.tsx
- ┗ 📜react-app-env.d.ts
+📦src/main
+ ┣ 📂java/com/goldenticket
+ ┃ ┣ 📂config
+ ┃ ┣ 📂controller
+ ┃ ┣ 📂DTO
+ ┃ ┣ 📂mapper
+ ┃ ┗ 📂service
+ ┣ 📂resources
+ ┃ ┣ 📂static
+ ┃ ┃ ┣ 📂css
+ ┃ ┃ ┣ 📂images
+ ┃ ┃ ┗ 📂js
+ ┃ ┣ 📂templates
+ ┃ ┃ ┣ 📂fragments
+ ┃ ┃ ┣ 📂layout
 ```
 # ⭐️ 주요 기능
 ### ✔️ 메인
