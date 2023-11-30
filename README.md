@@ -25,7 +25,7 @@
 # 🛠️ 개발환경
 - Server
   
-`Elastic Beanstalk`
+`AWS Elastic Beanstalk`
 - DB
   
 `MySQL 8.0.34`
