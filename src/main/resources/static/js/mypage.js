@@ -11,7 +11,7 @@ $(function(){
 })
 
 
-
+//마이페이지에서 회원 정보 수정
 function mypageUpdate(){
 	var input_name = document.getElementById('input_name');
 	var input_email = document.getElementById('input_email');
@@ -63,7 +63,7 @@ function mypageUpdate(){
 	}
 }
 
-//마이페이지 리뷰 삭제
+//마이페이지 회원이 작성한 리뷰 삭제
 function mypage_review_delete(movie_id) {
 			
 			fetch('/movies/review/'+movie_id,{
@@ -82,7 +82,8 @@ function mypage_review_delete(movie_id) {
 			  })
 
 	 }
-	
+
+//마이페이지에서 회원이 작성한 글삭제
 function mypage_article_delete(article_id){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
@@ -106,7 +107,7 @@ function mypage_article_delete(article_id){
 }
 
 
-//게시판 댓글삭제
+//마이페이지에서 회원이 작성한 댓글삭제
 function mypage_reply_delete(reply_id){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
@@ -116,7 +117,11 @@ function mypage_reply_delete(reply_id){
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('삭제되었습니다.');
-	          		location.href="/articles"
+	          		if(location.pathname="/mypage/reply"){
+						location.reload();  
+					}else{
+						location.href="/articles"
+					}
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
