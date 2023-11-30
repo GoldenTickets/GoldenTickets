@@ -63,10 +63,11 @@ function mypageUpdate(){
 	}
 }
 
+//마이페이지 리뷰 삭제
 function mypage_review_delete(movie_id) {
 			
-			fetch('/movies/'+movie_id,{
-				method:'GET',
+			fetch('/movies/review/'+movie_id,{
+				method:'DELETE',
 				}).then(response => response.text())
 			  .then(data => {
 				  if(data=="success"){
@@ -91,7 +92,11 @@ function mypage_article_delete(article_id){
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('삭제되었습니다.');
-	          		location.href="/articles"
+	          		if(location.pathname="/mypage/article"){
+						location.reload();
+					}else{
+	          			location.href="/articles"
+	          		}
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
@@ -105,7 +110,7 @@ function mypage_article_delete(article_id){
 function mypage_reply_delete(reply_id){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
-			fetch('/articles/reply'+reply_id,{
+			fetch('/articles/reply/'+reply_id,{
 			    method:'DELETE'
 			}).then(response => response.text())
 	  		.then(data => {

@@ -221,7 +221,7 @@ function replyValidate(){
 	}
 }
 
-//게시판 댓글글삭제
+//게시판 댓글삭제
 function delete_reply(){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
@@ -231,7 +231,7 @@ function delete_reply(){
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('삭제되었습니다.');
-	          		location.href="/articles"
+	          		location.reload();
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
