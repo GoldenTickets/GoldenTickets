@@ -25,6 +25,7 @@ import com.goldenticket.mapper.BoardMapper;
 import com.goldenticket.service.BoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="BoardController",description="게시판 관련 메서드입니다.")
@@ -44,9 +45,9 @@ public class BoardApiController {
 			+ "수정이 성공적으로 완료되면 DB에 수정된 정보를 업데이트 후, 해당 게시물을 보여주는 페이지로 이동합니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PutMapping("/articles/{article_id}")
-	public ResponseEntity<String> updateArticle(@PathVariable int article_id
-									   			,@RequestBody Article article
-												,HttpSession session){
+	public ResponseEntity<String> updateArticle(@Parameter(description = "게시글의 primary key인 id 컬럼입니다.") @PathVariable int article_id,
+												@Parameter(description = "게시글 수정페이지에서 입력한 category,title,content")@RequestBody Article article,
+												HttpSession session){
 		try {
 			System.out.println("article_id=>"+article_id);
 			Object session_id = session.getAttribute("id");
@@ -79,7 +80,7 @@ public class BoardApiController {
 			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당게시글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 삭제가 성공적으로 수행됩니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@DeleteMapping("/articles/{article_id}")
-	public ResponseEntity<String> deleteArticle(@PathVariable int article_id
+	public ResponseEntity<String> deleteArticle(@Parameter(description = "게시글의 primary key인 id 컬럼입니다.") @PathVariable int article_id
 									   			,HttpSession session){
 		try {
 			System.out.println("article_id=>"+article_id);
@@ -108,8 +109,8 @@ public class BoardApiController {
 	@Operation(summary="댓글 작성",description="게시물에 댓글을 작성하는 기능입니다.로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PostMapping("/articles/reply")
-	public ResponseEntity<String> createReply(@RequestBody Reply reply
-									   ,HttpSession session){
+	public ResponseEntity<String> createReply(@Parameter(description = "입력한 댓글의 content입니다.") @RequestBody Reply reply
+									   		  ,HttpSession session){
 		try {
 			Object session_id = session.getAttribute("id");
 			if(session_id!=null) {//로그인 상태
@@ -135,8 +136,8 @@ public class BoardApiController {
 			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당댓글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 삭제가 성공적으로 수행됩니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@DeleteMapping("/articles/reply/{reply_id}")
-	public ResponseEntity<String> deleteReply(@PathVariable int reply_id
-									   			,HttpSession session){
+	public ResponseEntity<String> deleteReply(@Parameter(description = "입력한 댓글의 primary key인 id입니다.") @PathVariable int reply_id
+									   		  ,HttpSession session){
 		try {
 			System.out.println("reply_id=>"+reply_id);
 			Object session_id = session.getAttribute("id");

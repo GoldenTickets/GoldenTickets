@@ -26,6 +26,7 @@ import com.goldenticket.mapper.MemberMapper;
 import com.goldenticket.service.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="MemberController",description="회원 관련 메서드입니다.")
@@ -41,8 +42,8 @@ public class MemberApiController {
 	//로그인 기능 ( login페이지나 offcanvas에서 로그인 모두 포함 )
 	@Operation(summary="로그인",description="로그인 기능입니다.")
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestParam("email") String email,
-			 					  @RequestParam("password") String password,
+	public ResponseEntity<String> login(@Parameter(description = "회원의 primary key인 email 컬럼입니다.") @RequestParam("email") String email,
+										@Parameter(description = "회원의 password 컬럼입니다.")@RequestParam("password") String password,
 			 					  HttpSession session) throws Exception {
 		try {
 			int result = memberService.loginCheck(email,password);
@@ -74,7 +75,7 @@ public class MemberApiController {
 	//회원가입하기
 	@Operation(summary="회원가입",description="회원가입 기능입니다.")
 	@PostMapping("/signup")
-	public ResponseEntity<String> createMember(@RequestBody Member member) {
+	public ResponseEntity<String> createMember(@Parameter(description = "회원가입때 입력하는 회원정보입니다.") @RequestBody Member member) {
 		try{
 			memberService.createMember(member);//DB에 이름,이메일,비밀번호,닉네임을 입력. 성공하면 1을 반환 
 			int mem_id = memberService.getMember(member.getEmail()).getId();//DB의 member테이블에 새 레코드가 추가되면 pk인 id를 가져옴 
@@ -93,7 +94,7 @@ public class MemberApiController {
 	@Operation(summary="회원정보수정",description="마이페이지에서 회원의 정보를 수정하는기능입니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PutMapping("/mypage")
-	public ResponseEntity<String> updateMember(@RequestBody Member member
+	public ResponseEntity<String> updateMember(@Parameter(description = "회원수정때 입력하는 회원정보입니다.")@RequestBody Member member
 											   ,HttpSession session){
 			try {	
 				int id=(int)session.getAttribute("id");
