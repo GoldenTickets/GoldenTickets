@@ -51,13 +51,22 @@ Library : `Springdoc 1.6.14`
  ┃ ┃ ┗ 📂js
  ┃ ┣ 📂templates
  ┃ ┃ ┣ 📂fragments
- ┃ ┃ ┣ 📂layout
+ ┃ ┃ ┗ 📂layout
 ```
 # ⭐️ 주요 기능
 ### ✔️ 메인
+![Honeycam_2023-12-01_01-08-10](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/4a72d4b6-60aa-4efd-833c-38fa372238d3)
+
 ### ✔️ 장르별 보기
+![Honeycam_2023-12-01_01-10-07](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/92c5a16e-8fad-4a17-9cba-f9fb610745dc)
+![Honeycam_2023-12-01_01-12-40](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/de291a2f-7e06-45df-8191-f3f364bff9b5)
+
 ### ✔️ 북마크
+![Honeycam_2023-12-01_01-16-16](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/28ad2846-659e-4cda-8fb8-dcd0ffc7589e)
+
 ### ✔️ 리뷰 작성
+![Honeycam_2023-12-01_01-19-13](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/316dbbfa-acab-4e58-aae9-91d5d0683bdb)
+
 
 
 # 구현 기능
