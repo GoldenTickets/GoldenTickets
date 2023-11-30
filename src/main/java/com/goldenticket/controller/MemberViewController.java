@@ -14,11 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Member;
 import com.goldenticket.DTO.Movie;
+import com.goldenticket.DTO.Reply;
 import com.goldenticket.DTO.Review;
 import com.goldenticket.mapper.MemberMapper;
 import com.goldenticket.service.MemberService;
-
-import io.swagger.v3.oas.annotations.Operation;
 
 @Controller
 public class MemberViewController {
@@ -140,6 +139,27 @@ public class MemberViewController {
 		List<Article> articles = memberMapper.getMyarticles(rowBounds, id);
 		
 		mav.addObject("articles", articles);
+		return mav;
+	}
+	
+	//회원이 작성한 게시글의 목록을 보여줍니다. 회원이 작성한 게시글을 삭제할수있으며, 게시글의 제목을 클릭하면 해당 게시글로 이동합니다.
+	@GetMapping("/mypage/reply")
+	public ModelAndView getMyReply(@RequestParam(defaultValue = "1") int page, HttpSession session) {
+		ModelAndView mav = new ModelAndView("mypage_reply");
+		int id = (int) session.getAttribute("id");
+		int pageSize = 10;
+		int startRow = (page-1)*pageSize;
+		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+			
+		int totalMovies = memberMapper.getMytotalreplies(id);
+		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+			
+		mav.addObject("currentPage", page);
+	    mav.addObject("totalPages", totalPages);
+
+		List<Reply> replies = memberMapper.getMyreplies(rowBounds, id);
+			
+		mav.addObject("replies", replies);
 		return mav;
 	}
 	

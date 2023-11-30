@@ -101,7 +101,7 @@ function mypage_article_delete(article_id){
 }
 
 
-//게시판 댓글글삭제
+//게시판 댓글삭제
 function mypage_reply_delete(reply_id){
 		let askbeforedelete = confirm("삭제 하시겠습니까?");
 		if(askbeforedelete){
