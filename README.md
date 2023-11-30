@@ -1,5 +1,6 @@
-# GoldenTicket
-![image](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/30c25167-0188-42cc-bce6-a0eb7179429b)
+# 🗒️ GoldenTicket
+![logo](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/e67d6d90-415b-4eaf-93ef-b6bae0b2040b)
+
 
 프로젝트 기간 : 2023.09.24 ~ 2023.11.30  
 리팩토링 : 2023.12.01~
