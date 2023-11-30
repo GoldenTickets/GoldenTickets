@@ -45,7 +45,7 @@ function reviewDelete() {
 			var reviewDeleteButton = document.getElementById('reviewDeleteButton');
 			var movie_id_fordelete=document.getElementById('movie_id').value;
 			fetch('/movies/'+movie_id_fordelete,{
-				method:'GET',
+				method:'DELETE',
 				}).then(response => response.text())
 			  .then(data => {
 				  if(data=="success"){

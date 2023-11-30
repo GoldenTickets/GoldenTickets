@@ -1,10 +1,12 @@
 package com.goldenticket.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.models.servers.Server;
  
 @Configuration
 public class SwaggerConfig {
@@ -13,12 +15,15 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .components(new Components())
                 .info(apiInfo());
+        		//.addServersItem(new Server().url("/"))
+        		//.scanPackages("com.myproject.controller");
+        	
     }
  
     private Info apiInfo() {
         return new Info()
-                .title("Springdoc 테스트")
-                .description("Springdoc을 사용한 Swagger UI 테스트")
+                .title("Golden Ticket")
+                .description("Rest API 설명서")
                 .version("1.0.0");
     }
 }

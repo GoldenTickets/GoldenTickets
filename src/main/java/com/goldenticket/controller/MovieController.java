@@ -10,7 +10,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +25,14 @@ import com.goldenticket.DTO.Review;
 import com.goldenticket.mapper.MovieMapper;
 import com.goldenticket.service.MovieService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 //@ControllerAdvice
+@Tag(name = "영화 API", description = "영화 관련 API")
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 public class MovieController {
 
 	@Autowired
@@ -36,10 +41,46 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 
+	@Operation(summary = "영화 리스트 가져오기", description = "선택된 페이지, 장르, 정렬순서에 맞게 영화 리스트를 가져옵니다.")
+	@GetMapping("")
+	public ModelAndView getMovies(@Parameter(description = "페이지") @RequestParam(defaultValue = "1") int page, 
+								  @Parameter(description = "장르") @RequestParam(defaultValue = "0") int genre, 
+								  @Parameter(description = "정렬순서") @RequestParam(defaultValue = "releasedate") String order) {
+		
+		ModelAndView mav = new ModelAndView("movieInfo_all");
+		int pageSize = 15;
+		int startRow = (page-1)*pageSize;
+		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+		List<Movie> movies;
+		System.out.println(order);
+		int totalMovies;
+		
+		if (genre == 0) {
+			movies = movieService.getAllMovies(rowBounds, order);
+			totalMovies = movieMapper.totalMovies();
+		}else {
+			movies = movieService.getAllMovies(rowBounds, order, genre);
+			totalMovies = movieMapper.totalMoviesByGenre(genre);
+		}
+		System.out.println(movies);
+		mav.addObject("order", order);
+		mav.addObject("genre", genre);
+		
+		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+		
+		mav.addObject("movies", movies);
+		mav.addObject("currentPage", page);
+        mav.addObject("totalPages", totalPages);
+        
+	
+		return mav;
+	}
+	
+	@Operation(summary = "특정 영화 가져오기", description = "영화 id와 일치하는 영화를 리뷰들과 리뷰페이지와 함께 가져옵니다.")
 	@GetMapping("/{id}")
-	public ModelAndView getAllMovies(@RequestParam(defaultValue = "1") int page,
-									 @PathVariable int id,
-									 HttpSession session) {
+	public ModelAndView getMovie(@Parameter(description = "페이지") @RequestParam(defaultValue = "1") int page,
+								 @Parameter(description = "영화 id") @PathVariable int id,
+								 @Parameter(description = "세션(로그인정보)") HttpSession session) {
 		try {
 			movieService.updateHit(id); //조회수 1 증가
 			ModelAndView mav=new ModelAndView("movie");
@@ -83,12 +124,12 @@ public class MovieController {
 
 		}
 	}
-	
-	//리뷰작성기능. 회원당 리뷰 작성 횟수 1회 제한. (평점을 여러번 매길수없도록)
-	@PostMapping("/submitreview/{id}")
-	public ResponseEntity<String> reviewSubmit(@RequestBody Review review,
-											   @PathVariable int id,
-											   HttpSession session){
+
+	@Operation(summary = "리뷰 작성", description = "회원 정보를 조회하여 이 영화에 리뷰를 작성했는지 확인하고 작성하지 않았을 경우 리뷰를 작성합니다.")
+	@PostMapping("/review/{id}")
+	public ResponseEntity<String> createReview(@Parameter(description = "클라이언트에서 입력한 데이터를 담은 DTO") @RequestBody Review review,
+											   @Parameter(description = "영화 id") @PathVariable int id,
+											   @Parameter(description = "세션(로그인정보)") HttpSession session){
 		try {
 			int result = movieService.createMovieReview(review,id,(int)session.getAttribute("id"));
 
@@ -108,11 +149,11 @@ public class MovieController {
 			return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	//리뷰삭제기능
-	@GetMapping("/deleteReview/{movie_id}")
-	public ResponseEntity<String> deleteReview(@PathVariable int movie_id,
-												HttpSession session){
+
+	@Operation(summary = "리뷰 삭제", description = "리뷰를 작성한 본인이 맞을 경우 리뷰를 삭제합니다.")
+	@GetMapping("/review/{movie_id}")
+	public ResponseEntity<String> deleteReview(@Parameter(description = "영화 id")@PathVariable int movie_id,
+											   @Parameter(description = "세션(로그인정보)")HttpSession session){
 		try {
 			movieService.deleteReview(movie_id, (int)session.getAttribute("id"));
 			return new ResponseEntity("success",HttpStatus.OK);
@@ -124,46 +165,14 @@ public class MovieController {
 		}
 	}
 
-	@GetMapping("")
-	public ModelAndView getAll(@RequestParam(defaultValue = "1") int page, 
-							   @RequestParam(defaultValue = "0") int genre, 
-							   @RequestParam(defaultValue = "releasedate") String order
-							   ) { // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
-		
-		ModelAndView mav = new ModelAndView("movieInfo_all");
-		int pageSize = 15;
-		int startRow = (page-1)*pageSize;
-		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		List<Movie> movies;
-		System.out.println(order);
-		int totalMovies;
-		
-		if (genre == 0) {
-			movies = movieService.getAllMovies(rowBounds, order);
-			totalMovies = movieMapper.totalMovies();
-		}else {
-			movies = movieService.getAllMovies(rowBounds, order, genre);
-			totalMovies = movieMapper.totalMoviesByGenre(genre);
-		}
-		System.out.println(movies);
-		mav.addObject("order", order);
-		mav.addObject("genre", genre);
-		
-		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
-		
-		mav.addObject("movies", movies);
-		mav.addObject("currentPage", page);
-        mav.addObject("totalPages", totalPages);
-        
 	
-		return mav;
-	}
 	
 
-		@GetMapping("/ranking")
-		public ModelAndView getRanking(@RequestParam(defaultValue = "1") int page,  
-									   @RequestParam(defaultValue = "0") int genre,
-									   HttpSession session){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
+	@Operation(summary = "영화 순위 가져오기", description = "선택된 페이지, 장르에 맞는 영화 순위를 가져옵니다.")
+	@GetMapping("/ranking")
+	public ModelAndView getRanking(@Parameter(description = "페이지") @RequestParam(defaultValue = "1") int page,  
+								   @Parameter(description = "장르") @RequestParam(defaultValue = "0") int genre,
+								   @Parameter(description = "세션(로그인정보)") HttpSession session){ // page = 현재페이지, pageSize도 나중에 정할 수 있게 바꾸기
 		
 		List<List<Object>> moviebook = new ArrayList<List<Object>>();
 			
@@ -220,10 +229,10 @@ public class MovieController {
 	}
 	
 
-	//북마크 추가
-	@GetMapping("/bookmark/{movie_id}")
-	public ResponseEntity<String> createBookmark(@PathVariable int movie_id,
-												 HttpSession session) {
+	@Operation(summary = "북마크 추가", description = "")
+	@PostMapping("/bookmark/{movie_id}")
+	public ResponseEntity<String> createBookmark(@Parameter(description = "영화 id") @PathVariable int movie_id,
+												 @Parameter(description = "세션(로그인정보)") HttpSession session) {
 		try {
 			
 			int mem_id;
@@ -241,25 +250,25 @@ public class MovieController {
 		}
 	}
 	
-	//북마크 삭제
-		@GetMapping("/deletebookmark/{movie_id}")
-		public ResponseEntity<String> deleteBookmark(@PathVariable int movie_id,
-													 HttpSession session) {
-			try {
-				int mem_id;
-				Object Session_id = session.getAttribute("id");
-				if(Session_id==null) {
-					return new ResponseEntity<>("needLogin",HttpStatus.BAD_REQUEST);
-				}else{
-					mem_id = (int)Session_id;
-					movieService.deleteBookmark(movie_id,mem_id);
-					return new ResponseEntity<>("success",HttpStatus.OK);
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-				return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
+	@Operation(summary = "북마크 삭제", description = "")
+	@DeleteMapping("/bookmark/{movie_id}")
+	public ResponseEntity<String> deleteBookmark(@Parameter(description = "영화 id") @PathVariable int movie_id,
+												 @Parameter(description = "세션(로그인정보)") HttpSession session) {
+		try {
+			int mem_id;
+			Object Session_id = session.getAttribute("id");
+			if(Session_id==null) {
+				return new ResponseEntity<>("needLogin",HttpStatus.BAD_REQUEST);
+			}else{
+				mem_id = (int)Session_id;
+				movieService.deleteBookmark(movie_id,mem_id);
+				return new ResponseEntity<>("success",HttpStatus.OK);
 			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("fail",HttpStatus.BAD_REQUEST);
 		}
+	}
 		
 	// 영화 검색
 	/*@GetMapping("/search")

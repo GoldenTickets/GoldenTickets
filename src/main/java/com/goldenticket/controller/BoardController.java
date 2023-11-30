@@ -38,7 +38,8 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@Operation(description="게시판으로 이동합니다.")
+	@Operation(summary="게시판",description="게시판으로 이동합니다. 게시글 목록을 보여줍니다. 게시글 10개당 한 페이지로 페이징처리되고, 10,15,20개씩 볼수있도록 변경가능합니다."
+			+ "게시글의 제목,제목과 닉네임,닉네임을 검색할 수 있습니다.")
 	@GetMapping("/articles")
 	public ModelAndView getArticles(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "0") int category, 
@@ -82,7 +83,8 @@ public class BoardController {
 		return mav;
 	}
 	
-	@Operation(description="게시글의 제목을 클릭하면 게시글을 볼수있게 해당 게시물페이지로 이동합니다. 해당 게시물의 작성자가 열람했을때만 수정,삭제 버튼이 생깁니다.")
+	@Operation(summary="게시물 조회",description="게시글의 제목을 클릭하면 게시글을 볼수있게 해당 게시물페이지로 이동합니다. 해당 게시물의 작성자가 열람했을때만 "
+			+ "게시물에 대한 수정,삭제 버튼이 생깁니다. 게시글의 조회수가 1 증가합니다. 댓글목록을 가져옵니다. 댓글은 10개 묶음으로 페이징처리됩니다.")
 	@GetMapping("/articles/{id}")
 	public ModelAndView getArticle(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id){
 		boardService.updateHit(id);//조회수 1 증가
@@ -107,14 +109,14 @@ public class BoardController {
 		return mav;
 	}
 	
-	@Operation(description="게시글을 작성할 수 있게 게시물 작성 페이지로 이동합니다.")
+	@Operation(summary="게시글 작성 페이지",description="게시글을 작성할 수 있게 게시물 작성 페이지로 이동합니다.")
 	@GetMapping("/new-article")
 	public ModelAndView getNewArticlePage(){
 		ModelAndView mav = new ModelAndView("newArticle");
 		return mav;
 	}
 	
-	@Operation(description="게시물 작성 페이지에서 게시물을 작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
+	@Operation(summary="게시글 작성",description="게시물 작성 페이지에서 게시물을 작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PostMapping("/articles")
 	public ResponseEntity<String> createArticle(@RequestBody Article article
@@ -140,7 +142,7 @@ public class BoardController {
 		}
 	}
 	
-	@Operation(description="게시글을 수정할 수 있게 게시물 수정 페이지로 이동합니다.")
+	@Operation(summary="게시글 수정 페이지",description="게시글을 수정할 수 있게 게시물 수정 페이지로 이동합니다. 작성했던 글의 제목,내용을 불러와집니다.")
 	//글 수정하기 페이지로 이동
 	@GetMapping("/update-article/{id}")
 	public ModelAndView getUpdateArticlePage(@PathVariable int id,HttpSession session){
@@ -154,16 +156,20 @@ public class BoardController {
 				mav.addObject("article",article);
 				return mav;
 			}else {
-				return new ModelAndView("redirect:/board");
+				return new ModelAndView("redirect:/articles");
 			}
 		}else {
-			return new ModelAndView("redirect:/board");
+			return new ModelAndView("redirect:/articles");
 		}
 	
 		
 	}
 	
-	@Operation(description="게시물 수정 페이지에서 게시물을 수정하면 DB에 수정된 정보를 업데이트 후, 해당 게시물을 보여주는 페이지로 이동합니다.")
+	@Operation(summary="게시글 수정",description="회원이 작성한 게시물을 수정하는 기능입니다. 로그인을 하지않았거나 해당 게시글의 작성자가 아닐 경우 수정,삭제 버튼이 "
+			+ "없지만, 만약 사용자가 버튼 클릭이 아닌 방식으로 수정을 요청할 경우를 대비해 세션에 저장된 회원의 id와 비교합니다. 로그인을 하지않았다면 오른쪽에서 로그인섹션이 열립니다."
+			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당게시글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 수정이 성공적으로 수행됩니다."
+			+ "수정이 성공적으로 완료되면 DB에 수정된 정보를 업데이트 후, 해당 게시물을 보여주는 페이지로 이동합니다.")
+	
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PutMapping("/articles/{article_id}")
 	public ResponseEntity<String> updateArticle(@PathVariable int article_id
@@ -177,7 +183,7 @@ public class BoardController {
 
 				if(mem_id == boardService.getArticleById(article_id).getMem_id()){//글 삭제하기전 세션의 아이디와 글의 mem_id가 일치하는지 확인
 					article.setId(article_id);
-					System.out.println("article=>"+article);
+
 					int result = boardService.updateArticle(article);
 					if(result == 1) {
 						return new ResponseEntity<>("success",HttpStatus.OK);
@@ -196,7 +202,9 @@ public class BoardController {
 		}
 	}
 	
-	@Operation(description="회원이 작성한 게시물을 삭제하는 기능입니다.")
+	@Operation(summary="게시글 삭제",description="회원이 작성한 게시물을 삭제하는 기능입니다. 로그인을 하지않았거나 해당 게시글의 작성자가 아닐 경우 수정,삭제"
+			+ "버튼이 없지만, 만약 사용자가 버튼 클릭이 아닌 방식으로 삭제를 요청할 경우를 대비해 세션에 저장된 회원의 id와 비교합니다. 로그인을 하지않았다면 오른쪽에서 로그인섹션이 열립니다."
+			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당게시글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 삭제가 성공적으로 수행됩니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@DeleteMapping("/articles/{article_id}")
 	public ResponseEntity<String> deleteArticle(@PathVariable int article_id
@@ -225,7 +233,7 @@ public class BoardController {
 		}
 	}
 	
-	@Operation(description="게시물에 댓글을 작성하는 기능입니다.로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
+	@Operation(summary="댓글 작성",description="게시물에 댓글을 작성하는 기능입니다.로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PostMapping("/articles/reply")
 	public ResponseEntity<String> createReply(@RequestBody Reply reply
@@ -250,7 +258,9 @@ public class BoardController {
 		}
 	}
 	
-	@Operation(description="회원의 게시물을 삭제하는 기능입니다. 해당 댓글의 작성자가 열람했을때만 삭제 버튼이 생깁니다.")
+	@Operation(summary="댓글 삭제",description="회원의 댓글을 삭제하는 기능입니다. 로그인을 하지않았거나 해당 댓글의 작성자가 아닐 경우 삭제 버튼이 없지만, "
+			+ "만약 사용자가 버튼 클릭이 아닌 방식으로 삭제를 요청할 경우를 대비해 세션에 저장된 회원의 id와 비교합니다."
+			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당댓글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 삭제가 성공적으로 수행됩니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@DeleteMapping("/articles/reply/{reply_id}")
 	public ResponseEntity<String> deleteReply(@PathVariable int reply_id

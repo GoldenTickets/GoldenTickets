@@ -1,7 +1,7 @@
 //북마크 추가
 function bookmark_append(movie_id){
 	fetch('/movies/bookmark/'+movie_id,{
-		method:'GET'
+		method:'POST'
 	}).then(response => {
 	  if(response.ok){
 		  alert('북마크가 추가되었습니다');
@@ -22,7 +22,7 @@ function bookmark_append(movie_id){
 //북마크 취소
 function bookmark_cancel(movie_id){
 	fetch('/movies/bookmark/'+movie_id,{
-		method:'GET'
+		method:'DELETE'
 	}).then(response => {
 	  if(response.ok){
 		  alert('북마크가 취소되었습니다');

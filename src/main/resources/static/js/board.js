@@ -231,7 +231,7 @@ function delete_reply(){
 	  		.then(data => {
 	     		 if(data=="success"){
 	          		alert('삭제되었습니다.');
-	          		location.href="/board"
+	          		location.href="/articles"
 	      		 }else if(data=="needLogin"){
 	          		alert('로그인이 필요합니다.');
 	          		document.getElementById('offCanvasToggleButton').click();
