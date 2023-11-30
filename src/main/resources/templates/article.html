@@ -88,7 +88,7 @@
       <div class="col">
         <button style="margin-right: 10px;" type="button" onclick="location.href='/articles'" class="btn btn-outline-secondary">글 목록</button>
         <th:block th:if="${session.id}==${article.mem_id}">
-	        <button style="margin-right: 10px;" type="button" th:onclick="|location.href='/articles/${article.id}'|" class="btn btn-outline-dark">수정</button>
+	        <button style="margin-right: 10px;" type="button" th:onclick="|location.href='/update-article/${article.id}'|" class="btn btn-outline-dark">수정</button>
 	        <button type="button" id="delete-btn" class="btn btn-outline-danger" onclick="delete_article()">삭제</button>
         </th:block>
       </div>

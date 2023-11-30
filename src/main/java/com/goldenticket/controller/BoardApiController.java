@@ -39,6 +39,33 @@ public class BoardApiController {
 	@Autowired
 	private BoardService boardService;
 	
+	//게시물 작성 페이지에서 게시물을 작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.
+		@Transactional(rollbackFor=Exception.class) 
+		@PostMapping("/articles")
+		public ResponseEntity<String> createArticle(@RequestBody Article article
+										   ,HttpSession session){
+			try {
+				Object session_id = session.getAttribute("id");
+				if(session_id!=null) {//로그인 상태
+					int mem_id=(int)session_id;
+					article.setMem_id(mem_id);
+					int result = boardService.createArticle(article);
+					if(result == 1) {
+						
+						return new ResponseEntity<>("success",HttpStatus.OK);
+					}else {
+						return new ResponseEntity<>("fail",HttpStatus.OK);
+					}
+				}else {
+					return new ResponseEntity<>("needLogin",HttpStatus.OK);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
+			}
+		}
+		
+	
 	@Operation(summary="게시글 수정",description="회원이 작성한 게시물을 수정하는 기능입니다. 로그인을 하지않았거나 해당 게시글의 작성자가 아닐 경우 수정,삭제 버튼이 "
 			+ "없지만, 만약 사용자가 버튼 클릭이 아닌 방식으로 수정을 요청할 경우를 대비해 세션에 저장된 회원의 id와 비교합니다. 로그인을 하지않았다면 오른쪽에서 로그인섹션이 열립니다."
 			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당게시글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 수정이 성공적으로 수행됩니다."
@@ -49,7 +76,6 @@ public class BoardApiController {
 												@Parameter(description = "게시글 수정페이지에서 입력한 category,title,content")@RequestBody Article article,
 												HttpSession session){
 		try {
-			System.out.println("article_id=>"+article_id);
 			Object session_id = session.getAttribute("id");
 			if(session_id!=null) {//로그인 상태
 				int mem_id=(int)session_id;
@@ -83,7 +109,6 @@ public class BoardApiController {
 	public ResponseEntity<String> deleteArticle(@Parameter(description = "게시글의 primary key인 id 컬럼입니다.") @PathVariable int article_id
 									   			,HttpSession session){
 		try {
-			System.out.println("article_id=>"+article_id);
 			Object session_id = session.getAttribute("id");
 			if(session_id!=null) {//로그인 상태
 				int mem_id=(int)session_id;
@@ -131,6 +156,7 @@ public class BoardApiController {
 		}
 	}
 	
+	
 	@Operation(summary="댓글 삭제",description="회원의 댓글을 삭제하는 기능입니다. 로그인을 하지않았거나 해당 댓글의 작성자가 아닐 경우 삭제 버튼이 없지만, "
 			+ "만약 사용자가 버튼 클릭이 아닌 방식으로 삭제를 요청할 경우를 대비해 세션에 저장된 회원의 id와 비교합니다."
 			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당댓글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 삭제가 성공적으로 수행됩니다.")
@@ -139,7 +165,6 @@ public class BoardApiController {
 	public ResponseEntity<String> deleteReply(@Parameter(description = "입력한 댓글의 primary key인 id입니다.") @PathVariable int reply_id
 									   		  ,HttpSession session){
 		try {
-			System.out.println("reply_id=>"+reply_id);
 			Object session_id = session.getAttribute("id");
 			if(session_id!=null) {//로그인 상태
 				int mem_id=(int)session_id;

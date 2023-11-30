@@ -51,7 +51,6 @@ public class MovieViewController {
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		List<Movie> movies;
-		System.out.println(order);
 		int totalMovies;
 		
 		if (genre == 0) {
@@ -61,7 +60,6 @@ public class MovieViewController {
 			movies = movieService.getAllMovies(rowBounds, order, genre);
 			totalMovies = movieMapper.totalMoviesByGenre(genre);
 		}
-		System.out.println(movies);
 		mav.addObject("order", order);
 		mav.addObject("genre", genre);
 		

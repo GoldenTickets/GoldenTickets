@@ -68,7 +68,6 @@ public class MainController {
 	@PostMapping("/todaymovie")
 	public int saveNewtodaymovie() {
 		List<Integer> list = movieMapper.getNewtodaymovie();
-		System.out.println(list);
 		movieMapper.deletetodaymovies();
 		
 		int index = 1;

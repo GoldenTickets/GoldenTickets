@@ -33,7 +33,7 @@
 			  <th:block th:text="${#temporals.format(item.regdate, 'yyyy.MM.dd HH:mm:ss')}" style="color:#555;font-size:15px;text-align: right;"></th:block>
 		  </div>
 		  <div class="col-3">
-			  <button style="margin-right: 10px;" type="button" class="btn btn-outline-dark" th:onclick="|location.href='/board/update/${item.id}'|">수정</button>
+			  <button style="margin-right: 10px;" type="button" class="btn btn-outline-dark" th:onclick="|location.href='/update-article/${item.id}'|">수정</button>
 			  <button type="button" class="btn btn-outline-danger" th:onclick="|mypage_article_delete(${item.id})|">삭제</button>
 		  </div>
 		  <div style="height:13px;"></div>

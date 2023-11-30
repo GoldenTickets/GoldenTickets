@@ -92,7 +92,6 @@ public class BoardViewController {
 		List<Reply> replies = boardMapper.getByArticle_id(id, rowBounds);
 		mav.addObject("article", article);
 		mav.addObject("replies", replies);
-		System.out.println(article);
 		
 		int totalReplies = boardMapper.getTotalreply(id);
 		int totalPages = (int) Math.ceil((double) totalReplies / pageSize); // 전체 페이지 수 구하기
@@ -110,31 +109,6 @@ public class BoardViewController {
 		return mav;
 	}
 	
-	//게시물 작성 페이지에서 게시물을 작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.
-	@Transactional(rollbackFor=Exception.class) 
-	@PostMapping("/articles")
-	public ResponseEntity<String> createArticle(@RequestBody Article article
-									   ,HttpSession session){
-		try {
-			Object session_id = session.getAttribute("id");
-			if(session_id!=null) {//로그인 상태
-				int mem_id=(int)session_id;
-				article.setMem_id(mem_id);
-				int result = boardService.createArticle(article);
-				if(result == 1) {
-					
-					return new ResponseEntity<>("success",HttpStatus.OK);
-				}else {
-					return new ResponseEntity<>("fail",HttpStatus.OK);
-				}
-			}else {
-				return new ResponseEntity<>("needLogin",HttpStatus.OK);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
-		}
-	}
 	
 	//게시글을 수정할 수 있게 게시물 수정 페이지로 이동합니다. 작성했던 글의 제목,내용을 불러와집니다.
 	@GetMapping("/update-article/{id}")

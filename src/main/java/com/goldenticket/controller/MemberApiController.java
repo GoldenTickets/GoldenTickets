@@ -99,8 +99,6 @@ public class MemberApiController {
 			try {	
 				int id=(int)session.getAttribute("id");
 				member.setId(id);
-				System.out.println("member=>"+member);
-				System.out.println("member.getMember_genre()=>"+member.getMember_genre());
 				int result = memberService.updateMember(member,member.getMember_genre());
 				
 				if(result == 1) {//수정 성공
