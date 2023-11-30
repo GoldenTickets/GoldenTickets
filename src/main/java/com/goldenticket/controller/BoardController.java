@@ -169,7 +169,6 @@ public class BoardController {
 			+ "없지만, 만약 사용자가 버튼 클릭이 아닌 방식으로 수정을 요청할 경우를 대비해 세션에 저장된 회원의 id와 비교합니다. 로그인을 하지않았다면 오른쪽에서 로그인섹션이 열립니다."
 			+ "세션에 저장된 사용자의 id와 DB에 저장된 해당게시글의 작성자의 id가 일치할경우에만 DB에 저장된 레코드의 수정이 성공적으로 수행됩니다."
 			+ "수정이 성공적으로 완료되면 DB에 수정된 정보를 업데이트 후, 해당 게시물을 보여주는 페이지로 이동합니다.")
-	
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PutMapping("/articles/{article_id}")
 	public ResponseEntity<String> updateArticle(@PathVariable int article_id

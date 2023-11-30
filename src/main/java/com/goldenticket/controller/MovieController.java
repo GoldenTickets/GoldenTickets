@@ -151,7 +151,7 @@ public class MovieController {
 	}
 
 	@Operation(summary = "리뷰 삭제", description = "리뷰를 작성한 본인이 맞을 경우 리뷰를 삭제합니다.")
-	@GetMapping("/review/{movie_id}")
+	@DeleteMapping("/review/{movie_id}")
 	public ResponseEntity<String> deleteReview(@Parameter(description = "영화 id")@PathVariable int movie_id,
 											   @Parameter(description = "세션(로그인정보)")HttpSession session){
 		try {
