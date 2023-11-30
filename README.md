@@ -81,10 +81,10 @@ Library : `springdoc-openapi 1.6.14`
 <br/>
 
 # ⭐️ 주요 기능
-### ✔️ 메인
+### ✔️ 메인 페이지
 ![Honeycam_2023-12-01_01-08-10](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/4a72d4b6-60aa-4efd-833c-38fa372238d3)
 
-### ✔️ 장르별 보기
+### ✔️ 영화 장르별 보기
 ![Honeycam_2023-12-01_01-10-07](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/92c5a16e-8fad-4a17-9cba-f9fb610745dc)
 ![Honeycam_2023-12-01_01-12-40](https://github.com/GoldenTickets/GoldenTickets/assets/133292703/de291a2f-7e06-45df-8191-f3f364bff9b5)
 
