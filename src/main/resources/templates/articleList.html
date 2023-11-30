@@ -21,21 +21,21 @@
   <!--<div style="height:10px;"></div>-->
   <div class="row">
     <div class="col-11">
-		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=0&pagesize=' + ${pagesize}}">전체</a>
-		</button>
-		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=1&pagesize=' + ${pagesize}}">공지</a>
-		</button>
-		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=2&pagesize=' + ${pagesize}}">뉴스</a>
-		</button>
-		<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=3&pagesize=' + ${pagesize}}">리뷰</a>
-		</button>
-		<button type="button" class="btn btn-outline-dark fw-bold">
-			<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=4&pagesize=' + ${pagesize}}">일반</a>
-		</button>
+		<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=0&pagesize=' + ${pagesize}}">
+			<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">전체</button>
+		</a>
+		<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=1&pagesize=' + ${pagesize}}">
+			<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">공지</button>
+		</a>
+		<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=2&pagesize=' + ${pagesize}}">
+			<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">뉴스</button>
+		</a>
+		<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=3&pagesize=' + ${pagesize}}">
+			<button type="button" class="btn btn-outline-dark fw-bold" style="margin-right:20px;">리뷰</button>
+		</a>
+		<a style="text-decoration: none; color: inherit;" th:href="@{'/articles?category=4&pagesize=' + ${pagesize}}">
+			<button type="button" class="btn btn-outline-dark fw-bold">일반</button>
+		</a>
     </div>
     <div class="col-1">
       <select class="form-select form-select-sm" aria-label="Default select example" id="pageSizeChange" onchange="selectpageSizeChange()">
