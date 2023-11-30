@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="MemberController",description="회원 관련 메서드입니다.")
 @RestController
-public class MemberController {
+public class MemberApiController {
 	
 	@Autowired
 	private MemberService memberService;

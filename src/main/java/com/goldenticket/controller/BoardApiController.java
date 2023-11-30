@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="BoardController",description="게시판 관련 메서드입니다.")
 @RestController
-public class BoardController {
+public class BoardApiController {
 	
 	
 	@Autowired
