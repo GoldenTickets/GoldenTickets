@@ -14,9 +14,8 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .components(new Components())
-                .info(apiInfo());
-        		//.addServersItem(new Server().url("/"))
-        		//.scanPackages("com.myproject.controller");
+                .info(apiInfo())
+        		.addServersItem(new Server().url("/"));
         	
     }
  
