@@ -33,9 +33,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 @Controller
 @RequestMapping("/movies")
 public class MovieViewController {
-
-	@Autowired
-	private MovieMapper movieMapper;
 	
 	@Autowired
 	private MovieService movieService;
@@ -53,24 +50,29 @@ public class MovieViewController {
 		List<Movie> movies;
 		int totalMovies;
 		
-		if (genre == 0) {
-			movies = movieService.getAllMovies(rowBounds, order);
-			totalMovies = movieMapper.totalMovies();
-		}else {
-			movies = movieService.getAllMovies(rowBounds, order, genre);
-			totalMovies = movieMapper.totalMoviesByGenre(genre);
+		try {
+			if (genre == 0) {
+				movies = movieService.getAllMovies(rowBounds, order);
+				totalMovies = movieService.totalMovies();
+			}else {
+				movies = movieService.getAllMovies(rowBounds, order, genre);
+				totalMovies = movieService.totalMoviesByGenre(genre);
+			}
+			mav.addObject("order", order);
+			mav.addObject("genre", genre);
+			
+			int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+			
+			mav.addObject("movies", movies);
+			mav.addObject("currentPage", page);
+	        mav.addObject("totalPages", totalPages);
+	        
+		
+			return mav;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return mav;
 		}
-		mav.addObject("order", order);
-		mav.addObject("genre", genre);
-		
-		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
-		
-		mav.addObject("movies", movies);
-		mav.addObject("currentPage", page);
-        mav.addObject("totalPages", totalPages);
-        
-	
-		return mav;
 	}
 	
 	// 영화 id와 일치하는 영화를 리뷰들과 리뷰페이지와 함께 가져옵니다.
@@ -86,7 +88,7 @@ public class MovieViewController {
 			int startRow = (page-1)*pageSize;
 			RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 			
-			int totalArticles = movieMapper.getTotalreviews(id);
+			int totalArticles = movieService.getTotalreviews(id);
 			int totalPages = (int) Math.ceil((double) totalArticles / pageSize); // 전체 페이지 수 구하기
 			mav.addObject("currentPage", page);
 	        mav.addObject("totalPages", totalPages);
@@ -139,11 +141,11 @@ public class MovieViewController {
 		int totalMovies;
 		try {
 		if (genre == 0) {
-			movies = movieMapper.getRanking(rowBounds);
-			totalMovies = movieMapper.totalMovies();
+			movies = movieService.getRanking(rowBounds);
+			totalMovies = movieService.totalMovies();
 		}else {
-			movies = movieMapper.getRankingByGenre(rowBounds, genre);
-			totalMovies = movieMapper.totalMoviesByGenre(genre);
+			movies = movieService.getRankingByGenre(rowBounds, genre);
+			totalMovies = movieService.totalMoviesByGenre(genre);
 		}
 		mav.addObject("genre", genre);
 		//mav.addObject("movies", movies);

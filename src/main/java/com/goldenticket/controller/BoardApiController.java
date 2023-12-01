@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Reply;
-import com.goldenticket.mapper.BoardMapper;
 import com.goldenticket.service.BoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,10 +30,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name="영화 API",description="게시판 API")
 @RestController
 public class BoardApiController {
-	
-	
-	@Autowired
-	private BoardMapper boardMapper;
 	
 	@Autowired
 	private BoardService boardService;

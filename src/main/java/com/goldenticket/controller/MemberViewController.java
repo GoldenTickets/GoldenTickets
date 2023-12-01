@@ -25,9 +25,6 @@ public class MemberViewController {
 	@Autowired
 	private MemberService memberService;
 	
-	@Autowired
-	private MemberMapper memberMapper;
-	
 	//로그인 페이지로 이동합니다. 이미 로그인이 되어있다면 로그인페이지가 아닌 메인페이지로 이동합니다.
 	@GetMapping("/login")
 	public ModelAndView getLoginPage(HttpSession session){
@@ -83,84 +80,106 @@ public class MemberViewController {
 	@GetMapping("/mypage/bookmark")
 	public ModelAndView getMyBookmark(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_bookmark");
+		
+		try {
 		int id = (int) session.getAttribute("id");
 		int pageSize = 15;
 		int startRow = (page-1)*pageSize;
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		
-		int totalMovies = memberMapper.getTotalbookmark(id);
+		int totalMovies = memberService.getTotalbookmark(id);
 		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
 		
 		mav.addObject("currentPage", page);
         mav.addObject("totalPages", totalPages);
 
-		List<Movie> movies = memberMapper.getBookmark(rowBounds, id);
+		List<Movie> movies = memberService.getBookmark(rowBounds, id);
 		
 		mav.addObject("movies", movies);
 		return mav;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return mav;
+		}
+	
 	}
 	
 	//회원이 작성한 리뷰의 목록을 보여줍니다. 제목을 클릭하면 해당 영화페이지로 이동합니다. 목록의 페이징은 10개로 기본설정되어있습니다
 	@GetMapping("/mypage/review")
 	public ModelAndView getMyReview(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_review");
-		int id = (int) session.getAttribute("id");
-		int pageSize = 10;
-		int startRow = (page-1)*pageSize;
-		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		
-		int totalMovies = memberMapper.getMytotalreviews(id);
-		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
-		
-		mav.addObject("currentPage", page);
-        mav.addObject("totalPages", totalPages);
-
-		List<Review> reviews = memberMapper.getMyreviews(rowBounds, id);
-		
-		mav.addObject("reviews", reviews);
-		return mav;
+		try {
+			int id = (int) session.getAttribute("id");
+			int pageSize = 10;
+			int startRow = (page-1)*pageSize;
+			RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+			
+			int totalMovies = memberService.getMytotalreviews(id);
+			int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+			
+			mav.addObject("currentPage", page);
+	        mav.addObject("totalPages", totalPages);
+	
+			List<Review> reviews = memberService.getMyreviews(rowBounds, id);
+			
+			mav.addObject("reviews", reviews);
+			return mav;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return mav;
+		}
 	}
 	
 	//회원이 작성한 게시글의 목록을 보여줍니다. 회원이 작성한 게시글을 삭제할수있으며, 게시글의 제목을 클릭하면 해당 게시글로 이동합니다.
 	@GetMapping("/mypage/article")
 	public ModelAndView getMyArticle(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_article");
-		int id = (int) session.getAttribute("id");
-		int pageSize = 10;
-		int startRow = (page-1)*pageSize;
-		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		
-		int totalMovies = memberMapper.getMytotalarticles(id);
-		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
-		
-		mav.addObject("currentPage", page);
-        mav.addObject("totalPages", totalPages);
-
-		List<Article> articles = memberMapper.getMyarticles(rowBounds, id);
-		
-		mav.addObject("articles", articles);
-		return mav;
+		try {
+			int id = (int) session.getAttribute("id");
+			int pageSize = 10;
+			int startRow = (page-1)*pageSize;
+			RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+			
+			int totalMovies = memberService.getMytotalarticles(id);
+			int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+			
+			mav.addObject("currentPage", page);
+	        mav.addObject("totalPages", totalPages);
+	
+			List<Article> articles = memberService.getMyarticles(rowBounds, id);
+			
+			mav.addObject("articles", articles);
+			return mav;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return mav;
+		}
 	}
 	
 	//회원이 작성한 게시글의 목록을 보여줍니다. 회원이 작성한 게시글을 삭제할수있으며, 게시글의 제목을 클릭하면 해당 게시글로 이동합니다.
 	@GetMapping("/mypage/reply")
 	public ModelAndView getMyReply(@RequestParam(defaultValue = "1") int page, HttpSession session) {
 		ModelAndView mav = new ModelAndView("mypage_reply");
-		int id = (int) session.getAttribute("id");
-		int pageSize = 10;
-		int startRow = (page-1)*pageSize;
-		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-			
-		int totalMovies = memberMapper.getMytotalreplies(id);
-		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
-			
-		mav.addObject("currentPage", page);
-	    mav.addObject("totalPages", totalPages);
-
-		List<Reply> replies = memberMapper.getMyreplies(rowBounds, id);
-			
-		mav.addObject("replies", replies);
-		return mav;
+		try {
+			int id = (int) session.getAttribute("id");
+			int pageSize = 10;
+			int startRow = (page-1)*pageSize;
+			RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+				
+			int totalMovies = memberService.getMytotalreplies(id);
+			int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+				
+			mav.addObject("currentPage", page);
+		    mav.addObject("totalPages", totalPages);
+	
+			List<Reply> replies = memberService.getMyreplies(rowBounds, id);
+				
+			mav.addObject("replies", replies);
+			return mav;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return mav;
+		}
 	}
 	
 }
