@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name="MemberController",description="회원 관련 메서드입니다.")
+@Tag(name="회원 API",description="회원 테이블과 관련된 API입니다.")
 @RestController
 public class MemberApiController {
 	

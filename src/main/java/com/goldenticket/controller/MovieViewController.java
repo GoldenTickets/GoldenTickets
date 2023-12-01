@@ -104,7 +104,7 @@ public class MovieViewController {
 			
 			List<Object> moviePhotoList = movieService.getMoviePhoto(id);
 			
-			mav.addObject("movie", movie);
+			mav.addObject("movie", movie);//영화 테이블에서 가져올 수 있는 컬럼
 			mav.addObject("movieactor",movieActor);//영화배우목록
 			mav.addObject("bookmarked",IsitBookmarked);//북마크여부
 			mav.addObject("photofirst", (String)moviePhotoList.get(0));//첫번째 사진
