@@ -25,11 +25,10 @@ public class MainController {
 	
 	// 세션에 저장된 로그인 정보를 확인 후 그에 맞는 메인 페이지를 가져옵니다.
 	@GetMapping("")
-	public ModelAndView getAll(HttpSession session){
-
+	public ModelAndView getAll(@Parameter(description = "세션(로그인정보)") HttpSession session){
+		try {	
 			ModelAndView mav = new ModelAndView("main");
 			List<Integer> list = movieMapper.getNewmovie_ids();
-		try {	
 			int index = 1;
 			for (int item : list) {
 				Movie newmovie = movieMapper.getNewmovie(item);
@@ -57,21 +56,28 @@ public class MainController {
 		
 			return mav;
 		}catch(Exception e) {
-			return mav;
+			return new ModelAndView("main");
 		}
 	}
 	
 	// @Scheduled 애너테이션을 이용하여 매일 자정에 오늘의 영화 테이블의 영화들을 갱신합니다.
     @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행되어 오늘의 영화 테이블을 갱신한다.
 	@PostMapping("/todaymovie")
-	public void newtodaymovie() {
-		List<Integer> list = movieMapper.getNewtodaymovie();
-		movieMapper.deletetodaymovies();
-		
-		int index = 1;
-		for (int item : list) {
-			movieMapper.saveNewtodaymovie(index, item);
-			index++;
-		}
-	}
+	public int saveNewtodaymovie() {
+    	try {
+			List<Integer> list = movieMapper.getNewtodaymovie();
+			movieMapper.deletetodaymovies();
+			
+			int index = 1;
+			for (int item : list) {
+				movieMapper.saveNewtodaymovie(index, item);
+				index++;
+			}
+			return 0;
+    	
+	    }catch(Exception e) {
+	    	e.printStackTrace();
+	    	return -1;
+	    }
+    }
 }

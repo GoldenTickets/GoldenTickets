@@ -21,29 +21,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Reply;
-import com.goldenticket.mapper.BoardMapper;
 import com.goldenticket.service.BoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name="게시판 API",description="게시판 테이블과 관련된 API입니다.")
+
+@Tag(name="영화 API",description="게시판 API")
 @RestController
 public class BoardApiController {
-	
-	
-	@Autowired
-	private BoardMapper boardMapper;
 	
 	@Autowired
 	private BoardService boardService;
 	
-	@Operation(summary="게시글 작성",description="회원이 작성한 게시물을 저장하는 기능입니다. 게시물 작성 페이지에서 게시물을 "
-            + "작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
-	@Transactional(rollbackFor=Exception.class) 
-	@PostMapping("/articles")
-	public ResponseEntity<String> createArticle(@RequestBody Article article
+		@Operation(summary="게시글 작성",description="회원이 작성한 게시물을 저장하는 기능입니다. 게시물 작성 페이지에서 게시물을 "
+			+ "작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
+		@Transactional(rollbackFor=Exception.class) 
+		@PostMapping("/articles")
+		public ResponseEntity<String> createArticle(@RequestBody Article article
 										   ,HttpSession session){
 			try {
 				Object session_id = session.getAttribute("id");

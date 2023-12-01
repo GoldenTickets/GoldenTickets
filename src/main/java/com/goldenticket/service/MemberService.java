@@ -2,10 +2,15 @@ package com.goldenticket.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Member;
+import com.goldenticket.DTO.Movie;
+import com.goldenticket.DTO.Reply;
+import com.goldenticket.DTO.Review;
 import com.goldenticket.mapper.MemberMapper;
 
 @Service
@@ -41,12 +46,12 @@ public class MemberService {
 	}
 	
 	//회원정보 전부 가져오기
-		public Member getMemberinfo(int id) { //예외처리 나중에 하기
+		public Member getMemberinfo(int id) throws Exception { //예외처리 나중에 하기
 			return memberMapper.getMemberinfo(id);
 		}
 		
     //회원정보 수정페이지에서 회원이 선호하는 장르 목록 가져오기
-		public List<Integer> getMemGenreList(int id){
+		public List<Integer> getMemGenreList(int id) throws Exception {
 			return memberMapper.getMemGenreList(id);
 		}
 	//회원정보 수정하기
@@ -65,4 +70,44 @@ public class MemberService {
 				return 0;//위의 과정이 한개라도 실패할경우 0 반환
 			}
 		}
+	
+	//회원이 북마크한 영화 갯수 가져오기
+	public int getTotalbookmark(int id) throws Exception{
+		return memberMapper.getTotalbookmark(id);
+	}
+	
+	//회원의 북마크 목록 가져오기
+	public List<Movie> getBookmark(RowBounds rowBounds, int id) throws Exception{
+		return memberMapper.getBookmark(rowBounds, id);
+	};
+	
+	//회원이 작성한 리뷰 갯수 가져오기
+	public int getMytotalreviews(int id) throws Exception{
+		return memberMapper.getMytotalreplies(id);
+	}
+	
+	//회원의 리뷰 목록 가져오기
+	public List<Review> getMyreviews(RowBounds rowBounds, int id) throws Exception{
+		return memberMapper.getMyreviews(rowBounds, id);
+	}
+	
+	//회원이 작성한 게시글 갯수 가져오기
+	public int getMytotalarticles(int id) throws Exception {
+		return memberMapper.getMytotalarticles(id);
+	}
+	
+	//회원의 게시글 목록 가져오기
+	public List<Article> getMyarticles(RowBounds rowBounds, int id) throws Exception{
+		return memberMapper.getMyarticles(rowBounds, id);
+	}
+	
+	//회원이 작성한 댓글 갯수 가져오기
+	public int getMytotalreplies(int id) throws Exception{
+		return memberMapper.getMytotalreplies(id);
+	}
+	
+	//회원의 댓글 목록 가져오기
+	public List<Reply> getMyreplies(RowBounds rowBounds, int id) throws Exception{
+		return memberMapper.getMyreplies(rowBounds, id);
+	}
 }

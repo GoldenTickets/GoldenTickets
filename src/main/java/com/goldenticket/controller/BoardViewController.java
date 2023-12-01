@@ -19,16 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenticket.DTO.Article;
 import com.goldenticket.DTO.Reply;
-import com.goldenticket.mapper.BoardMapper;
 import com.goldenticket.service.BoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
 @Controller
 public class BoardViewController {
-	@Autowired
-	private BoardMapper boardMapper;
-	
+
 	@Autowired
 	private BoardService boardService;
 	
@@ -47,32 +44,36 @@ public class BoardViewController {
 		List<Article> articles;
 		int totalArticles;
 		
-		if (category == 0) { // 카테고리 전체
-			if (subject.equals("title")) { // 제목으로 검색
-				articles = boardMapper.getByTitle(rowBounds, keyword);
-				totalArticles = boardMapper.totalArticlesByTitle(keyword);
-			}else if (subject.equals("nickname")){ // 닉네임으로 검색
-				articles = boardMapper.getByNickname(rowBounds, keyword);
-				totalArticles = boardMapper.totalArticlesByNickname(keyword);
-			}else if (subject.equals("both")) { // 제목 + 닉네임으로 검색
-				articles = boardMapper.getByTitleAndNickname(rowBounds, keyword);
-				totalArticles = boardMapper.totalArticlesByTitleAndNickname(keyword);
-			}else { // 전체 조회
-				articles = boardMapper.getAll(rowBounds);
-				totalArticles = boardMapper.totalArticles();
+		try {
+			if (category == 0) { // 카테고리 전체
+				if (subject.equals("title")) { // 제목으로 검색
+					articles = boardService.getByTitle(rowBounds, keyword);
+					totalArticles = boardService.totalArticlesByTitle(keyword);
+				}else if (subject.equals("nickname")){ // 닉네임으로 검색
+					articles = boardService.getByNickname(rowBounds, keyword);
+					totalArticles = boardService.totalArticlesByNickname(keyword);
+				}else if (subject.equals("both")) { // 제목 + 닉네임으로 검색
+					articles = boardService.getByTitleAndNickname(rowBounds, keyword);
+					totalArticles = boardService.totalArticlesByTitleAndNickname(keyword);
+				}else { // 전체 조회
+					articles = boardService.getAll(rowBounds);
+					totalArticles = boardService.totalArticles();
+				}
+			}else { // 카테고리로 조회
+				articles = boardService.getAllByCategory(rowBounds, category);
+				totalArticles = boardService.totalArticlesByCategory(category);
 			}
-		}else { // 카테고리로 조회
-			articles = boardMapper.getAllByCategory(rowBounds, category);
-			totalArticles = boardMapper.totalArticlesByCategory(category);
+			
+			mav.addObject("pagesize", pagesize);
+			mav.addObject("category", category);
+			mav.addObject("articles", articles);
+			
+			int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
+			mav.addObject("currentPage", page);
+	        mav.addObject("totalPages", totalPages);
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		
-		mav.addObject("pagesize", pagesize);
-		mav.addObject("category", category);
-		mav.addObject("articles", articles);
-		
-		int totalPages = (int) Math.ceil((double) totalArticles / pagesize); // 전체 페이지 수 구하기
-		mav.addObject("currentPage", page);
-        mav.addObject("totalPages", totalPages);
 		
 		return mav;
 	}
@@ -81,25 +82,30 @@ public class BoardViewController {
 	//게시물에 대한 수정,삭제 버튼이 생깁니다. 게시글의 조회수가 1 증가합니다. 댓글목록을 가져옵니다. 댓글은 10개 묶음으로 페이징처리됩니다.
 	@GetMapping("/articles/{id}")
 	public ModelAndView getArticle(@RequestParam(defaultValue = "1") int page, @PathVariable("id") int id){
-		boardService.updateHit(id);//조회수 1 증가
-		
-		int pageSize = 10;
-		int startRow = (page-1)*pageSize;
-		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
-		
-		ModelAndView mav = new ModelAndView("article");
-		Article article = boardMapper.getById(id);
-		List<Reply> replies = boardMapper.getByArticle_id(id, rowBounds);
-		mav.addObject("article", article);
-		mav.addObject("replies", replies);
-		
-		int totalReplies = boardMapper.getTotalreply(id);
-		int totalPages = (int) Math.ceil((double) totalReplies / pageSize); // 전체 페이지 수 구하기
-		mav.addObject("currentPage", page);
-        mav.addObject("totalPages", totalPages);
-        mav.addObject("totalReplies", totalReplies);
-        
-		return mav;
+		try {
+			boardService.updateHit(id);//조회수 1 증가
+			
+			int pageSize = 10;
+			int startRow = (page-1)*pageSize;
+			RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
+			
+			ModelAndView mav = new ModelAndView("article");
+			Article article = boardService.getById(id);
+			List<Reply> replies = boardService.getByArticle_id(id, rowBounds);
+			mav.addObject("article", article);
+			mav.addObject("replies", replies);
+			
+			int totalReplies = boardService.getTotalreply(id);
+			int totalPages = (int) Math.ceil((double) totalReplies / pageSize); // 전체 페이지 수 구하기
+			mav.addObject("currentPage", page);
+	        mav.addObject("totalPages", totalPages);
+	        mav.addObject("totalReplies", totalReplies);
+	        
+	        return mav;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ModelAndView("article");
+		}
 	}
 	
 	@Operation(summary="게시글 작성 페이지",description="게시글을 작성할 수 있게 게시물 작성 페이지로 이동합니다.")
@@ -113,19 +119,24 @@ public class BoardViewController {
 	//게시글을 수정할 수 있게 게시물 수정 페이지로 이동합니다. 작성했던 글의 제목,내용을 불러와집니다.
 	@GetMapping("/update-article/{id}")
 	public ModelAndView getUpdateArticlePage(@PathVariable int id,HttpSession session){
-		Object session_id = session.getAttribute("id");
-		int mem_id;
-		if(session_id!=null) {
-			mem_id=(int)session_id;
-			Article article = boardService.getArticleById(id);
-			if(mem_id == boardService.getArticleById(id).getMem_id()) {
-				ModelAndView mav = new ModelAndView("updateArticle");
-				mav.addObject("article",article);
-				return mav;
+		try {
+			Object session_id = session.getAttribute("id");
+			int mem_id;
+			if(session_id!=null) {
+				mem_id=(int)session_id;
+				Article article = boardService.getArticleById(id);
+				if(mem_id == boardService.getArticleById(id).getMem_id()) {
+					ModelAndView mav = new ModelAndView("updateArticle");
+					mav.addObject("article",article);
+					return mav;
+				}else {
+					return new ModelAndView("redirect:/articles");
+				}
 			}else {
 				return new ModelAndView("redirect:/articles");
 			}
-		}else {
+		}catch(Exception e) {
+			e.printStackTrace();
 			return new ModelAndView("redirect:/articles");
 		}
 	}
