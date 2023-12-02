@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "영화 API", description = "영화 관련 API")
+@Tag(name = "영화", description = "영화 리뷰와 북마크를 등록 하거나 삭제합니다.영화를 조회수,평점,개봉일 순으로 나열합니다.")
 @RestController
 @RequestMapping("/movies")
 public class MovieApiController {
