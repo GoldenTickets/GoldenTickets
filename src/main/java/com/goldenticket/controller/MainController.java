@@ -14,11 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.goldenticket.DTO.Movie;
 import com.goldenticket.mapper.MovieMapper;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "메인 페이지", description = "메인페이지와 관련된 메서드들 모음")
 @Controller
 public class MainController {
 

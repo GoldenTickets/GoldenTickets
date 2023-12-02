@@ -20,7 +20,7 @@ public class SwaggerConfig {
     private Info apiInfo() {
         return new Info()
                 .title("Golden Ticket")
-                .description("Rest API 설명서")
+                .description("Rest API 명세")
                 .version("1.0.0");
     }
 }

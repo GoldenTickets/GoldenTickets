@@ -29,8 +29,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name="회원",description="회원가입,로그인,로그아웃,회원 수정, 회원의 북마크,게시글,댓글 관리기능입니다.")
-@RestController
+@Tag(name="회원 API",description="회원 테이블과 관련된 API입니다.")
+
 public class MemberApiController {
 	
 	@Autowired
