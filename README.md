@@ -25,14 +25,11 @@
 
 # 🛠️ 개발환경
 - Server
-  
-`AWS Elastic Beanstalk`
+`Tomcat 9.0`
+
 - DB
-  
-`MySQL 8.0.34`
-- SCM
-  
-`Git(GitHub)`
+`Oracle 11g`
+
 - BackEnd(Language & Framework & Library)
   
 Language : `Java 8` `JDK 1.8.0`
