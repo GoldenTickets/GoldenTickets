@@ -27,8 +27,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name="게시판 API",description="게시판 테이블과 관련된 API 입니다.")
 
-@Tag(name="영화 API",description="게시판 API")
 @RestController
 public class BoardApiController {
 	

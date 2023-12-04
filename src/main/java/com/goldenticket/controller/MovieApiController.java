@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "영화 API", description = "영화 테이블과 관련된 API입니다.")
+
 @RestController
 @RequestMapping("/movies")
 public class MovieApiController {

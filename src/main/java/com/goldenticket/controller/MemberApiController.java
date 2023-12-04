@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="회원 API",description="회원 테이블과 관련된 API입니다.")
-@RestController
+
 public class MemberApiController {
 	
 	@Autowired
