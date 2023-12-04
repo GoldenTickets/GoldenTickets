@@ -24,14 +24,14 @@
 <br/>
 
 # 🛠️ 개발환경
-- Server
+- Server <br>
 `AWS Elastic Beanstalk`
 
-- DB
-'MySQL 8.0.34`
+- DB<br>
+`MySQL 8.0.34`
 
-- SCM
-'Git(GitHub)`
+- SCM <br>
+`Git(GitHub)`
 
 - BackEnd(Language & Framework & Library)
   
