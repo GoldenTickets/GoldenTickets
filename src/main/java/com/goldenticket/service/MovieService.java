@@ -159,5 +159,4 @@ public class MovieService {
 		return movieMapper.getRankingByGenre(rowBounds, genre);
 	}
 	
-	
 }
