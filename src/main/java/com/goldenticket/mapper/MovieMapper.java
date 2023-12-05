@@ -159,9 +159,9 @@ public interface MovieMapper {
 
 	//영화 검색
 	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
-	List<Movie> getBySearch(RowBounds rowBounds, String subject, String genre, String keyword);
+	List<Movie> getBySearch(RowBounds rowBounds, String subject, List<String> genre, String keyword);
 	
 	//검색 결과 레코드 수
 	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
-	int totalmoviesBySearch(String subject, String genre, String keyword);
+	int totalmoviesBySearch(String subject, List<String> genre, String keyword);
 }

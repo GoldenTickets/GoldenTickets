@@ -193,24 +193,24 @@ public class MovieViewController {
 		RowBounds rowBounds = new RowBounds(startRow, pageSize); // 페이징 처리
 		List<Movie> movies;
 		int totalMovies;
-		/*
+		/* -> 장르 List를 어떻게 할 것인지 고민하기
 		if (genre == 0) {
-			movies = movieMapper.getBySearch(rowBounds, order);
-			totalMovies = movieMapper.totalmoviesBySearch();
+			movies = movieService.getBySearch(rowBounds, subject, genre, keyword);
+			totalMovies = movieService.totalmoviesBySearch( subject, genre, keyword);
 		}else {
-			movies = movieMapper.getAllMoviesByGenre(rowBounds, order, genre);
-			totalMovies = movieMapper.totalMoviesByGenre(genre);
+			movies = movieService.getBySearch(rowBounds, subject, genre, keyword);
+			totalMovies = movieService.totalMoviesByGenre( subject, genre, keyword);
 		}
-		System.out.println(movies);
-		mav.addObject("order", order);
-		mav.addObject("genre", genre);
-		*/
-		//int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
 		
-		//mav.addObject("movies", movies);
+		System.out.println(movies);
+		mav.addObject("genre", genre);
+
+		int totalPages = (int) Math.ceil((double) totalMovies / pageSize); // 전체 페이지 수 구하기
+		
+		mav.addObject("movies", movies);
 		mav.addObject("currentPage", page);
-        //mav.addObject("totalPages", totalPages);
-        
+        mav.addObject("totalPages", totalPages);
+        */
 	
 		return mav;
 	}
