@@ -24,11 +24,14 @@
 <br/>
 
 # 🛠️ 개발환경
-- Server
-`Tomcat 9.0`
+- Server <br>
+`AWS Elastic Beanstalk`
 
-- DB
-`Oracle 11g`
+- DB<br>
+`MySQL 8.0.34`
+
+- SCM <br>
+`Git(GitHub)`
 
 - BackEnd(Language & Framework & Library)
   
