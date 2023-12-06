@@ -24,15 +24,15 @@
 <br/>
 
 # 🛠️ 개발환경
-- Server
-  
+- Server <br>
 `AWS Elastic Beanstalk`
-- DB
-  
+
+- DB<br>
 `MySQL 8.0.34`
-- SCM
-  
+
+- SCM <br>
 `Git(GitHub)`
+
 - BackEnd(Language & Framework & Library)
   
 Language : `Java 8` `JDK 1.8.0`
