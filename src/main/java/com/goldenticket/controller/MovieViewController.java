@@ -185,7 +185,7 @@ public class MovieViewController {
 	
 	// 영화 검색
 	@GetMapping("/search")
-	public ModelAndView searchMovies(@RequestParam(name = "subject") String subject, @RequestParam(name = "genre", required = false) List<String> genre, @RequestParam(name = "keyword") String keyword, @RequestParam(defaultValue = "1") int page) {
+	public ModelAndView searchMovies(@RequestParam(name = "subject") String subject, @RequestParam(name = "genre", required = false) List<Integer> genre, @RequestParam(name = "keyword") String keyword, @RequestParam(defaultValue = "1") int page) {
 		ModelAndView mav = new ModelAndView("movieInfo_result");
 		
 		int pageSize = 10;

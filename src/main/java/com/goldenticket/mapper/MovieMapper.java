@@ -157,11 +157,23 @@ public interface MovieMapper {
 	@Delete("DELETE FROM bookmark WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
 	int deleteBookmark(int movie_id,int mem_id) throws Exception;
 
-	//영화 검색
-	@Select("SELECT C.categoryname, A.*, M.nickname FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
-	List<Movie> getBySearch(RowBounds rowBounds, String subject, List<String> genre, String keyword);
+	//영화 제목으로 검색
+	@Select("SELECT M.id, M.title, M.rating, G.name, C.name, M.releasedate, M.hit"
+			+ "FROM movie M"
+			+ "JOIN movie_genre ON M.id = MG.movie_id"
+			+ "JOIN genre G ON G.id = MG.genre_id"
+			+ "JOIN movie_country MC ON M.id = MC.movie_id"
+			+ "JOIN country C ON C.id = MC.country_id"
+			+ "WHERE M.title LIKE CONCAT('%', #{keyword}, '%')"
+			+ "<if test='genre != null and genre.size > 0'>"
+		    + "AND G.id IN"
+		    + "<foreach item='item' collection='genre' open='(' separator=',' close=')'>"
+		    + "#{item}"
+		    + "</foreach>"
+		    + "</if>")
+	List<Movie> searchByTitle(RowBounds rowBounds, List<Integer> genre, String keyword);
 	
 	//검색 결과 레코드 수
 	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
-	int totalmoviesBySearch(String subject, List<String> genre, String keyword);
+	int totalmoviesBySearch(String subject, List<Integer> genre, String keyword);
 }
