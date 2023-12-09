@@ -175,5 +175,5 @@ public interface MovieMapper {
 	
 	//검색 결과 레코드 수
 	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
-	int totalmoviesBySearch(String subject, List<Integer> genre, String keyword);
+	int totalmoviesBySearch(List<Integer> genre, String keyword);
 }
