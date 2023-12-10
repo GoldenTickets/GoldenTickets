@@ -160,12 +160,12 @@ public class MovieService {
 	}
 	
 	//영화 검색
-	public List<Movie> getBySearch(RowBounds rowBounds, String subject, List<Integer> genre, String keyword){
-		return movieMapper.getBySearch(rowBounds, subject, genre, keyword);
+	public List<Movie> searchByTitle(RowBounds rowBounds, List<Integer> genre, String keyword){
+		return movieMapper.searchByTitle(rowBounds, genre, keyword);
 	}
 	
 	//검색 결과 레코드 수
-	public int totalmoviesBySearch(String subject, List<Integer> genre, String keyword) {
-		return movieMapper.totalmoviesBySearch(subject, genre, keyword);
+	public int totalSearchByTitle(List<Integer> genre, String keyword) {
+		return movieMapper.totalSearchByTitle(genre, keyword);
 	}
 }
