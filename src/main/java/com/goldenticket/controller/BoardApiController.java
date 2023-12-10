@@ -36,7 +36,7 @@ public class BoardApiController {
 	private BoardService boardService;
 	
 		@Operation(summary="게시글 작성",description="회원이 작성한 게시물을 저장하는 기능입니다. 게시물 작성 페이지에서 게시물을 "
-			+ "작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
+			+ "작성하면 DB에 저장 후, 해당 게시물을 보여주는 페이지로 이동합니다. 로그인이되어있지않다면 오른쪽에서 로그인 섹션이 열립니다.")
 		@Transactional(rollbackFor=Exception.class) 
 		@PostMapping("/articles")
 		public ResponseEntity<String> createArticle(@RequestBody Article article
@@ -128,7 +128,7 @@ public class BoardApiController {
 		}
 	}
 	
-	@Operation(summary="댓글 작성",description="게시물에 댓글을 작성하는 기능입니다.로그인이되어있지않다면 오른쪽에서 로그인섹션이 열립니다.")
+	@Operation(summary="댓글 작성",description="게시물에 댓글을 작성하는 기능입니다.로그인이 되어있지않다면 오른쪽에서 로그인 섹션이 열립니다.")
 	@Transactional(rollbackFor=Exception.class) //서비스로 뺄 방법 강구하기
 	@PostMapping("/articles/reply")
 	public ResponseEntity<String> createReply(@Parameter(description = "입력한 댓글의 content입니다.") @RequestBody Reply reply
