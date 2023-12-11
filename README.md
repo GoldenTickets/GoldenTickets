@@ -43,7 +43,7 @@ IDE : `STS-4.20.1.RELEASE`
 
 Build Tools : `Maven 4.0.0`
 
-ORM : `Mybatis 2.3.1`
+SQL Mapper : `Mybatis 2.3.1`
 
 Library : `springdoc-openapi 1.6.14` 
 <br/>
