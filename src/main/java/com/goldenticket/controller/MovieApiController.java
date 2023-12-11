@@ -97,7 +97,7 @@ public class MovieApiController {
 	}
 	
 	@Operation(summary = "북마크 삭제", description = "로그인을 하지않았다면 북마크 버튼이 default 상태인 북마크추가 버튼으로 나오기때문에"
-			+ "로그인하기전에 북마크를 삭제할수없지만 버튼클릭이 아닌 js로 요청할경우 로그인을 요구합니다. 로그인창이 오른쪽에서 로그인섹션이 열립니다.")
+			+ "로그인하기전에 북마크를 삭제할수없지만 버튼클릭이 아닌 자바스크립트로 요청할경우 로그인을 요구합니다. 로그인창이 오른쪽에서 로그인섹션이 열립니다.")
 	@DeleteMapping("/bookmark/{movie_id}")
 	public ResponseEntity<String> deleteBookmark(@Parameter(description = "영화 id") @PathVariable int movie_id,
 												 @Parameter(description = "세션(로그인정보)") HttpSession session) {
