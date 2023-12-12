@@ -174,6 +174,18 @@ public interface MovieMapper {
 	List<Movie> searchByTitle(RowBounds rowBounds, List<Integer> genre, String keyword);
 	
 	//검색 결과 레코드 수
-	@Select("SELECT COUNT(*) FROM article A JOIN article_category AC ON A.id = AC.article_id JOIN category C ON C.id = AC.category_id JOIN member M ON A.mem_id = M.id WHERE A.title LIKE CONCAT('%', #{keyword}, '%')")
+	@Select("SELECT COUNT(*)"
+			+ "FROM movie M"
+			+ "JOIN movie_genre ON M.id = MG.movie_id"
+			+ "JOIN genre G ON G.id = MG.genre_id"
+			+ "JOIN movie_country MC ON M.id = MC.movie_id"
+			+ "JOIN country C ON C.id = MC.country_id"
+			+ "WHERE M.title LIKE CONCAT('%', #{keyword}, '%')"
+			+ "<if test='genre != null and genre.size > 0'>"
+			+ "AND G.id IN"
+			+ "<foreach item='item' collection='genre' open='(' separator=',' close=')'>"
+			+ "#{item}"
+			+ "</foreach>"
+			+ "</if>")
 	int totalSearchByTitle(List<Integer> genre, String keyword);
 }
