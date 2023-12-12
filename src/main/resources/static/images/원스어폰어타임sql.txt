@@ -1,0 +1,22 @@
+INSERT INTO movie (title, synopsis, releasedate, director, runningtime, poster,rating, trailer) VALUES ('원스 어폰 어 타임... 인 할리우드', '1969년 할리우드, 잊혀져 가는 액션스타 ‘릭 달튼’과 그의 스턴트 배우 겸 매니저인 ‘클리프 부스’는 과거의 영광을 되찾기 위해 고군분투하지만 새로운 스타들에 밀려 큰 성과를 거두진 못한다. 그러던 어느 날 ‘릭’의 옆집에 할리우드에서 가장 핫한 ‘로만 폴란스키’ 감독과 배우 ‘샤론 테이트’ 부부가 이사 오자 ‘릭’은 새로운 기회가 생길 수도 있다고 기뻐하지만 인사조차 나누지 못한다. 형편상 더 이상 함께 일할 수 없게 된 ‘릭’과 ‘클리프’는 각자의 길을 가기로 하고 ‘릭’의 집에서 술을 거나하게 마시던 중 뜻하지 않은 낯선 방문객을 맞이하게 되는데…', '2019-09-25', '쿠엔틴 타란티노', '161', 'OnceUponaTimeinHollywood_poster.jpg',0,'https://www.youtube.com/embed/ELeMaP8EPAA?si=H5he7892TLyGsWnK');
+INSERT INTO actor (name) VALUES ('레오나르도 디카프리오')ON DUPLICATE KEY UPDATE name= name;
+INSERT INTO actor (name) VALUES ('브래드 피트')ON DUPLICATE KEY UPDATE name= name;
+INSERT INTO actor (name) VALUES ('마고 로비')ON DUPLICATE KEY UPDATE name= name;
+INSERT INTO movie_actor (movie_id,actor_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM actor WHERE name='레오나르도 디카프리오'));
+INSERT INTO movie_actor (movie_id,actor_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM actor WHERE name='브래드 피트'));
+INSERT INTO movie_actor (movie_id,actor_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM actor WHERE name='마고 로비'));
+INSERT INTO movie_country (movie_id,country_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM country WHERE name='미국'));
+INSERT INTO movie_country (movie_id,country_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM country WHERE name='영국'));
+INSERT INTO movie_photo (movie_id,photoname)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),('OnceUponaTimeinHollywood_1.jpg'));
+INSERT INTO movie_photo (movie_id,photoname)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),('OnceUponaTimeinHollywood_2.jpg'));
+INSERT INTO movie_photo (movie_id,photoname)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),('OnceUponaTimeinHollywood_3.jpg'));
+INSERT INTO movie_photo (movie_id,photoname)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),('OnceUponaTimeinHollywood_4.jpg'));
+INSERT INTO movie_photo (movie_id,photoname)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),('OnceUponaTimeinHollywood_5.jpg'));
+INSERT INTO movie_genre (movie_id,genre_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM genre WHERE name='액션'));
+INSERT INTO movie_genre (movie_id,genre_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM genre WHERE name='드라마'));
+INSERT INTO movie_genre (movie_id,genre_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM genre WHERE name='스릴러'));
+
+INSERT INTO movie_platform (movie_id,platform_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM platform WHERE name='series_on'));
+INSERT INTO movie_platform (movie_id,platform_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM platform WHERE name='tving'));
+INSERT INTO movie_platform (movie_id,platform_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM platform WHERE name='coupangplay'));
+INSERT INTO movie_platform (movie_id,platform_id)VALUES (( SELECT id FROM movie WHERE title ='원스 어폰 어 타임... 인 할리우드'),(SELECT id FROM platform WHERE name='watcha'));
