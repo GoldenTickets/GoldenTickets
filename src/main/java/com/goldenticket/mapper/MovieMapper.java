@@ -223,5 +223,5 @@ public interface MovieMapper {
 				+ "#{item}"
 				+ "</foreach>"
 				+ "</if>")
-		int totalSearchByActor(List<Integer> genre, String keyword);
+	int totalSearchByActor(List<Integer> genre, String keyword);
 }
