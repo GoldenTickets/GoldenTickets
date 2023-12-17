@@ -242,4 +242,22 @@ public interface MovieMapper {
 			+ "</foreach>"
 			+ "</if>")
 	List<Movie> searchByCountry(RowBounds rowBounds, List<Integer> genre, String keyword);
+	
+	//국가로 검색했을 때 결과 레코드 수
+			@Select("SELECT COUNT(*)"
+					+ "FROM movie M"
+					+ "JOIN movie_genre ON M.id = MG.movie_id"
+					+ "JOIN genre G ON G.id = MG.genre_id"
+					+ "JOIN movie_country MC ON M.id = MC.movie_id"
+					+ "JOIN country C ON C.id = MC.country_id"
+					+ "JOIN movie_actor MA ON M.id = MA.movie_id"
+					+ "JOIN actor A ON A.id = MA.actor_id"
+					+ "WHERE A.name LIKE CONCAT('%', #{keyword}, '%')"
+					+ "<if test='genre != null and genre.size > 0'>"
+					+ "AND G.id IN"
+					+ "<foreach item='item' collection='genre' open='(' separator=',' close=')'>"
+					+ "#{item}"
+					+ "</foreach>"
+					+ "</if>")
+		int totalSearchByCountry(List<Integer> genre, String keyword);
 }
