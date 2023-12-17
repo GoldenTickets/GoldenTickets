@@ -63,7 +63,7 @@ public interface MemberMapper {
 	@Select("SELECT R.movie_id, M.title, R.id , R.rating, R.content, R.regdate FROM review R JOIN movie M ON R.movie_id = M.id WHERE mem_id = #{id}")
 	List<Review> getMyreviews(RowBounds rowBounds, int id) throws Exception;
 	
-	// 내가 쓴 리뷰 갯수 가져오기
+	// 내가 쓴 리뷰의 갯수 가져오기
 	@Select("SELECT count(*) FROM review WHERE mem_id = #{id}")
 	int getMytotalreviews(int id) throws Exception;
 	
