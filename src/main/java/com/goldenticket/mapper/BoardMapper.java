@@ -45,10 +45,10 @@ public interface BoardMapper {
 	@Delete("DELETE FROM article WHERE id = #{id}")
 	int deleteArticle(int id) throws Exception; // 파라미터 그냥 id로 바꾸기
 	
-	@Delete("DELETE FROM reply WHERE id = #{id}") //댓글삭제기능
+	@Delete("DELETE FROM reply WHERE id = #{id}") //댓글 삭제기능
 	int deleteReply(int id) throws Exception;
 	
-	@Select("SELECT mem_id FROM reply WHERE id = #{reply_id}")//댓글 삭제 위해서 해당 댓글의 작성자가 session의 사용자와 일치하는지확인
+	@Select("SELECT mem_id FROM reply WHERE id = #{reply_id}")//댓글 삭제하기 위해서 해당 댓글의 작성자가 session의 사용자와 일치하는지확인
 	int confirmIdOfReply(int id) throws Exception;
 	
 	// 페이징 처리
