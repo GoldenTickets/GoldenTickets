@@ -43,7 +43,7 @@ public interface BoardMapper {
 	int acUpdate(@Param("article") Article article) throws Exception;
 	
 	@Delete("DELETE FROM article WHERE id = #{id}")
-	int deleteArticle(int id) throws Exception; // 파라미터 그냥 id로 바꾸기
+	int deleteArticle(int id) throws Exception; // 파라미터를 그냥 id로 바꾸기
 	
 	@Delete("DELETE FROM reply WHERE id = #{id}") //댓글 삭제기능
 	int deleteReply(int id) throws Exception;
