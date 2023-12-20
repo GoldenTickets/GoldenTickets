@@ -24,7 +24,7 @@ public interface BoardMapper {
 	@Select("SELECT A.*, C.categoryname, M.nickname, COUNT(R.id) AS reply_count FROM article A INNER JOIN article_category AC on A.id = AC. article_id INNER JOIN category C ON AC. category_id = C.id INNER JOIN member M ON A.mem_id = M.id LEFT JOIN reply R ON A.id = R.article_id WHERE C.id = #{category} GROUP BY A.id, C.categoryname, M.nickname ORDER BY regdate DESC")
 	List<Article> getAllByCategory(RowBounds rowBounds, int category) throws Exception;
 	
-	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id} ORDER BY R.regdate DESC")//댓글가져오기
+	@Select("SELECT R.*,M.nickname FROM reply R INNER JOIN member M ON R.mem_id = M.id WHERE R.article_id = #{id} ORDER BY R.regdate DESC")//댓글 가져오기
 	List<Reply> getByArticle_id(@Param("id") int id, RowBounds rowBounds) throws Exception;
 	
 	@Insert("INSERT INTO article (mem_id, title, content, regdate) VALUES (#{article.mem_id}, #{article.title}, #{article.content}, now())")
