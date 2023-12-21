@@ -36,7 +36,7 @@ public interface MovieMapper {
 	@Select("SELECT A.name FROM movie_actor MA INNER JOIN actor A on MA.actor_id=A.id WHERE MA.movie_id = #{movie_id}")
 	List<String> getMovieActors(int id) throws Exception;
 	
-	//영화 볼수있는곳 플랫폼의 이름,url 모두 가져오기
+	//영화 볼수있는 곳 플랫폼의 이름,url 모두 가져오기
 	@Select("SELECT P.name,P.url FROM movie_platform MP INNER JOIN platform P ON MP.platform_id=P.id WHERE MP.movie_id=#{id}")
 	List<Platform> getMoviePlatform(int id) throws Exception;
 	
@@ -44,7 +44,7 @@ public interface MovieMapper {
 	@Select("SELECT R.*,M.nickname FROM review R INNER JOIN member M ON R.mem_id=M.id WHERE R.movie_id=#{id} ORDER BY R.regdate DESC")
 	List<Review> getMovieReview(int id, RowBounds rowBounds) throws Exception;
 	
-	//총 리뷰수 구하기
+	//총 리뷰 수 구하기
 	@Select("SELECT COUNT(*) FROM review WHERE movie_id = #{id}")
 	int getTotalreviews(int id) throws Exception;
 	
