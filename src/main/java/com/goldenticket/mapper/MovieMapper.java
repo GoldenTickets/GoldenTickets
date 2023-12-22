@@ -92,7 +92,7 @@ public interface MovieMapper {
 	@Select("SELECT DISTINCT M.id, M.title, M.rating, MP.photoname FROM movie M JOIN movie_photo MP ON M.id = MP.movie_id WHERE M.id = #{id} ORDER BY RAND() LIMIT 1")
 	Movie getNewmovie(int id) throws Exception;
 	
-	//신작영화 장르가져오기
+	//신작 영화 장르 가져오기
 	@Select("SELECT G.name FROM genre G JOIN movie_genre MG ON G.id = MG.genre_id WHERE MG.movie_id = #{id}")
 	List<String> getNewmovieGenres(int id) throws Exception;
 	
