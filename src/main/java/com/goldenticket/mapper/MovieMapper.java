@@ -124,7 +124,7 @@ public interface MovieMapper {
 	@Select("SELECT id, title, poster, rating FROM movie ORDER BY hit DESC LIMIT 10")
 	List<Movie> getLovedmovies() throws Exception;
 	
-	//상위 10개 영화 가져오기
+	//평점 상위 10개 영화 가져오기
 	@Select("SELECT id, title, poster, ROW_NUMBER() OVER (ORDER BY rating DESC) as ranking FROM movie ORDER BY rating DESC LIMIT 10;")
 	List<Movie> getTopMovies() throws Exception;
 	
