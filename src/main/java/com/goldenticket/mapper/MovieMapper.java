@@ -132,7 +132,7 @@ public interface MovieMapper {
 	@Select("SELECT count(*) FROM review WHERE movie_id=#{movie_id} and mem_id=#{mem_id}")
 	int getReviewCount(int movie_id,int mem_id) throws Exception;
 
-	//리뷰 작성 후,리뷰 삭제 후 해당영화 평균 평점 업데이트
+	//리뷰 작성 후,리뷰 삭제 후 해당 영화 평균 평점 업데이트
 	//@Update("UPDATE movie SET rating = #{newRating} WHERE id = #{movie_id}") 서브쿼리사용으로 변경
 	@Update("UPDATE movie SET rating = (SELECT AVG(rating) FROM review GROUP BY movie_id HAVING movie_id = #{movie_id})  WHERE id = #{movie_id}")
 	int updateReviewRating(int movie_id) throws Exception;
@@ -141,7 +141,7 @@ public interface MovieMapper {
 	@Delete("DELETE FROM review WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
 	int deleteReview(int movie_id,int mem_id) throws Exception;
 
-	//회원아이디의 아이디에 해당영화가 북마크 되었는지 확인 
+	//회원 아이디의 id에 해당영화가 북마크 되었는지 확인 
 	@Select("SELECT COUNT(*) FROM bookmark WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
 	int IsitBookdmarkedById(int movie_id,int mem_id) throws Exception;
 	
