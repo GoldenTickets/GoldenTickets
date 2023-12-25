@@ -145,7 +145,7 @@ public interface MovieMapper {
 	@Select("SELECT COUNT(*) FROM bookmark WHERE movie_id = #{movie_id} AND mem_id = #{mem_id}")
 	int IsitBookdmarkedById(int movie_id,int mem_id) throws Exception;
 	
-	//회원아이디에 따른 북마크된 영화 목록
+	//회원 아이디에 따른 북마크된 영화 목록
 	@Select("SELECT movie_id FROM bookmark WHERE mem_id = #{mem_id}")
 	List<Integer> getBookmarkedMoviesById(int mem_id) throws Exception;
 	
