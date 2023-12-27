@@ -23,7 +23,7 @@ public interface MemberMapper {
 	@Select("SELECT password from member WHERE email = #{email}")
 	String logincheck(String email) throws Exception;
 	
-	//닉네임, id번호 가져오기
+	//닉네임, id 번호 가져오기
 	@Select("SELECT id,nickname from member WHERE email = #{email}")
 	Member getMember(String nickname) throws Exception;
 
