@@ -43,7 +43,7 @@ public interface MemberMapper {
 	@Select("SELECT genre_id FROM member_genre WHERE mem_id = #{mem_id}")
 	List<Integer> getMemGenreList(int mem_id) throws Exception;
 	
-	//회원정보 수정하기
+	//회원 정보 수정하기
 	@Update("UPDATE member set name=#{name},email=#{email},password=#{password},nickname=#{nickname} WHERE id=#{id}")
 	int updateMember(Member member) throws Exception;
 	
