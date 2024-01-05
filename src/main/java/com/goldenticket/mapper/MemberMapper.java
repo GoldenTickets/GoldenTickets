@@ -35,7 +35,7 @@ public interface MemberMapper {
 	@Insert("INSERT INTO member_genre (genre_id,mem_id) VALUES (#{genre_id},#{id})")
 	int setMemberGenre(@Param("genre_id")int genre_id,@Param("id")int id) throws Exception;
 	
-	//회원 정보 목록 전부 가져오기 
+	//회원 정보 전부 가져오기 
 	@Select("SELECT * FROM member WHERE id = #{id}")
 	Member getMemberinfo(int id) throws Exception;
 	
