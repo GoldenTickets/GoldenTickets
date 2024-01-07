@@ -31,7 +31,7 @@ public interface MemberMapper {
 	@Insert("INSERT INTO member (email,password,nickname,name) VALUES (#{email},#{password},#{nickname},#{name})")
 	int createMember(Member member) throws Exception;
 	
-	//회원가입 시 선호하는 장르
+	//회원가입 시 선호하는 장르 저장
 	@Insert("INSERT INTO member_genre (genre_id,mem_id) VALUES (#{genre_id},#{id})")
 	int setMemberGenre(@Param("genre_id")int genre_id,@Param("id")int id) throws Exception;
 	
