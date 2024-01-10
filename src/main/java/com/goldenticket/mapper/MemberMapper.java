@@ -47,7 +47,7 @@ public interface MemberMapper {
 	@Update("UPDATE member set name=#{name},email=#{email},password=#{password},nickname=#{nickname} WHERE id=#{id}")
 	int updateMember(Member member) throws Exception;
 	
-	//회원의 선호 장르 모두 삭제 (수정하기 위해서 먼저 삭제)
+	//회원 선호 장르 모두 삭제 (수정하기 위해서 먼저 삭제)
 	@Delete("DELETE FROM member_genre where mem_id=#{mem_id}")
 	int deleteMember(int id) throws Exception;
 	
