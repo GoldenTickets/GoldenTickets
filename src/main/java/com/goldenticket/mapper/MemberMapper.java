@@ -39,7 +39,7 @@ public interface MemberMapper {
 	@Select("SELECT * FROM member WHERE id = #{id}")
 	Member getMemberinfo(int id) throws Exception;
 	
-	//회원 정보 수정페이지에서 회원이 선호하는 장르 목록 가져오기
+	//회원정보 수정페이지에서 회원이 선호하는 장르 목록 가져오기
 	@Select("SELECT genre_id FROM member_genre WHERE mem_id = #{mem_id}")
 	List<Integer> getMemGenreList(int mem_id) throws Exception;
 	
