@@ -39,7 +39,7 @@ public interface MemberMapper {
 	@Select("SELECT * FROM member WHERE id = #{id}")
 	Member getMemberinfo(int id) throws Exception;
 	
-	//회원 정보 수정페이지에서 회원이 선호하는 장르 목록 가져오기
+	//회원정보 수정페이지에서 회원이 선호하는 장르 목록 가져오기
 	@Select("SELECT genre_id FROM member_genre WHERE mem_id = #{mem_id}")
 	List<Integer> getMemGenreList(int mem_id) throws Exception;
 	
@@ -47,7 +47,7 @@ public interface MemberMapper {
 	@Update("UPDATE member set name=#{name},email=#{email},password=#{password},nickname=#{nickname} WHERE id=#{id}")
 	int updateMember(Member member) throws Exception;
 	
-	//회원 선호 장르 모두 삭제 (수정하기 위해서 먼저 삭제)
+	//회원선호 장르 모두 삭제 (수정하기 위해서 먼저 삭제)
 	@Delete("DELETE FROM member_genre where mem_id=#{mem_id}")
 	int deleteMember(int id) throws Exception;
 	
